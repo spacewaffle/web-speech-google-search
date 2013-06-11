@@ -43,8 +43,7 @@ $(document).ready(function() {
           console.log("result after substring is "+ result);
           result = result.replace(/ /g, "+");
           console.log("result is now "+ result);
-          url = url + result;
-          var win=window.open(url, '_blank');
+          var win=window.open(url+result, '_blank');
           win.focus();
         }
       }
