@@ -1,6 +1,7 @@
 var results = [];
 var result;
 var action;
+var recognition;
 var search_url = "http://www.google.com/search?q=";
 var wiki_url = "http://wikipedia.org/w/index.php?search=";
 
