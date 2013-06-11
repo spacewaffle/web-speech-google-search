@@ -1,7 +1,6 @@
 var results = [];
 var result;
 var url = "http://www.google.com/search?q=";
-
 $(document).ready(function() {
 
   try {
@@ -11,10 +10,6 @@ $(document).ready(function() {
   }
   recognition.continuous = true;
   recognition.lang = 'en';
-  var startRecognition = function() {
-    console.log('starting speech recognition...');
-    recognition.start();
-  };
 
   recognition.onresult = function (event) {
 
@@ -62,7 +57,6 @@ $(document).ready(function() {
   };
   recognition.onend = function() {
       console.log('restarting speech recognition');
-      recognition.start();
   };
   recognition.start();
 });
