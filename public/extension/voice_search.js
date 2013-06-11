@@ -70,16 +70,28 @@ recognition.onresult = function (event) {
   }
 
 };
-recognition.onend = function() {
-  console.log('speech service disconnected');
-  recognition.start();
-};
-// window.addEventListener('focus', function() {
-//     recognition.start();
-// });
 
-// window.addEventListener('blur', function() {
-//     recognition.stop();
-// });
-recognition.start();
-//var start_int = window.setInterval(function(){recognition.start();}, 1000);
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log(sender.tab ?
+                "from a content script:" + sender.tab.url :
+                "from the extension");
+
+    //if request is start, spin up recognition and set onend to loop
+    if (request.greeting == "start"){
+      recognition.onend = function() {
+        console.log('speech service disconnected (will restart)');
+        recognition.start();
+      };
+      console.log('starting speech navigation');
+      recognition.start();
+      sendResponse({farewell: "executed start"});
+    }
+    //if request is abort, unloop onend and abort the connection
+    else if(request.greeting == "abort"){
+      recognition.onend = function() {
+        console.log('speech service disconnected');
+      };
+      recognition.abort();
+    }
+});

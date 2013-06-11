@@ -18,3 +18,11 @@ chrome.tabs.onActivated.addListener(function(info) {
     });
   });
 });
+
+//kick off recognition start when the window loads
+chrome.tabs.query({'active': true}, function(tab){
+  //send this tab a message to send a start message
+  chrome.tabs.sendMessage(tab.id, {greeting: "start"}, function(response) {
+    console.log(response.farewell);
+  });
+});
