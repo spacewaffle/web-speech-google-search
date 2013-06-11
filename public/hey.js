@@ -1,6 +1,7 @@
 var results = [];
 var result;
 var url = "http://www.google.com/search?q=";
+
 $(document).ready(function() {
 
   try {
@@ -38,20 +39,30 @@ $(document).ready(function() {
           result = result.replace(" ", "");
         }
         console.log('substring is ' + result.substring(0,6));
-        if (result.substring(0, 6) === "search"){
-          result = result.substring(7);
-          console.log("result after substring is "+ result);
-          result = result.replace(/ /g, "+");
-          console.log("result is now "+ result);
-          var win=window.open(url+result, '_blank');
-          win.focus();
+        switch (result.split(" ")[0]){
+          case "search":
+            result = result.substring(7);
+            console.log("result after substring is "+ result);
+            result = result.replace(/ /g, "+");
+            console.log("result is now "+ result);
+            var win=window.open(url+result, '_blank');
+            win.focus();
+            //window.location = url+result;
+            break;
+          case "back":
+            history.back();
+            break;
+          case "forward":
+            history.forward();
+            break;
         }
       }
     }
 
   };
   recognition.onend = function() {
-      console.log('speech recognition stopped!');
+      console.log('restarting speech recognition');
+      recognition.start();
   };
-  var speech_int = setIntereval(recognition.start(), 60000);
+  recognition.start();
 });
