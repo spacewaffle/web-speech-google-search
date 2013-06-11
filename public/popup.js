@@ -1,7 +1,8 @@
 var results = [];
 var result;
 var url = "http://www.google.com/search?q=";
-document.addEventListener('DOMContentLoaded', function () {
+window.onload = function() {
+
   try {
       recognition = new webkitSpeechRecognition();
   } catch(e) {
@@ -58,4 +59,4 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log('restarting speech recognition');
   };
   recognition.start();
-});
+};
