@@ -1,25 +1,24 @@
 $(document).ready(function() {
   try {
-      window.recognition = new webkitSpeechRecognition();
+      recognition = new webkitSpeechRecognition();
   } catch(e) {
-      window.recognition = Object;
+      recognition = Object;
   }
-  window.recognition.continuous = true;
-  window.recognition.lang = 'en';
+  recognition.continuous = true;
+  recognition.lang = 'en';
   var startRecognition = function() {
     console.log('starting speech recognition...');
-    window.recognition.start();
+    recognition.start();
   };
 
-  window.recognition.onresult = function (event) {
+  recognition.onresult = function (event) {
     for (var i = event.resultIndex; i < event.results.length; ++i) {
       if (event.results[i].isFinal) {
-        console.log(event.results[i]);
+        console.log("result is " + event.results[i]);
       }
     }
-    
   };
-  window.recognition.onend = function() {
+  recognition.onend = function() {
       console.log('speech recognition stopped!');
   };
   
