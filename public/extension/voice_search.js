@@ -72,6 +72,11 @@ recognition.onresult = function (event) {
 
 };
 
+recognition.onend = function() {
+  console.log('speech service disconnected (will restart)');
+  recognition.start();
+};
+
 chrome.extension.onMessage.addListener(
   function(request, sender, sendResponse) {
     console.log(sender.tab ?

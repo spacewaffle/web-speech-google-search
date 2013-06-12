@@ -12,15 +12,15 @@ chrome.tabs.onActivated.addListener(function(info) {
       
       console.log('sending abort');
       //eventually should check if tab is the activated tab before aborting
-      chrome.tabs.sendMessage(tabs[i].id, {greeting: "abort"}, function(response) {
-      });
+      //chrome.tabs.sendMessage(tabs[i].id, {greeting: "abort"}, function(response) {
+      //});
     }
   });
 
   //set recognition start for current tab
   chrome.tabs.get(info.tabId, function(tab) {
-    // console.log('sending start');
-    // console.log('tab is ' + tab);
+    console.log('sending start');
+    //console.log('tab is ' + tab);
     //send this tab a message to send a start message
     chrome.tabs.sendMessage(tab.id, {greeting: "start"}, function(response) {
     });
