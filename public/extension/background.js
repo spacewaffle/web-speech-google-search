@@ -10,7 +10,7 @@ chrome.tabs.onActivated.addListener(function(info) {
     console.log('starting query');
     for (var i = tabs.length - 1; i >= 0; i--) {
       
-      console.log('sending abort to ' + tabs[i].title);
+      console.log('sending abort to ' + tabs[i].title + " id: " + tabs[i].id);
       //eventually should check if tab is the activated tab before aborting
       chrome.tabs.sendMessage(tabs[i].id, {greeting: "abort"}, function(response) {
       });
@@ -19,7 +19,7 @@ chrome.tabs.onActivated.addListener(function(info) {
 
   //set recognition start for current tab
   chrome.tabs.get(info.tabId, function(tab) {
-    console.log('sending start to ' + tab.title + tab.id);
+    console.log('sending start to ' + tab.title + " id: " + tab.id);
     //console.log('tab is ' + tab);
     //send this tab a message to send a start message
     chrome.tabs.sendMessage(tab.id, {greeting: "start"}, function(response) {
