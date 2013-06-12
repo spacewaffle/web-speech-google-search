@@ -14,7 +14,6 @@ try {
 recognition.continuous = true;
 
 function startRecognition(){
-  console.log('starting voice recognition');
   recognition.start();
 }
 
@@ -96,6 +95,7 @@ chrome.extension.onMessage.addListener(
         console.log('speech service disconnected (will restart)');
         startRecognition();
       };
+      console.log('starting voice recognition');
       startRecognition();
     }
     //if request is abort, unloop onend and abort the connection
@@ -106,4 +106,5 @@ chrome.extension.onMessage.addListener(
       recognition.abort();
     }
 });
+console.log('starting voice recognition');
 startRecognition();
