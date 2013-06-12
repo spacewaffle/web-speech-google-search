@@ -74,6 +74,7 @@ recognition.onresult = function (event) {
 
 var port = chrome.runtime.connect({name: "commands"});
 port.onMessage.addListener(function(msg) {
+  console.log('RECIEVED MESSAGE: ' + msg.initiate);
   if (msg.initiate == "start"){
     recognition.onend = function() {
       console.log('speech service disconnected (will restart)');
@@ -82,7 +83,8 @@ port.onMessage.addListener(function(msg) {
     console.log('starting speech navigation');
     recognition.start();
   }
-  else if (msg.question == "abort"){
+  else if (msg.initiate == "abort"){
+    console.log("ran abort");
     recognition.onend = function() {
       console.log('speech service disconnected');
     };
