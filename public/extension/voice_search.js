@@ -13,6 +13,11 @@ try {
 }
 recognition.continuous = true;
 
+function startRecognition(){
+  console.log('starting voice recognition');
+  recognition.start();
+}
+
 recognition.onresult = function (event) {
 
   function parseResult(input){
@@ -73,8 +78,8 @@ recognition.onresult = function (event) {
 };
 
 recognition.onend = function() {
-  console.log('speech service disconnected (will restart)');
-  recognition.start();
+  console.log('speech service disconnected (will restart without listener)');
+  startRecognition();
 };
 
 chrome.extension.onMessage.addListener(
@@ -89,17 +94,16 @@ chrome.extension.onMessage.addListener(
     if (request.greeting == "start"){
       recognition.onend = function() {
         console.log('speech service disconnected (will restart)');
-        recognition.start();
+        startRecognition();
       };
-      console.log('starting speech navigation');
-      recognition.start();
+      startRecognition();
     }
     //if request is abort, unloop onend and abort the connection
     else if(request.greeting == "abort"){
       recognition.onend = function() {
-        console.log('speech service disconnected');
+        console.log('speech service disconnected (ABORT)');
       };
       recognition.abort();
     }
 });
-recognition.start();
+startRecognition();
