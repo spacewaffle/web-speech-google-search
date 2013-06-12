@@ -72,27 +72,45 @@ recognition.onresult = function (event) {
 
 };
 
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    console.log(sender.tab ?
-                "from a content script:" + sender.tab.url :
-                "from the extension");
-
-    //if request is start, spin up recognition and set onend to loop
-    if (request.greeting == "start"){
-      recognition.onend = function() {
-        console.log('speech service disconnected (will restart)');
-        recognition.start();
-      };
-      console.log('starting speech navigation');
+var port = chrome.runtime.connect({name: "commands"});
+port.onMessage.addListener(function(msg) {
+  if (msg.initiate == "start"){
+    recognition.onend = function() {
+      console.log('speech service disconnected (will restart)');
       recognition.start();
-      sendResponse({farewell: "executed start"});
-    }
-    //if request is abort, unloop onend and abort the connection
-    else if(request.greeting == "abort"){
-      recognition.onend = function() {
-        console.log('speech service disconnected');
-      };
-      recognition.abort();
-    }
+    };
+    console.log('starting speech navigation');
+    recognition.start();
+  }
+  else if (msg.question == "abort"){
+    recognition.onend = function() {
+      console.log('speech service disconnected');
+    };
+    recognition.abort();
+  }
 });
+
+// chrome.runtime.onMessage.addListener(
+//   function(request, sender, sendResponse) {
+//     console.log(sender.tab ?
+//                 "from a content script:" + sender.tab.url :
+//                 "from the extension");
+
+//     //if request is start, spin up recognition and set onend to loop
+//     if (request.greeting == "start"){
+//       recognition.onend = function() {
+//         console.log('speech service disconnected (will restart)');
+//         recognition.start();
+//       };
+//       console.log('starting speech navigation');
+//       recognition.start();
+//       sendResponse({farewell: "executed start"});
+//     }
+//     //if request is abort, unloop onend and abort the connection
+//     else if(request.greeting == "abort"){
+//       recognition.onend = function() {
+//         console.log('speech service disconnected');
+//       };
+//       recognition.abort();
+//     }
+// });
