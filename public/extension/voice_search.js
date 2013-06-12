@@ -76,12 +76,13 @@ var port = chrome.runtime.connect({name: "commands"});
 port.onMessage.addListener(function(msg) {
   console.log('RECIEVED MESSAGE: ' + msg.initiate);
   if (msg.initiate == "start"){
+    console.log('starting speech navigation');
+    recognition.start();
     recognition.onend = function() {
       console.log('speech service disconnected (will restart)');
       recognition.start();
     };
-    console.log('starting speech navigation');
-    recognition.start();
+
   }
   else if (msg.initiate == "abort"){
     console.log("ran abort");
