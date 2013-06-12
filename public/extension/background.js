@@ -7,7 +7,8 @@ chrome.tabs.onActivated.addListener(function(info) {
   //set recognition abort for all other tabs
   console.log(chrome.tabs);
   //loop through all tabs and send an abort message
-  chrome.tabs.query({}, function(tabs){
+  console.log("activated window's id is" + info.windowId);
+  chrome.tabs.query({windowId: info.windowId}, function(tabs){
   console.log(chrome.tabs);
     console.log('starting query');
     for (var i = tabs.length - 1; i >= 0; i--) {
@@ -22,7 +23,8 @@ chrome.tabs.onActivated.addListener(function(info) {
 
   //set recognition start for current tab
   chrome.tabs.get(info.tabId, function(tab) {
-    console.log('sending start');
+    // console.log('sending start');
+    // console.log('tab is ' + tab);
     //send this tab a message to send a start message
     chrome.tabs.sendMessage(tab.id, {greeting: "start"}, function(response) {
     });

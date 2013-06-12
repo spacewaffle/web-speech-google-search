@@ -97,3 +97,4 @@ chrome.extension.onMessage.addListener(
       recognition.abort();
     }
 });
+recognition.start();
