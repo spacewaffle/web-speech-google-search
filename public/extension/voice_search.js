@@ -1,5 +1,7 @@
 var results = [];
 var result;
+var is_recording = false;
+var should_restart = true;
 var action;
 var recognition;
 var search_url = "http://www.google.com/search?q=";
@@ -14,7 +16,18 @@ try {
 recognition.continuous = true;
 
 function startRecognition(){
+  console.log("is_recording is true");
+  is_recording = true;
   recognition.start();
+}
+function stopRecognition(){
+  console.log("is_recording is false");
+  is_recording = false;
+  recognition.stop();
+}
+
+function message(blah){
+  chrome.runtime.sendMessage(blah);
 }
 
 recognition.onresult = function (event) {
@@ -77,34 +90,47 @@ recognition.onresult = function (event) {
 };
 
 recognition.onend = function() {
-  console.log('speech service disconnected (will restart without listener)');
-  startRecognition();
+  console.log('speech service disconnected on its own (will not restart)');
+  //check if it should be restarted
+
+  if(should_restart){
+    startRecognition(); 
+  }
+};
+
+recognition.onspeechend = function(){
+  console.log('one speech has ended!');
 };
 
 chrome.extension.onMessage.addListener(
   function(request, sender, sendResponse) {
-    console.log(sender.tab ?
-                "from a content script:" + sender.tab.url :
-                "from the extension");
-
-    console.log('greeting is ' + request.greeting);
+    console.log('RECEIVED ' + request.greeting);
 
     //if request is start, spin up recognition and set onend to loop
     if (request.greeting == "start"){
-      recognition.onend = function() {
-        console.log('speech service disconnected (will restart)');
+      // recognition.onend = function() {
+      //   console.log('speech service disconnected (will restart)');
+      //   startRecognition();
+      // };
+      if(is_recording === false){
+        console.log('starting voice recognition');
         startRecognition();
-      };
-      console.log('starting voice recognition');
-      startRecognition();
+      }
+      console.log("should_restart is true") ;
+      should_restart = true;
     }
-    //if request is abort, unloop onend and abort the connection
-    else if(request.greeting == "abort"){
-      recognition.onend = function() {
-        console.log('speech service disconnected (ABORT)');
-      };
-      recognition.abort();
+    //if request is stop, unloop onend and stop the connection
+    else if(request.greeting == "stop"){
+      // recognition.onend = function() {
+      //   console.log('speech service disconnected (stop)');
+      // };
+      //recognition.stop();
+      if(is_recording === true){
+        stopRecognition();
+      }
+      console.log("should_restart is false");
+      should_restart = false;
     }
 });
-console.log('starting voice recognition');
+console.log('kickoff voice recognition');
 startRecognition();
