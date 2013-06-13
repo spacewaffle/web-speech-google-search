@@ -45,11 +45,9 @@ var updateTabs = function(tab){
       console.log('sending start to ' + tab.title + " id: " + tab.id);
       //console.log('tab is ' + tab);
       //send this tab a message to send a start message
-      // if(tab.id){
-        chrome.tabs.sendMessage(tab.id, {greeting: "start"}, function(response) {
-          console.log(response);
-        });
-      // }
+      chrome.tabs.sendMessage(tab.id, {greeting: "start"}, function(response) {
+        console.log(response);
+      });
     });
   }
 };
