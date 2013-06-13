@@ -14,16 +14,23 @@ try {
     recognition = Object;
 }
 recognition.continuous = true;
-
+console.log("recognition is...");
+console.log(recognition);
 function startRecognition(){
-  console.log("is_recording is true");
+  console.log('starting recognition');
+  console.log("is_recording " + is_recording + " to true");
   is_recording = true;
   recognition.start();
+  console.log("recognition is...");
+  console.log(recognition);
 }
 function stopRecognition(){
-  console.log("is_recording is false");
+  console.log('stopping recognition');
+  console.log("is_recording " + is_recording + " to false");
   is_recording = false;
   recognition.stop();
+  console.log("recognition is...");
+  console.log(recognition);
 }
 
 function message(blah){
@@ -116,7 +123,7 @@ chrome.extension.onMessage.addListener(
         console.log('starting voice recognition');
         startRecognition();
       }
-      console.log("should_restart is true") ;
+      console.log("should_restart " + should_restart + " to true");
       should_restart = true;
     }
     //if request is stop, unloop onend and stop the connection
@@ -128,7 +135,7 @@ chrome.extension.onMessage.addListener(
       if(is_recording === true){
         stopRecognition();
       }
-      console.log("should_restart is false");
+      console.log("should_restart " + should_restart + " to false");
       should_restart = false;
     }
 });

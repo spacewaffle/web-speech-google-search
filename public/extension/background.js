@@ -1,11 +1,29 @@
 //setup event listeners for tab switching
 console.log('running background.js');
+var is_sending;
 
 //when switching tabs, move speech recognition to the active tab
+chrome.tabs.onActivated.addListener(function(tab) {
+  chrome.tabs.get(tab.tabId, function(tab){
+    console.log('tab activated');
+    updateTabs(tab);
+  });
+});
+
+
+//when a tab is updated via url switch, update recognition to that tab
 chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
-  console.log('a tab has been activated');
+  console.log('tab updated');
+  console.log(info);
+  if(info.status === "complete"){
+    updateTabs(tab);
+  }
+});
+
+var updateTabs = function(tab){
   //set recognition stop for all other tabs
   //loop through all tabs and send an stop message
+  console.log(tab);
   console.log('tab url is ' + tab.url);
   if(tab.url.substring(0,15) != "chrome-devtools"){
     //stop speech recognition in all tabs
@@ -13,7 +31,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
       console.log('starting query');
       for (var i = tabs.length - 1; i >= 0; i--) {
         if(tabs[i].url.substring(0,6) != "chrome"){
-          if(tabs[i].id != tabId){
+          if(tabs[i].id != tab.id){
             console.log('sending stop to ' + tabs[i].title + " id: " + tabs[i].id);
             //eventually should check if tab is the activated tab before stoping
             chrome.tabs.sendMessage(tabs[i].id, {greeting: "stop"}, function(response) {
@@ -27,20 +45,17 @@ chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
       //console.log('tab is ' + tab);
       //send this tab a message to send a start message
       // if(tab.id){
-        chrome.tabs.sendMessage(tabId, {greeting: "start"}, function(response) {
+        chrome.tabs.sendMessage(tab.id, {greeting: "start"}, function(response) {
         });
       // }
     });
   }
-});
-
-
-//when a tab is updated,
+};
 
 
 //utility functions
 
-getTabs = function(){
+var getTabs = function(){
   chrome.tabs.query({},function(tabs){console.log(tabs);});
 };
 
