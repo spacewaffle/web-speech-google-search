@@ -6,7 +6,7 @@ var is_sending;
 chrome.tabs.onActivated.addListener(function(tab) {
   chrome.tabs.get(tab.tabId, function(tab){
     console.log('tab activated');
-    updateTabs(tab);
+    updateTabs(tab, "activated");
   });
 });
 
@@ -16,11 +16,11 @@ chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
   console.log('tab updated');
   console.log(info);
   if(info.status === "complete"){
-    updateTabs(tab);
+    updateTabs(tab, "updated");
   }
 });
 
-var updateTabs = function(tab){
+var updateTabs = function(tab, type){
   //set recognition stop for all other tabs
   //loop through all tabs and send an stop message
   console.log(tab);
@@ -45,9 +45,19 @@ var updateTabs = function(tab){
       console.log('sending start to ' + tab.title + " id: " + tab.id);
       //console.log('tab is ' + tab);
       //send this tab a message to send a start message
-      chrome.tabs.sendMessage(tab.id, {greeting: "start"}, function(response) {
-        console.log(response);
-      });
+      window.setTimeout(function(){
+        chrome.tabs.sendMessage(tab.id, {greeting: "start"});
+      }, 1000);
+      // window.setTimeout(function(){
+      //   chrome.tabs.sendMessage(tab.id, {greeting: "stop"});
+      //   window.setTimeout(function(){
+      //     chrome.tabs.sendMessage(tab.id, {greeting: "start"});
+      //   }, 1000);
+      // }, 1000);
+
+
+
+      
     });
   }
 };
