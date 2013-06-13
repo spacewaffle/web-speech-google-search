@@ -11,7 +11,8 @@ console.log('loading voice search js');
 try {
     recognition = new webkitSpeechRecognition();
 } catch(e) {
-    recognition = Object;
+  console.log("recognition wasn't set properly");
+  recognition = Object;
 }
 recognition.continuous = true;
 console.log("recognition is...");
@@ -20,6 +21,7 @@ function startRecognition(){
   console.log('starting recognition');
   console.log("is_recording " + is_recording + " to true");
   is_recording = true;
+  recognition = new webkitSpeechRecognition();
   recognition.start();
   console.log("recognition is...");
   console.log(recognition);
@@ -29,6 +31,7 @@ function stopRecognition(){
   console.log("is_recording " + is_recording + " to false");
   is_recording = false;
   recognition.stop();
+  recognition = false;
   console.log("recognition is...");
   console.log(recognition);
 }
@@ -101,7 +104,7 @@ recognition.onend = function() {
   //check if it should be restarted
 
   if(should_restart){
-    startRecognition(); 
+    startRecognition();
   }
 };
 
@@ -139,5 +142,5 @@ chrome.extension.onMessage.addListener(
       should_restart = false;
     }
 });
-console.log('kickoff voice recognition');
-startRecognition();
+// console.log('kickoff voice recognition');
+// startRecognition();

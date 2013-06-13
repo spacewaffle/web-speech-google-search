@@ -31,12 +31,12 @@ var updateTabs = function(tab){
       console.log('starting query');
       for (var i = tabs.length - 1; i >= 0; i--) {
         if(tabs[i].url.substring(0,6) != "chrome"){
-          if(tabs[i].id != tab.id){
+          //if(tabs[i].id != tab.id){
             console.log('sending stop to ' + tabs[i].title + " id: " + tabs[i].id);
             //eventually should check if tab is the activated tab before stoping
             chrome.tabs.sendMessage(tabs[i].id, {greeting: "stop"}, function(response) {
             });
-          }
+          //}
         }
       }
 
