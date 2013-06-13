@@ -124,7 +124,6 @@ chrome.extension.onMessage.addListener(
       if(is_recording === false){
         startRecognition();
       }
-      sendResponse({farewell: "started"});
     }
     //if request is stop, unloop onend and stop the connection
     else if(request.greeting == "stop"){
@@ -135,7 +134,6 @@ chrome.extension.onMessage.addListener(
       if(is_recording === true){
         stopRecognition();
       }
-      sendResponse({farewell: "stopped"});
     }
 });
 // console.log('kickoff voice recognition');

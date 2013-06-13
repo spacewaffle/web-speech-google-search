@@ -34,9 +34,7 @@ var updateTabs = function(tab, type){
           //if(tabs[i].id != tab.id){
             console.log('sending stop to ' + tabs[i].title + " id: " + tabs[i].id);
             //eventually should check if tab is the activated tab before stoping
-            chrome.tabs.sendMessage(tabs[i].id, {greeting: "stop"}, function(response) {
-              console.log(response);
-            });
+            chrome.tabs.sendMessage(tabs[i].id, {greeting: "stop"});
           //}
         }
       }
@@ -47,17 +45,8 @@ var updateTabs = function(tab, type){
       //send this tab a message to send a start message
       window.setTimeout(function(){
         chrome.tabs.sendMessage(tab.id, {greeting: "start"});
-      }, 1000);
-      // window.setTimeout(function(){
-      //   chrome.tabs.sendMessage(tab.id, {greeting: "stop"});
-      //   window.setTimeout(function(){
-      //     chrome.tabs.sendMessage(tab.id, {greeting: "start"});
-      //   }, 1000);
-      // }, 1000);
+      }, 200);
 
-
-
-      
     });
   }
 };
