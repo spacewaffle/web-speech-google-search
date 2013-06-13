@@ -26,6 +26,8 @@ function startRecognition(){
   recognition.start();
   console.log("recognition is...");
   console.log(recognition);
+  console.log("should_restart " + should_restart + " to true");
+  should_restart = true;
 
   recognition.onresult = function (event) {
 
@@ -105,6 +107,8 @@ function stopRecognition(){
   recognition = false;
   console.log("recognition is...");
   console.log(recognition);
+  console.log("should_restart " + should_restart + " to false");
+  should_restart = false;
 }
 
 chrome.extension.onMessage.addListener(
@@ -120,8 +124,6 @@ chrome.extension.onMessage.addListener(
       if(is_recording === false){
         startRecognition();
       }
-      console.log("should_restart " + should_restart + " to true");
-      should_restart = true;
       sendResponse({farewell: "started"});
     }
     //if request is stop, unloop onend and stop the connection
@@ -133,8 +135,6 @@ chrome.extension.onMessage.addListener(
       if(is_recording === true){
         stopRecognition();
       }
-      console.log("should_restart " + should_restart + " to false");
-      should_restart = false;
       sendResponse({farewell: "stopped"});
     }
 });
