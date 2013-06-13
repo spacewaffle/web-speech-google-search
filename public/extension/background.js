@@ -35,6 +35,7 @@ var updateTabs = function(tab){
             console.log('sending stop to ' + tabs[i].title + " id: " + tabs[i].id);
             //eventually should check if tab is the activated tab before stoping
             chrome.tabs.sendMessage(tabs[i].id, {greeting: "stop"}, function(response) {
+              console.log(response);
             });
           //}
         }
@@ -46,6 +47,7 @@ var updateTabs = function(tab){
       //send this tab a message to send a start message
       // if(tab.id){
         chrome.tabs.sendMessage(tab.id, {greeting: "start"}, function(response) {
+          console.log(response);
         });
       // }
     });

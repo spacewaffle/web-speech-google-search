@@ -122,6 +122,7 @@ chrome.extension.onMessage.addListener(
       }
       console.log("should_restart " + should_restart + " to true");
       should_restart = true;
+      sendResponse({farewell: "started"});
     }
     //if request is stop, unloop onend and stop the connection
     else if(request.greeting == "stop"){
@@ -134,6 +135,7 @@ chrome.extension.onMessage.addListener(
       }
       console.log("should_restart " + should_restart + " to false");
       should_restart = false;
+      sendResponse({farewell: "stopped"});
     }
 });
 // console.log('kickoff voice recognition');
