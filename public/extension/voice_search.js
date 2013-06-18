@@ -103,7 +103,7 @@ function stopRecognition(){
   console.log('stopping recognition');
   console.log("is_recording " + is_recording + " to false");
   is_recording = false;
-  recognition.stop();
+  recognition.abort();
   recognition = false;
   console.log("recognition is...");
   console.log(recognition);
