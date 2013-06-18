@@ -28,6 +28,7 @@ var updateTabs = function(tab, type){
   if(tab.url.substring(0,15) != "chrome-devtools"){
 
     //set restart flag for the proper tab
+    console.log('sending start to ' + tab.title + " id: " + tab.id);
     chrome.tabs.sendMessage(tab.id, {greeting: "start"});
 
     //execute speech recognition in all tabs
@@ -44,7 +45,6 @@ var updateTabs = function(tab, type){
       }
 
       //set recognition start for current tab
-      console.log('sending start to ' + tab.title + " id: " + tab.id);
       //send this tab a message to send a start message
       //not sure if settimeout is necessary
       // window.setTimeout(function(){
