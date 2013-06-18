@@ -21,20 +21,24 @@ chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
 });
 
 var updateTabs = function(tab, type){
-  //set recognition stop for all other tabs
-  //loop through all tabs and send an stop message
+  //set recognition execute for all other tabs
+  //loop through all tabs and send an execute message
   console.log(tab);
   console.log('tab url is ' + tab.url);
   if(tab.url.substring(0,15) != "chrome-devtools"){
-    //stop speech recognition in all tabs
+
+    //set restart flag for the proper tab
+    chrome.tabs.sendMessage(tab.id, {greeting: "start"});
+
+    //execute speech recognition in all tabs
     chrome.tabs.query({}, function(tabs){
       console.log('starting query');
       for (var i = tabs.length - 1; i >= 0; i--) {
         if(tabs[i].url.substring(0,6) != "chrome"){
           //if(tabs[i].id != tab.id){
-            console.log('sending stop to ' + tabs[i].title + " id: " + tabs[i].id);
-            //eventually should check if tab is the activated tab before stoping
-            chrome.tabs.sendMessage(tabs[i].id, {greeting: "stop"});
+            console.log('sending execute to ' + tabs[i].title + " id: " + tabs[i].id);
+            //eventually should check if tab is the activated tab before executeing
+            chrome.tabs.sendMessage(tabs[i].id, {greeting: "execute"});
           //}
         }
       }
@@ -44,7 +48,6 @@ var updateTabs = function(tab, type){
       //send this tab a message to send a start message
       //not sure if settimeout is necessary
       // window.setTimeout(function(){
-        chrome.tabs.sendMessage(tab.id, {greeting: "start"});
       // }, 200);
 
     });

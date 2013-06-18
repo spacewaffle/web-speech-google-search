@@ -1,9 +1,10 @@
 var results = [];
 var result;
 var is_recording = false;
-var should_restart = true;
+var should_restart = false;
+var signaled_to_start = false;
 var action;
-var recognition;
+var recognition = false;
 var search_url = "http://www.google.com/search?q=";
 var wiki_url = "http://wikipedia.org/w/index.php?search=";
 
@@ -18,29 +19,23 @@ console.log('loading voice search js');
 // console.log("recognition is...");
 // console.log(recognition);
 
-function stopRecognition(){
-  console.log('stopping recognition');
-  console.log("is_recording " + is_recording + " to false");
-  is_recording = false;
-  recognition.stop();
-  recognition = false;
-  console.log("recognition is...");
-  console.log(recognition);
-  console.log("should_restart " + should_restart + " to false");
-  should_restart = false;
-}
+// function startRecognition(){
+//   should_restart = true;
+// }
 
 function startRecognition(){
-  console.log('starting recognition');
-  console.log("is_recording " + is_recording + " to true");
-  is_recording = true;
+  //this if is duplicated in execute but is necessary since startRecognition loops itself
+  if(recognition){
+    recognition.abort();
+    recognition = false;
+  }
+  should_restart = true;
   recognition = new webkitSpeechRecognition();
   recognition.continuous = true;
   recognition.start();
   console.log("recognition is...");
   console.log(recognition);
   console.log("should_restart " + should_restart + " to true");
-  should_restart = true;
 
   recognition.onresult = function (event) {
 
@@ -106,10 +101,31 @@ function startRecognition(){
     //check if it should be restarted
 
     if(should_restart){
-      stopRecognition();
       startRecognition();
     }
   };
+}
+
+function executeRecognition(){
+  console.log('stopping recognition');
+  console.log("is_recording " + is_recording + " to false");
+  is_recording = false;
+  if(recognition){
+    recognition.abort();
+    recognition = false;
+  }
+  
+  if(signaled_to_start == true){
+    console.log('starting recognition');
+    console.log("is_recording " + is_recording + " to true");
+    is_recording = true;
+    startRecognition();
+  }
+  else{
+    should_restart = false;
+  }
+  //set signal to start as false after the first start run
+  signaled_to_start = false;
 }
 
 chrome.extension.onMessage.addListener(
@@ -122,19 +138,17 @@ chrome.extension.onMessage.addListener(
       //   console.log('speech service disconnected (will restart)');
       //   startRecognition();
       // };
-      if(is_recording === false){
-        startRecognition();
-      }
+      signaled_to_start = true;
     }
     //if request is stop, unloop onend and stop the connection
-    else if(request.greeting == "stop"){
+    else if(request.greeting == "execute"){
       // recognition.onend = function() {
       //   console.log('speech service disconnected (stop)');
       // };
       //recognition.stop();
-      if(is_recording === true){
-        stopRecognition();
-      }
+      // if(is_recording === true){
+        executeRecognition();
+      // }
     }
 });
 // console.log('kickoff voice recognition');
