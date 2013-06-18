@@ -17,6 +17,19 @@ console.log('loading voice search js');
 
 // console.log("recognition is...");
 // console.log(recognition);
+
+function stopRecognition(){
+  console.log('stopping recognition');
+  console.log("is_recording " + is_recording + " to false");
+  is_recording = false;
+  recognition.stop();
+  recognition = false;
+  console.log("recognition is...");
+  console.log(recognition);
+  console.log("should_restart " + should_restart + " to false");
+  should_restart = false;
+}
+
 function startRecognition(){
   console.log('starting recognition');
   console.log("is_recording " + is_recording + " to true");
@@ -97,18 +110,6 @@ function startRecognition(){
       startRecognition();
     }
   };
-}
-
-function stopRecognition(){
-  console.log('stopping recognition');
-  console.log("is_recording " + is_recording + " to false");
-  is_recording = false;
-  recognition.stop();
-  recognition = false;
-  console.log("recognition is...");
-  console.log(recognition);
-  console.log("should_restart " + should_restart + " to false");
-  should_restart = false;
 }
 
 chrome.extension.onMessage.addListener(
