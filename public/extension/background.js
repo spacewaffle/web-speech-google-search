@@ -41,11 +41,11 @@ var updateTabs = function(tab, type){
 
       //set recognition start for current tab
       console.log('sending start to ' + tab.title + " id: " + tab.id);
-      //console.log('tab is ' + tab);
       //send this tab a message to send a start message
-      window.setTimeout(function(){
+      //not sure if settimeout is necessary
+      // window.setTimeout(function(){
         chrome.tabs.sendMessage(tab.id, {greeting: "start"});
-      }, 200);
+      // }, 200);
 
     });
   }
