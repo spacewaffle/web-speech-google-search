@@ -4,8 +4,6 @@ var is_recording = false;
 var should_restart = true;
 var action;
 var recognition;
-var search_url = "http://www.google.com/search?q=";
-var wiki_url = "http://wikipedia.org/w/index.php?search=";
 
 console.log('loading voice search js');
 // try {
@@ -63,26 +61,7 @@ function startRecognition(){
         result = parseResult(result);
         console.log('action is now ' + action);
         console.log('result is now ' + result);
-        switch (action){
-          case "search":
-            window.location = search_url+result;
-            break;
-          case "back":
-            //history.back doesn't do a full reload so no js :/
-            //window.location.href = document.referrer;
-            history.go(-1);
-            break;
-          case "forward":
-            history.forward();
-            break;
-          case "go to":
-          case "goto":
-            window.location = search_url+result+"&btnI";
-            break;
-          case "wiki":
-            window.location = wiki_url+result;
-            break;
-        }
+        chrome.extension.sendMessage({greeting: "action", action: action, result: result});
       }
     }
 
@@ -111,30 +90,31 @@ function stopRecognition(){
   should_restart = false;
 }
 
-chrome.extension.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    console.log('RECEIVED ' + request.greeting);
+// chrome.extension.onMessage.addListener(
+//   function(request, sender, sendResponse) {
+//     console.log('RECEIVED ' + request.greeting);
 
-    //if request is start, spin up recognition and set onend to loop
-    if (request.greeting == "start"){
-      // recognition.onend = function() {
-      //   console.log('speech service disconnected (will restart)');
-      //   startRecognition();
-      // };
-      if(is_recording === false){
-        startRecognition();
-      }
-    }
-    //if request is stop, unloop onend and stop the connection
-    else if(request.greeting == "stop"){
-      // recognition.onend = function() {
-      //   console.log('speech service disconnected (stop)');
-      // };
-      //recognition.stop();
-      if(is_recording === true){
-        stopRecognition();
-      }
-    }
-});
+//     //if request is start, spin up recognition and set onend to loop
+//     if (request.greeting == "start"){
+//       // recognition.onend = function() {
+//       //   console.log('speech service disconnected (will restart)');
+//       //   startRecognition();
+//       // };
+//       if(is_recording === false){
+//         startRecognition();
+//       }
+//     }
+//     //if request is stop, unloop onend and stop the connection
+//     else if(request.greeting == "stop"){
+//       // recognition.onend = function() {
+//       //   console.log('speech service disconnected (stop)');
+//       // };
+//       //recognition.stop();
+//       if(is_recording === true){
+//         stopRecognition();
+//       }
+//     }
+// });
+startRecognition();
 // console.log('kickoff voice recognition');
 // startRecognition();

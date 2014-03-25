@@ -7,6 +7,14 @@
   "permissions": [
     "tabs"
   ],
+    "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["receiver.js"],
+      "run_at": "document_start"
+    }
+  ],
+
   "background": {
     "scripts": ["background.js"]
   },

@@ -1,75 +1,89 @@
-// //setup event listeners for tab switching
-// console.log('running background.js');
-// var is_sending;
+//setup event listeners for tab switching
+console.log('running background.js');
+var is_sending, tab_id;
 
-// //when switching tabs, move speech recognition to the active tab
-// chrome.tabs.onActivated.addListener(function(tab) {
-//   chrome.tabs.get(tab.tabId, function(tab){
-//     console.log('tab activated');
-//     updateTabs(tab, "activated");
-//   });
-// });
-
-
-// //when a tab is updated via url switch, update recognition to that tab
-// chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
-//   console.log('tab updated');
-//   console.log(info);
-//   if(info.status === "complete"){
-//     updateTabs(tab, "updated");
-//   }
-// });
-
-// var updateTabs = function(tab, type){
-//   //set recognition stop for all other tabs
-//   //loop through all tabs and send an stop message
-//   console.log(tab);
-//   console.log('tab url is ' + tab.url);
-//   if(tab.url.substring(0,15) != "chrome-devtools"){
-//     //stop speech recognition in all tabs
-//     chrome.tabs.query({}, function(tabs){
-//       console.log('starting query');
-//       for (var i = tabs.length - 1; i >= 0; i--) {
-//         if(tabs[i].url.substring(0,6) != "chrome"){
-//           //if(tabs[i].id != tab.id){
-//             console.log('sending stop to ' + tabs[i].title + " id: " + tabs[i].id);
-//             //eventually should check if tab is the activated tab before stoping
-//             if(tabs[i].id != tab.id){
-//               chrome.tabs.sendMessage(tabs[i].id, {greeting: "stop"});
-//             }
-//           //}
-//         }
-//       }
-
-//       //set recognition start for current tab
-//       console.log('sending start to ' + tab.title + " id: " + tab.id);
-//       //send this tab a message to send a start message
-//       //not sure if settimeout is necessary
-//       // window.setTimeout(function(){
-//         chrome.tabs.sendMessage(tab.id, {greeting: "start"});
-//       // }, 200);
-
-//     });
-//   }
-// };
+//when switching tabs, move speech recognition to the active tab
+chrome.tabs.onActivated.addListener(function(tab) {
+  chrome.tabs.get(tab.tabId, function(tab){
+    console.log('tab activated');
+    updateTabs(tab, "activated");
+  });
+});
 
 
-// //utility functions
+//when a tab is updated via url switch, update recognition to that tab
+chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
+  console.log('tab updated');
+  console.log(info);
+  if(info.status === "complete"){
+    updateTabs(tab, "updated");
+  }
+});
 
-// var getTabs = function(){
-//   chrome.tabs.query({},function(tabs){console.log(tabs);});
-// };
+var updateTabs = function(tab, type){
+  if(tab.url.substring(0,15) != "chrome-devtools"){
+    //set the tab_id of the current tab
+    tab_id = tab.id;
+  }
+};
+
+
+//event listeners
 
 chrome.browserAction.onClicked.addListener(function() {
   chrome.windows.getCurrent(function(window) {
     chrome.windows.create({
-        url: chrome.extension.getURL("popup.html")
-      , width: 300
-      , height: 200
-      , left: window.left + window.width - 145
-      , top: window.top
-      , focused: true
-      , type: "popup"
+        url: chrome.extension.getURL("popup.html"),
+        width: 300,
+        height: 200,
+        left: window.left + window.width - 145,
+        top: window.top,
+        focused: true,
+        type: "popup"
     });
   });
+});
+
+chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
+  if( request.greeting === "action" ){
+    chrome.tabs.sendMessage(tab_id, {greeting: "do_action", action: request.action, result: request.result});
+
+    var action = request.action;
+    var result = request.result;
+    switch(action){
+      case "new":
+        if(result === "tab"){
+          chrome.tabs.create({url: "https://google.com"});
+        }
+        break;
+      case "utah":
+        chrome.tabs.create({url: "https://google.com"});
+        break;
+      case "close":
+        if(result === "tab"){
+          chrome.tabs.remove(tab_id);
+        }
+        break;
+      case "next":
+        chrome.tabs.query({}, function(response){
+          for (var i = response.length - 1; i >= 0; i--) {
+            if(response[i].id == tab_id){
+              chrome.tabs.update(response[i+1].id, {selected: true});
+              break;
+            }
+          }
+        });
+      break;
+      case "previous":
+        chrome.tabs.query({}, function(response){
+          for (var i = response.length - 1; i >= 0; i--) {
+            if(response[i].id == tab_id){
+              chrome.tabs.update(response[i-1].id, {selected: true});
+              break;
+            }
+          }
+        });
+        break;
+    }
+  }
 });
