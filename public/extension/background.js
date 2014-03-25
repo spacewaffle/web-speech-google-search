@@ -46,8 +46,14 @@ chrome.browserAction.onClicked.addListener(function() {
 
 chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
   if( request.greeting === "action" ){
-    chrome.tabs.sendMessage(tab_id, {greeting: "do_action", action: request.action, result: request.result});
-
+    chrome.tabs.sendMessage(tab_id, {greeting: "do_action",
+                                      action: request.action,
+                                      result: request.result,
+                                      last_action: request.last_action,
+                                      last_resupt: request.last_result
+                                    });
+    console.log('last_action is ' + request.last_action);
+    console.log('last_result is ' + request.last_result);
     var action = request.action;
     var result = request.result;
     switch(action){

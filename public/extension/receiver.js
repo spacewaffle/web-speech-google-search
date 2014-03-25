@@ -7,6 +7,8 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
   if( request.greeting === "do_action" ){
     var action = request.action;
     var result = request.result;
+    var last_action = request.last_action;
+    var last_result = request.last_result;
     switch (action){
       case "search":
         window.location = search_url+result;
@@ -33,15 +35,45 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         window.location = window.location;
         break;
       case "scroll":
+        var doc_height = $(document).height();
         if(result == "down"){
           $("html, body").animate({
-            scrollTop: $("body").scrollTop()+300
-          }, 500);
+            scrollTop: doc_height
+          }, doc_height*5, "linear");
+        }
+        else if(result == "down+fast"){
+          $("html, body").animate({
+            scrollTop: doc_height
+          }, doc_height*3, "linear");
         }
         else if(result == "up"){
           $("html, body").animate({
-            scrollTop: $("body").scrollTop()-300
-          }, 500);
+            scrollTop: 0
+          }, doc_height*5, "linear");
+        }
+        else if(result == "up+fast"){
+          $("html, body").animate({
+            scrollTop: 0
+          }, doc_height*3, "linear");
+        }
+        break;
+      case "stop":
+        console.log("last action is " + last_action);
+        console.log("last result is " + last_result);
+        if(last_action == "scroll" && last_result == "down" || last_result == "down+fast"){
+          $("html, body").stop().animate({
+            scrollTop: $("body").scrollTop()-200
+          }, 1000);
+        }
+        else if(last_action == "scroll" && last_result == "up" || last_result == "up+fast"){
+          $("html, body").stop().animate({
+            scrollTop: $("body").scrollTop()+200
+          }, 1000);
+        }
+        else{
+          $("html, body").stop().animate({
+            scrollTop: $("body").scrollTop()
+          }, 0);
         }
         break;
 

@@ -4,6 +4,8 @@ var is_recording = false;
 var should_restart = true;
 var action;
 var recognition;
+var last_action = "",
+last_result = "";
 
 console.log('loading voice search js');
 // try {
@@ -61,7 +63,24 @@ function startRecognition(){
         result = parseResult(result);
         console.log('action is now ' + action);
         console.log('result is now ' + result);
-        chrome.extension.sendMessage({greeting: "action", action: action, result: result});
+        if(action == "repeat"){
+          chrome.extension.sendMessage({greeting: "action",
+                                      action: action,
+                                      result: result,
+                                      last_action: last_action,
+                                      last_result: last_result
+                                    });
+        }
+        else{
+          chrome.extension.sendMessage({greeting: "action",
+                                      action: action,
+                                      result: result,
+                                      last_action: last_action,
+                                      last_result: last_result
+                                    });
+          last_action = action;
+          last_result = result;
+        }
       }
     }
 
