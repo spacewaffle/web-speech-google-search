@@ -58,6 +58,7 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         }
         break;
       case "stop":
+      case "stock":
         console.log("last action is " + last_action);
         console.log("last result is " + last_result);
         if(last_action == "scroll" && last_result == "down" || last_result == "down+fast"){

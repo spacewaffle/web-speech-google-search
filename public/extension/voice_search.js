@@ -78,6 +78,7 @@ function startRecognition(){
                                       last_action: last_action,
                                       last_result: last_result
                                     });
+
           last_action = action;
           last_result = result;
         }
