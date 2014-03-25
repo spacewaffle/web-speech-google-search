@@ -50,7 +50,7 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
                                       action: request.action,
                                       result: request.result,
                                       last_action: request.last_action,
-                                      last_resupt: request.last_result
+                                      last_result: request.last_result
                                     });
     console.log('last_action is ' + request.last_action);
     console.log('last_result is ' + request.last_result);
