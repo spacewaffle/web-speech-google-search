@@ -75,6 +75,7 @@ function startRecognition(){
             action = "go to";
             break;
           case "fack":
+          case "facts":
             action = "back";
             break;
           case "screw":
@@ -86,6 +87,25 @@ function startRecognition(){
           case "pods":
           case "odds":
             action = "pause";
+            break;
+          case "post":
+            action = "close";
+            break;
+          case "utah":
+          case "newtown":
+            action = "new";
+            break;
+          case "quotev":
+          case "first":
+            if(action == "quotev" || result == "ave")
+            action = "close";
+            break;
+          case "reviews":
+          case "sirius":
+            action = "previous";
+            break;
+          case "sex":
+            action = "next";
             break;
         }
         if(action == "repeat"){

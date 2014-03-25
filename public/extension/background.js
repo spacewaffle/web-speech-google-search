@@ -58,17 +58,10 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
     var result = request.result;
     switch(action){
       case "new":
-        if(result === "tab"){
-          chrome.tabs.create({url: "https://google.com"});
-        }
-        break;
-      case "utah":
         chrome.tabs.create({url: "https://google.com"});
         break;
       case "close":
-        if(result === "tab"){
-          chrome.tabs.remove(tab_id);
-        }
+        chrome.tabs.remove(tab_id);
         break;
       case "next":
         chrome.tabs.query({}, function(response){

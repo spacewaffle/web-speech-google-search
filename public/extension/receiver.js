@@ -1,7 +1,3 @@
-$(document).ready(function(){
-
-
-
 var search_url = "https://www.google.com/search?q=";
 var wiki_url = "https://wikipedia.org/w/index.php?search=";
 
@@ -84,6 +80,4 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         break;
     }
   }
-});
-
 });
