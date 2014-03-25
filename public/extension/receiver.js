@@ -1,3 +1,7 @@
+$(document).ready(function(){
+
+
+
 var search_url = "https://www.google.com/search?q=";
 var wiki_url = "https://wikipedia.org/w/index.php?search=";
 
@@ -14,7 +18,6 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         window.location = search_url+result;
         break;
       case "back":
-      case "fack":
         //history.back doesn't do a full reload so no js :/
         //window.location.href = document.referrer;
         history.go(-1);
@@ -23,25 +26,17 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         history.forward();
         break;
       case "go to":
-      case "goto":
         window.location = search_url+result+"&btnI";
         break;
       case "wiki":
         window.location = wiki_url+result;
         break;
       case "reload":
-      case "refresh":
-      case "rephresh":
         window.location = window.location;
         break;
       case "scroll":
         var doc_height = $(document).height();
-        if(result == "down"){
-          $("html, body").animate({
-            scrollTop: doc_height
-          }, doc_height*5, "linear");
-        }
-        else if(result == "down+fast"){
+        if(result == "down+fast"){
           $("html, body").animate({
             scrollTop: doc_height
           }, doc_height*3, "linear");
@@ -56,9 +51,13 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
             scrollTop: 0
           }, doc_height*3, "linear");
         }
+        else{
+          $("html, body").animate({
+            scrollTop: doc_height
+          }, doc_height*5, "linear");
+        }
         break;
       case "stop":
-      case "stock":
         console.log("last action is " + last_action);
         console.log("last result is " + last_result);
         if(last_action == "scroll" && last_result == "down" || last_result == "down+fast"){
@@ -77,7 +76,14 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
           }, 0);
         }
         break;
-
+      case "play":
+        $('video').play();
+        break;
+      case "pause":
+        $('video').pause();
+        break;
     }
   }
+});
+
 });

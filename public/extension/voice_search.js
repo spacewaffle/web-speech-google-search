@@ -63,6 +63,31 @@ function startRecognition(){
         result = parseResult(result);
         console.log('action is now ' + action);
         console.log('result is now ' + result);
+        switch (action){
+          case "stock":
+            action = "stop";
+            break;
+          case "refresh":
+          case "rephresh":
+            action = "reload";
+            break;
+          case "goto":
+            action = "go to";
+            break;
+          case "fack":
+            action = "back";
+            break;
+          case "screw":
+          case "scrabble":
+            action = "scroll";
+            break;
+          case "popeyes":
+          case "pies":
+          case "pods":
+          case "odds":
+            action = "pause";
+            break;
+        }
         if(action == "repeat"){
           chrome.extension.sendMessage({greeting: "action",
                                       action: action,
