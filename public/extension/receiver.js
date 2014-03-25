@@ -28,8 +28,23 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         window.location = wiki_url+result;
         break;
       case "reload":
+      case "refresh":
+      case "rephresh":
         window.location = window.location;
         break;
+      case "scroll":
+        if(result == "down"){
+          $("html, body").animate({
+            scrollTop: $("body").scrollTop()+300
+          }, 500);
+        }
+        else if(result == "up"){
+          $("html, body").animate({
+            scrollTop: $("body").scrollTop()-300
+          }, 500);
+        }
+        break;
+
     }
   }
 });
