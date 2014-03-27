@@ -5,11 +5,16 @@
   "description": "Allows Chrome users to google search via voice, and navigate back and forward in browser history",
   "version": "1.0",
   "permissions": [
-    "tabs"
+    "tabs",
+    "<all_urls>",
+    "chrome://newtab"
   ],
     "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": [
+        "<all_urls>",
+        "chrome://newtab"
+      ],
       "js": ["jquery-2.1.0.min.js", "receiver.js"],
       "run_at": "document_end"
     }
