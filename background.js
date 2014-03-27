@@ -2,25 +2,33 @@
 console.log('running background.js');
 var is_sending, tab_id;
 
-//when switching tabs, move speech recognition to the active tab
-chrome.tabs.onActivated.addListener(function(tab) {
-  chrome.tabs.get(tab.tabId, function(tab){
-    console.log('tab activated');
-    updateTabs(tab, "activated");
-  });
-});
-
-
-//when a tab is updated via url switch, update recognition to that tab
-chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
-  console.log('tab updated');
-  console.log(info);
-  if(info.status === "complete"){
-    updateTabs(tab, "updated");
+//set the initial active tab
+chrome.tabs.query({active: true}, function(response){
+  for (var i = response.length - 1; i >= 0; i--) {
+    console.log(response[i]);
+    updateTabs(response[i]);
+    break;
   }
 });
 
-var updateTabs = function(tab, type){
+//add receiver to all existing tabs
+chrome.tabs.query({}, function(response){
+  for (var i = response.length - 1; i >= 0; i--) {
+    chrome.tabs.executeScript(tab_id, {file: "jquery-2.1.0.min.js"});
+    chrome.tabs.executeScript(tab_id, {file: "receiver.js"});
+  }
+});
+
+//when switching tabs, switch which tab is considered the active tab
+chrome.tabs.onActivated.addListener(function(tab) {
+  chrome.tabs.get(tab.tabId, function(tab){
+    console.log('tab activated');
+    updateTabs(tab);
+  });
+});
+
+//update which tab is the active tab
+var updateTabs = function(tab){
   if(tab.url.substring(0,15) != "chrome-devtools"){
     //set the tab_id of the current tab
     tab_id = tab.id;
@@ -45,8 +53,13 @@ chrome.browserAction.onClicked.addListener(function() {
 });
 
 //add jquery and receiver to new tabs or refreshed tabs
-chrome.tabs.onUpdated.addListener(function(tab_id,changeInfo,tab){
-  if(changeInfo.status == "complete"){
+chrome.tabs.onUpdated.addListener(function(tab_id, info,tab){
+   console.log(info);
+  if(info.status == "complete"){
+    console.log('tab updated');
+
+    updateTabs(tab);
+
     chrome.tabs.executeScript(tab_id, {file: "jquery-2.1.0.min.js"});
     chrome.tabs.executeScript(tab_id, {file: "receiver.js"});
   }
