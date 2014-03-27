@@ -1,3 +1,11 @@
+//inject dependencies into all existing open tabs
+chrome.tabs.query({}, function(response){
+  for (var i = response.length - 1; i >= 0; i--) {
+    chrome.tabs.executeScript(response[i].id, {file: "jquery-2.1.0.min.js"});
+    chrome.tabs.executeScript(response[i].id, {file: "voice_search.js"});
+  }
+});
+
 //setup event listeners for tab switching
 console.log('running background.js');
 var is_sending, tab_id;
