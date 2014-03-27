@@ -6,14 +6,12 @@
   "version": "1.0",
   "permissions": [
     "tabs",
-    "<all_urls>",
-    "chrome://newtab"
+    "<all_urls>"
   ],
     "content_scripts": [
     {
       "matches": [
-        "<all_urls>",
-        "chrome://newtab"
+        "<all_urls>"
       ],
       "js": ["jquery-2.1.0.min.js", "receiver.js"],
       "run_at": "document_end"
