@@ -8,15 +8,6 @@ var last_action = "",
 last_result = "";
 
 console.log('loading voice search js');
-// try {
-//     recognition = new webkitSpeechRecognition();
-// } catch(e) {
-//   console.log("recognition wasn't set properly");
-//   recognition = Object;
-// }
-
-// console.log("recognition is...");
-// console.log(recognition);
 function startRecognition(){
   console.log('starting recognition');
   console.log("is_recording " + is_recording + " to true");
@@ -156,31 +147,5 @@ function stopRecognition(){
   should_restart = false;
 }
 
-// chrome.extension.onMessage.addListener(
-//   function(request, sender, sendResponse) {
-//     console.log('RECEIVED ' + request.greeting);
-
-//     //if request is start, spin up recognition and set onend to loop
-//     if (request.greeting == "start"){
-//       // recognition.onend = function() {
-//       //   console.log('speech service disconnected (will restart)');
-//       //   startRecognition();
-//       // };
-//       if(is_recording === false){
-//         startRecognition();
-//       }
-//     }
-//     //if request is stop, unloop onend and stop the connection
-//     else if(request.greeting == "stop"){
-//       // recognition.onend = function() {
-//       //   console.log('speech service disconnected (stop)');
-//       // };
-//       //recognition.stop();
-//       if(is_recording === true){
-//         stopRecognition();
-//       }
-//     }
-// });
 startRecognition();
-// console.log('kickoff voice recognition');
-// startRecognition();
+
