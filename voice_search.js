@@ -105,6 +105,7 @@ function startRecognition(){
             action = "previous";
             break;
           case "sex":
+          case "x":
             action = "next";
             break;
         }
