@@ -71,6 +71,8 @@ function startRecognition(){
             break;
           case "screw":
           case "scrabble":
+          case "throwdown":
+          case "troll":
             action = "scroll";
             break;
           case "popeyes":
