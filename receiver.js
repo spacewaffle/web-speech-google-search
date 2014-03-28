@@ -9,6 +9,7 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
     var result = request.result;
     var last_action = request.last_action;
     var last_result = request.last_result;
+    console.log(action + result);
     switch (action){
       case "search":
         window.location = search_url+result;

@@ -14,8 +14,8 @@ chrome.tabs.query({active: true}, function(response){
 //add receiver to all existing tabs
 chrome.tabs.query({}, function(response){
   for (var i = response.length - 1; i >= 0; i--) {
-    chrome.tabs.executeScript(tab_id, {file: "jquery-2.1.0.min.js"});
-    chrome.tabs.executeScript(tab_id, {file: "receiver.js"});
+    chrome.tabs.executeScript(response[i].id, {file: "jquery-2.1.0.min.js"});
+    chrome.tabs.executeScript(response[i].id, {file: "receiver.js"});
   }
 });
 
