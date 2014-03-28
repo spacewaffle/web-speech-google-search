@@ -80,6 +80,7 @@ function startRecognition(){
             action = "pause";
             break;
           case "post":
+          case "lowes":
             action = "close";
             break;
           case "utah":
