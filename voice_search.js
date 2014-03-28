@@ -93,6 +93,7 @@ function startRecognition(){
             break;
           case "reviews":
           case "sirius":
+          case "prius":
             action = "previous";
             break;
           case "sex":
