@@ -83,6 +83,7 @@ function startRecognition(){
             break;
           case "post":
           case "lowes":
+          case "contact":
             action = "close";
             break;
           case "utah":
