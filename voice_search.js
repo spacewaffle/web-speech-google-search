@@ -84,6 +84,7 @@ function startRecognition(){
           case "post":
           case "lowes":
           case "contact":
+          case "clothes":
             action = "close";
             break;
           case "utah":
@@ -98,6 +99,7 @@ function startRecognition(){
           case "reviews":
           case "sirius":
           case "prius":
+          case "paris":
             action = "previous";
             break;
           case "sex":
