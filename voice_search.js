@@ -1,11 +1,10 @@
-var results = [];
-var result;
 var is_recording = false;
 var should_restart = true;
 var action;
+var modifier;
 var recognition;
 var last_action = "",
-last_result = "";
+last_modifier = "";
 
 var commands = {
   "stop": ["stock", "stop"],
@@ -13,9 +12,9 @@ var commands = {
   "go to": ["goto", "go to"],
   "back": ["fack", "facts", "back"],
   "scroll": ["screw", "scrabble", "throwdown", "troll", "scroll"],
-  "close tab": ["post", "lowes", "contact", "clothes", "quotev", "close tab",
+  "close": ["post", "lowes", "contact", "clothes", "quotev", "close tab",
                 "close", "first ave"],
-  "new tab": ["utah", "newtown", "new tab", "new"],
+  "new": ["utah", "newtown", "new tab", "new"],
   "previous": ["reviews", "sirius", "prius", "paris", "previous"],
   "next": ["sex", "x", "next"],
   "search": ["search"],
@@ -42,115 +41,50 @@ function startRecognition(){
   console.log("should_restart " + should_restart + " to true");
   should_restart = true;
 
-  recognition.onresult = function (event) {
+  recognition.onmodifier = function (event) {
 
-    function parseResult(input){
-      var splicenum = 1;
-      //get rid of leading space that appears sometimes
-      if(input[0] === ' '){
-          input = input.replace(" ", "");
-      }
-      input = input.toLowerCase();
-      //grab the first word
-      input = input.split(" ");
-      action = input[0];
-      //if the first word is go
-      if(action === 'go' && input[1] === 'to'){
-        action = "go to";
-        splicenum = 2;
-      }
-      input.splice(0, splicenum);
-      input = input.join(" ");
-      return input;
+    var input = event.modifier.transcript;
+    console.log('event.modifiers is...');
+    console.log(input);
+
+    //get rid of leading space that appears sometimes
+    if(input[0] === ' '){
+        input = input.replace(" ", "");
     }
 
-    if(event.isFinal){
-      results.push(event);
-    }
-    console.log('event.results is...');
-    for (var i = event.resultIndex; i < event.results.length; ++i) {
-      if (event.results[i].isFinal) {
-        results.push(event.results[i]);
-        console.log(event.results[i][0].transcript);
-        result = event.results[i][0].transcript;
-        result = parseResult(result);
-        console.log('action is now ' + action);
-        console.log('result is now ' + result);
-        switch (action){
-          case "stock":
-            action = "stop";
-            break;
-          case "refresh":
-          case "rephresh":
-            action = "reload";
-            break;
-          case "goto":
-            action = "go to";
-            break;
-          case "fack":
-          case "facts":
-            action = "back";
-            break;
-          case "screw":
-          case "scrabble":
-          case "throwdown":
-          case "troll":
-            action = "scroll";
-            break;
-          case "popeyes":
-          case "pies":
-          case "pods":
-          case "odds":
-            action = "pause";
-            break;
-          case "post":
-          case "lowes":
-          case "contact":
-          case "clothes":
-            action = "close";
-            break;
-          case "utah":
-          case "newtown":
-            action = "new";
-            break;
-          case "quotev":
-          case "first":
-            if(action == "quotev" || result == "ave")
-            action = "close";
-            break;
-          case "reviews":
-          case "sirius":
-          case "prius":
-          case "paris":
-            action = "previous";
-            break;
-          case "sex":
-          case "x":
-            action = "next";
-            break;
-        }
-        if(action == "repeat"){
-          chrome.extension.sendMessage({greeting: "action",
-                                      action: action,
-                                      result: result,
-                                      last_action: last_action,
-                                      last_result: last_result
-                                    });
-        }
-        else{
-          chrome.extension.sendMessage({greeting: "action",
-                                      action: action,
-                                      result: result,
-                                      last_action: last_action,
-                                      last_result: last_result
-                                    });
+    //turn all words to lowercase
+    input = input.toLowerCase();
 
-          last_action = action;
-          last_result = result;
+    //check for matches
+    for (var key in commands) {
+      for (var i = commands[key].length - 1; i >= 0; i--) {
+        var index = input.indexOf(commands[key][i]);
+        if(index >= 0){
+          action = key;
+          input = input.substring(index);
+          modifier = input.replace(commands[key][i], "");
         }
       }
     }
 
+    if(action == "repeat"){
+      chrome.extension.sendMessage({greeting: "action",
+                                    action: action,
+                                    modifier: modifier,
+                                    last_action: last_action,
+                                    last_modifier: last_modifier
+                                  });
+    }
+    else{
+      chrome.extension.sendMessage({greeting: "action",
+                                    action: action,
+                                    modifier: modifier,
+                                    last_action: last_action,
+                                    last_modifier: last_modifier
+                                  });
+      last_action = action;
+      last_modifier = modifier;
+    }
   };
 
   recognition.onend = function() {
