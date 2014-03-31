@@ -6,7 +6,7 @@ last_modifier = "";
 
 var commands = {
   "stop": ["stock", "stop"],
-  "reload": ["refresh", "rephresh", "reload"],
+  "reload": ["refresh", "rephresh", "reload", "realtor"],
   "go to": ["goto", "go to"],
   "back": ["fack", "facts", "back"],
   "scroll": ["screw", "scrabble", "throwdown", "troll", "scroll"],
@@ -35,11 +35,12 @@ function startRecognition(){
   console.log("recognition is...");
   console.log(recognition);
 
-  recognition.onmodifier = function (event) {
+  recognition.onresult = function (event) {
 
-    var input = event.modifier.transcript;
+    console.log("event is");
+    console.log(event);
+    var input = event.results[event.results.length-1][0].transcript;
     console.log('event.modifiers is...');
-    console.log(input);
 
     //get rid of leading space that appears sometimes
     if(input[0] === ' '){
@@ -50,6 +51,7 @@ function startRecognition(){
     input = input.toLowerCase();
 
     //check for matches
+    console.log("checking for matches");
     for (var key in commands) {
       for (var i = commands[key].length - 1; i >= 0; i--) {
         var index = input.indexOf(commands[key][i]);
