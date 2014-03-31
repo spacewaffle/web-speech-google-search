@@ -8,17 +8,16 @@ var last_action = "",
 last_result = "";
 
 var commands = {
-  "stop": ["stock"],
-  "reload": ["refresh", "rephresh"],
-  "go to": ["goto"],
-  "back": ["fack", "facts"],
-  "scroll": ["screw", "scrabble", "throwdown", "troll"],
-  "pause": ["popeyes", "pies", "pods", "odds"],
-  "close": ["post", "lowes", "contact", "clothes"],
-  "new tab": ["utah", "newtown"],
-  "close tab": ["quotev", "first"],
-  "previous": ["reviews", "sirius", "prius", "paris"],
-  "next": ["sex", "x"]
+  "stop": ["stock", "stop"],
+  "reload": ["refresh", "rephresh", "reload"],
+  "go to": ["goto", "go to"],
+  "back": ["fack", "facts", "back"],
+  "scroll": ["screw", "scrabble", "throwdown", "troll", "scroll"],
+  "pause": ["popeyes", "pies", "pods", "odds", "pause"],
+  "close tab": ["post", "lowes", "contact", "clothes", "quotev", "close tab"],
+  "new tab": ["utah", "newtown", "new tab"],
+  "previous": ["reviews", "sirius", "prius", "paris", "previous"],
+  "next": ["sex", "x", "next"]
 };
 
 
