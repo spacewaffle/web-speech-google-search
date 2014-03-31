@@ -1,5 +1,3 @@
-var is_recording = false;
-var should_restart = true;
 var action;
 var modifier;
 var recognition;
@@ -31,15 +29,11 @@ var commands = {
 console.log('loading voice search js');
 function startRecognition(){
   console.log('starting recognition');
-  console.log("is_recording " + is_recording + " to true");
-  is_recording = true;
   recognition = new webkitSpeechRecognition();
   recognition.continuous = true;
   recognition.start();
   console.log("recognition is...");
   console.log(recognition);
-  console.log("should_restart " + should_restart + " to true");
-  should_restart = true;
 
   recognition.onmodifier = function (event) {
 
@@ -88,26 +82,10 @@ function startRecognition(){
   };
 
   recognition.onend = function() {
-    console.log('speech service disconnected on its own (will not restart)');
+    console.log('restaring speech service');
     //check if it should be restarted
-
-    if(should_restart){
-      stopRecognition();
-      startRecognition();
-    }
+    startRecognition();
   };
-}
-
-function stopRecognition(){
-  console.log('stopping recognition');
-  console.log("is_recording " + is_recording + " to false");
-  is_recording = false;
-  recognition.abort();
-  recognition = false;
-  console.log("recognition is...");
-  console.log(recognition);
-  console.log("should_restart " + should_restart + " to false");
-  should_restart = false;
 }
 
 startRecognition();
