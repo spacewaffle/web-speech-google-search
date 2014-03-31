@@ -69,14 +69,14 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
   if( request.greeting === "action" ){
     chrome.tabs.sendMessage(tab_id, {greeting: "do_action",
                                       action: request.action,
-                                      result: request.result,
+                                      modifier: request.modifier,
                                       last_action: request.last_action,
-                                      last_result: request.last_result
+                                      last_modifier: request.last_modifier
                                     });
     console.log('last_action is ' + request.last_action);
-    console.log('last_result is ' + request.last_result);
+    console.log('last_modifier is ' + request.last_modifier);
     var action = request.action;
-    var result = request.result;
+    var modifier = request.modifier;
     switch(action){
       case "new":
         chrome.tabs.create({url: "https://google.com"});
