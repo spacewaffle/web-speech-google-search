@@ -57,6 +57,10 @@ function startRecognition(){
           action = key;
           input = input.substring(index);
           modifier = input.replace(commands[key][i], "");
+          //get rid of leading space that appears sometimes
+          if(modifier[0] === ' '){
+            modifier = modifier.replace(" ", "");
+          }
         }
       }
     }
