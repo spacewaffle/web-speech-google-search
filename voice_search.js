@@ -7,6 +7,21 @@ var recognition;
 var last_action = "",
 last_result = "";
 
+var commands = {
+  "stop": ["stock"],
+  "reload": ["refresh", "rephresh"],
+  "go to": ["goto"],
+  "back": ["fack", "facts"],
+  "scroll": ["screw", "scrabble", "throwdown", "troll"],
+  "pause": ["popeyes", "pies", "pods", "odds"],
+  "close": ["post", "lowes", "contact", "clothes"],
+  "new tab": ["utah", "newtown"],
+  "close tab": ["quotev", "first"],
+  "previous": ["reviews", "sirius", "prius", "paris"],
+  "next": ["sex", "x"]
+};
+
+
 console.log('loading voice search js');
 function startRecognition(){
   console.log('starting recognition');
