@@ -122,9 +122,17 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
           if(check_url){
             var el = document.createElement("a");
             for (i = response.length - 1; i >= 0; i--) {
-              console.log("url is" + response[i].url);
               el.href = response[i].url;
-              var hostname = el.hostname.slice(0, el.hostname.indexOf("."));
+              console.log(el.href);
+              var hostname = el.hostname.split(".");
+              console.log(hostname);
+              if(hostname.length-2 >= 0){
+                hostname = hostname[hostname.length-2];
+              }
+              else{
+                hostname = hostname[hostname.length-1];
+              }
+              console.log("hostname is " + hostname);
               if(hostname.indexOf(modifier) >= 0 ){
                 chrome.tabs.update(response[i].id, {selected: true});
                 break;
