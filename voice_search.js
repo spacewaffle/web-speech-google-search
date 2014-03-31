@@ -13,11 +13,19 @@ var commands = {
   "go to": ["goto", "go to"],
   "back": ["fack", "facts", "back"],
   "scroll": ["screw", "scrabble", "throwdown", "troll", "scroll"],
-  "pause": ["popeyes", "pies", "pods", "odds", "pause"],
-  "close tab": ["post", "lowes", "contact", "clothes", "quotev", "close tab"],
-  "new tab": ["utah", "newtown", "new tab"],
+  "close tab": ["post", "lowes", "contact", "clothes", "quotev", "close tab",
+                "close", "first ave"],
+  "new tab": ["utah", "newtown", "new tab", "new"],
   "previous": ["reviews", "sirius", "prius", "paris", "previous"],
-  "next": ["sex", "x", "next"]
+  "next": ["sex", "x", "next"],
+  "search": ["search"],
+  "forward": ["forward"],
+  "wiki": ["wiki"],
+  "scroll up": ["scroll up"],
+  "scroll down": ["scroll down"],
+  "pause": ["popeyes", "pies", "pods", "odds", "pause"],
+  "play": ["play"],
+  "repeat": ["repeat"]
 };
 
 
@@ -52,7 +60,7 @@ function startRecognition(){
         splicenum = 2;
       }
       input.splice(0, splicenum);
-      input = input.join("+");
+      input = input.join(" ");
       return input;
     }
 
