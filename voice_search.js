@@ -14,7 +14,7 @@ var commands = {
                 "close", "first ave"],
   "new": ["utah", "newtown", "new tab", "new"],
   "previous": ["reviews", "sirius", "prius", "paris", "previous"],
-  "next": ["sex", "x", "next"],
+  "next": ["sex", "next"],
   "search": ["search"],
   "forward": ["forward"],
   "wiki": ["wiki"],
@@ -22,6 +22,7 @@ var commands = {
   "scroll down": ["scroll down"],
   "pause": ["popeyes", "pies", "pods", "odds", "pause"],
   "play": ["play"],
+  "switch": ["switch to", "switch", "switch 2"],
   "repeat": ["repeat"]
 };
 
@@ -40,7 +41,6 @@ function startRecognition(){
     console.log("event is");
     console.log(event);
     var input = event.results[event.results.length-1][0].transcript;
-    console.log('event.modifiers is...');
 
     //get rid of leading space that appears sometimes
     if(input[0] === ' '){
@@ -50,12 +50,16 @@ function startRecognition(){
     //turn all words to lowercase
     input = input.toLowerCase();
 
+    console.log('input is ' + input);
     //check for matches
     console.log("checking for matches");
     for (var key in commands) {
       for (var i = commands[key].length - 1; i >= 0; i--) {
         var index = input.indexOf(commands[key][i]);
         if(index >= 0){
+          console.log(input);
+          console.log(commands[key][i]);
+          console.log('key is' + key);
           action = key;
           input = input.substring(index);
           modifier = input.replace(commands[key][i], "");
@@ -67,10 +71,13 @@ function startRecognition(){
       }
     }
 
+    console.log('action is ' + action);
+    console.log('modifier is ' + modifier);
+
     if(action == "repeat"){
       chrome.extension.sendMessage({greeting: "action",
-                                    action: action,
-                                    modifier: modifier,
+                                    action: last_action,
+                                    modifier: last_modifier,
                                     last_action: last_action,
                                     last_modifier: last_modifier
                                   });

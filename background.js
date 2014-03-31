@@ -73,6 +73,8 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
                                       last_action: request.last_action,
                                       last_modifier: request.last_modifier
                                     });
+    console.log('action is ' + request.action);
+    console.log('modifier is ' + request.modifier);
     console.log('last_action is ' + request.last_action);
     console.log('last_modifier is ' + request.last_modifier);
     var action = request.action;
@@ -104,6 +106,34 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
           }
         });
         break;
+      case "switch":
+        console.log('running switch');
+        chrome.tabs.query({}, function(response){
+          var check_url = true;
+          var i;
+          for (i = response.length - 1; i >= 0; i--) {
+            console.log("title is" + response[i].title.toLowerCase());
+            if(response[i].title.toLowerCase().indexOf(modifier) >= 0 ){
+              chrome.tabs.update(response[i].id, {selected: true});
+              check_url = false;
+              break;
+            }
+          }
+          if(check_url){
+            var el = document.createElement("a");
+            for (i = response.length - 1; i >= 0; i--) {
+              console.log("url is" + response[i].url);
+              el.href = response[i].url;
+              var hostname = el.hostname.slice(0, el.hostname.indexOf("."));
+              if(hostname.indexOf(modifier) >= 0 ){
+                chrome.tabs.update(response[i].id, {selected: true});
+                break;
+              }
+            }
+          }
+        });
+        break;
     }
   }
 });
+
