@@ -10,6 +10,7 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
     var last_action = request.last_action;
     var last_modifier = request.last_modifier;
     console.log(action + modifier);
+    var doc_height = $(document).height();
     switch (action){
       case "search":
         window.location = search_url+modifier.replace(" ", "+");
@@ -31,27 +32,23 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
       case "reload":
         window.location = window.location;
         break;
-      case "scroll":
-        var doc_height = $(document).height();
-        if(modifier == "down+fast"){
+      case "scroll up":
+        if(modifier.indexOf("fast") >= 0){
           $("html, body").animate({
-            scrollTop: doc_height
+            scrollTop: 0
           }, doc_height*3, "linear");
         }
-        else if(modifier == "up"){
+        else{
           $("html, body").animate({
             scrollTop: 0
           }, doc_height*5, "linear");
         }
-        else if(modifier == "up fast"){
+        break;
+      case "scroll down":
+        if(modifier.indexOf("fast") >= 0){
           $("html, body").animate({
-            scrollTop: 0
+            scrollTop: doc_height
           }, doc_height*3, "linear");
-        }
-        else if(modifier.indexOf("top") >=0 || modifier.indexOf("to top") >=0){
-          $("html, body").animate({
-            scrollTop: 0
-          }, 1000, "linear");
         }
         else{
           $("html, body").animate({
@@ -59,23 +56,26 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
           }, doc_height*5, "linear");
         }
         break;
+      case "scroll top":
+        $("html, body").animate({
+          scrollTop: 0
+        }, 300, "linear");
+        break;
+      case "scroll bottom":
+        $("html, body").animate({
+          scrollTop: doc_height
+        }, 1000, "linear");
+        break;
       case "stop":
-        console.log("last action is " + last_action);
-        console.log("last modifier is " + last_modifier);
-        if(last_action == "scroll" && last_modifier == "down" || last_modifier == "down+fast"){
+        if(last_action == "scroll down"){
           $("html, body").stop().animate({
             scrollTop: $("body").scrollTop()-200
           }, 1000);
         }
-        else if(last_action == "scroll" && last_modifier == "up" || last_modifier == "up+fast"){
+        else if(last_action == "scroll up"){
           $("html, body").stop().animate({
             scrollTop: $("body").scrollTop()+200
           }, 1000);
-        }
-        else{
-          $("html, body").stop().animate({
-            scrollTop: $("body").scrollTop()-200
-          }, 0);
         }
         break;
       case "play":

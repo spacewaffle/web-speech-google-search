@@ -20,6 +20,8 @@ var commands = {
   "wiki": ["wiki"],
   "scroll up": ["scroll up"],
   "scroll down": ["scroll down"],
+  "scroll top": ["scroll top", "scroll to top"],
+  "scroll bottom": ["scroll bottom", "scroll to bottom"],
   "pause": ["popeyes", "pies", "pods", "odds", "pause"],
   "play": ["play"],
   "switch": ["switch to", "switch", "switch 2"],
