@@ -27,7 +27,6 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         break;
       case "back":
         //history.back doesn't do a full reload so no js :/
-        //window.location.href = document.referrer;
         history.go(-1);
         break;
       case "forward":
@@ -63,7 +62,7 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         else{
           $("html, body").animate({
             scrollTop: doc_height
-          }, doc_height*5, "linear");
+          }, doc_height*8, "linear");
         }
         break;
       case "scroll top":

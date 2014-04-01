@@ -5,10 +5,11 @@ var last_action = "",
 last_modifier = "";
 
 var commands = {
+  "open": ["open"],
   "stop": ["stock", "stop"],
   "reload": ["refresh", "rephresh", "reload", "realtor"],
   "go to": ["goto", "go to"],
-  "back": ["fack", "facts", "back", "fac"],
+  "back": ["fack", "facts", "back", "fac", "bass"],
   "scroll": ["screw", "scrabble", "throwdown", "troll", "scroll"],
   "close": ["post", "lowes", "contact", "clothes", "quotev", "close tab",
                 "close", "first ave"],
@@ -18,7 +19,7 @@ var commands = {
   "search": ["search"],
   "forward": ["forward"],
   "wiki": ["wiki"],
-  "scroll up": ["scroll up"],
+  "scroll up": ["scroll up", "skrillex"],
   "scroll down": ["scroll down"],
   "scroll top": ["scroll top", "scroll to top"],
   "scroll bottom": ["scroll bottom", "scroll to bottom"],
@@ -26,8 +27,7 @@ var commands = {
   "play": ["play"],
   "switch": ["switch to", "switch", "switch 2"],
   "repeat": ["repeat"],
-  "click": ["click", "clique", "quick"],
-  "open": ["open"]
+  "click": ["click", "clique", "quick"]
 };
 
 
