@@ -56,6 +56,11 @@ function startRecognition(){
     input = input.toLowerCase();
 
     console.log('input is ' + input);
+
+    //add voice input to popup
+    document.getElementById("input").innerHTML = input;
+    document.getElementById("previous").innerHTML = last_action + " " + last_modifier;
+    
     //check for matches
     console.log("checking for matches");
     for (var key in commands) {
