@@ -8,7 +8,7 @@ var commands = {
   "stop": ["stock", "stop"],
   "reload": ["refresh", "rephresh", "reload", "realtor"],
   "go to": ["goto", "go to"],
-  "back": ["fack", "facts", "back"],
+  "back": ["fack", "facts", "back", "fac"],
   "scroll": ["screw", "scrabble", "throwdown", "troll", "scroll"],
   "close": ["post", "lowes", "contact", "clothes", "quotev", "close tab",
                 "close", "first ave"],
@@ -25,7 +25,9 @@ var commands = {
   "pause": ["popeyes", "pies", "pods", "odds", "pause"],
   "play": ["play"],
   "switch": ["switch to", "switch", "switch 2"],
-  "repeat": ["repeat"]
+  "repeat": ["repeat"],
+  "click": ["click", "clique", "quick"],
+  "open": ["open"]
 };
 
 

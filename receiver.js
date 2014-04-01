@@ -9,9 +9,19 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
     var modifier = request.modifier;
     var last_action = request.last_action;
     var last_modifier = request.last_modifier;
-    console.log(action + modifier);
+    console.log(action + " " + modifier);
     var doc_height = $(document).height();
     switch (action){
+      case "click":
+      case "open":
+        var links = document.getElementsByTagName("a");
+        for (var i = 0; i < links.length; i++) {
+          if(links[i].innerHTML.toLowerCase().indexOf(modifier) >= 0){
+            window.location = links[i].href;
+            break;
+          }
+        }
+        break;
       case "search":
         window.location = search_url+modifier.replace(" ", "+");
         break;
