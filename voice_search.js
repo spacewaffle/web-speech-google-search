@@ -40,6 +40,9 @@ function startRecognition(){
 
   recognition.onresult = function (event) {
 
+    action = "";
+    modifier = "";
+
     console.log("event is");
     console.log(event);
     var input = event.results[event.results.length-1][0].transcript;
