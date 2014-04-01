@@ -43,7 +43,7 @@ chrome.browserAction.onClicked.addListener(function() {
     chrome.windows.create({
         url: chrome.extension.getURL("popup.html"),
         width: 300,
-        height: 200,
+        height: 600,
         left: window.left + window.width - 145,
         top: window.top,
         focused: true,
