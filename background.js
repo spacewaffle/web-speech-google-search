@@ -35,26 +35,24 @@ var updateTabs = function(tab){
   }
 };
 
+//check stored settings if we should start on launch
 chrome.storage.sync.get('auto_start', function(items) {
-  //check stored settings if we should start on launch
-  if(items["auto_start"] == false){
-    auto_start = false;
+
+  console.log("auto start is " + items["auto_start"]);
+  if(items["auto_start"] == true){
+    chrome.windows.getCurrent(function(window) {
+      chrome.windows.create({
+          url: chrome.extension.getURL("popup.html"),
+          width: 300,
+          height: 600,
+          left: window.left + window.width - 145,
+          top: window.top,
+          focused: true,
+          type: "popup"
+      });
+    });
   }
 });
-
-if(auto_start){
-  chrome.windows.getCurrent(function(window) {
-    chrome.windows.create({
-        url: chrome.extension.getURL("popup.html"),
-        width: 300,
-        height: 600,
-        left: window.left + window.width - 145,
-        top: window.top,
-        focused: true,
-        type: "popup"
-    });
-  });
-}
 
 
 //event listeners
