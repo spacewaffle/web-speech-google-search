@@ -1,6 +1,6 @@
 //setup event listeners for tab switching
 console.log('running background.js');
-var is_sending, tab_id, start_on_launch = true;
+var is_sending, tab_id, auto_start = true;
 
 //set the initial active tab
 chrome.tabs.query({active: true}, function(response){
@@ -35,12 +35,14 @@ var updateTabs = function(tab){
   }
 };
 
-chrome.storage.sync.get('start_on_launch', function(items) {
+chrome.storage.sync.get('auto_start', function(items) {
   //check stored settings if we should start on launch
-  start_on_launch = items["start_on_launch"];
+  if(items["auto_start"] == false){
+    auto_start = false;
+  }
 });
 
-if(start_on_launch){
+if(auto_start){
   chrome.windows.getCurrent(function(window) {
     chrome.windows.create({
         url: chrome.extension.getURL("popup.html"),
