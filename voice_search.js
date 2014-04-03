@@ -7,19 +7,20 @@ var started = false;
 
 var commands = {
   "open": ["open"],
-  "stop": ["stock", "stop"],
-  "reload": ["refresh", "rephresh", "reload", "realtor"],
   "go to": ["goto", "go to"],
+  "search": ["search"],
+  "forward": ["forward"],
+  "wiki": ["wiki"],
+  "repeat": ["repeat"],
+  "stop": ["stock", "stop"],
+  "new": ["utah", "newtown", "new tab", "new"],
+  "reload": ["refresh", "rephresh", "reload", "realtor"],
   "back": ["fack", "facts", "back", "fac", "bass"],
   "scroll": ["screw", "scrabble", "throwdown", "troll", "scroll"],
   "close": ["post", "lowes", "contact", "clothes", "quotev", "close tab",
                 "close", "first ave"],
-  "new": ["utah", "newtown", "new tab", "new"],
   "previous": ["reviews", "sirius", "prius", "paris", "previous"],
   "next": ["sex", "next"],
-  "search": ["search"],
-  "forward": ["forward"],
-  "wiki": ["wiki"],
   "scroll up": ["scroll up", "skrillex"],
   "scroll down": ["scroll down"],
   "scroll top": ["scroll top", "scroll to top"],
@@ -27,7 +28,6 @@ var commands = {
   "pause": ["popeyes", "pies", "pods", "odds", "pause"],
   "play": ["play"],
   "switch": ["switch to", "switch", "switch 2"],
-  "repeat": ["repeat"],
   "click": ["click", "clique", "quick"]
 };
 
@@ -52,7 +52,6 @@ function startRecognition(){
     modifier = "";
 
     console.log("event is");
-    console.log(event);
     var input = event.results[event.results.length-1][0].transcript;
 
     //get rid of leading space that appears sometimes
@@ -75,9 +74,8 @@ function startRecognition(){
       for (var i = commands[key].length - 1; i >= 0; i--) {
         var index = input.indexOf(commands[key][i]);
         if(index >= 0){
-          console.log(input);
           console.log(commands[key][i]);
-          console.log('key is' + key);
+          console.log('key is ' + key);
           action = key;
           input = input.substring(index);
           modifier = input.replace(commands[key][i], "");
