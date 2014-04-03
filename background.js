@@ -1,6 +1,6 @@
 //setup event listeners for tab switching
 console.log('running background.js');
-var is_sending, tab_id, auto_start = true;
+var is_sending, tab_id, auto_start = true, popup_id = -1;
 
 function new_window(){
   chrome.windows.getCurrent(function(window) {
@@ -12,6 +12,8 @@ function new_window(){
         top: window.top,
         focused: true,
         type: "popup"
+    }, function(new_window){
+      popup_id = new_window.id;
     });
   });
 }
@@ -61,16 +63,25 @@ chrome.storage.sync.get('auto_start', function(items) {
 
 //event listeners
 
+//reset the popup id if it was closed
+chrome.windows.onRemoved.addListener(function(id){
+  if(popup_id == id){
+    popup_id = -1;
+  }
+});
+
+//when clicking the icon, if Nat's popup exists, focus it. otherwise open it
 chrome.browserAction.onClicked.addListener(function() {
 
+  console.log("popup_id is " + popup_id);
   //open the popup when icon clicked if it isn't open already
-  new_window();
-
+  if(popup_id < 0){
+    new_window();
+  }
   //otherwise focus the window
-  /*
-   code goes here
-  */
-
+  else{
+    chrome.windows.update(popup_id, {"focused": true});
+  }
 });
 
 //add jquery and receiver to new tabs or refreshed tabs
