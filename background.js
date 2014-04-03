@@ -1,6 +1,6 @@
 //setup event listeners for tab switching
 console.log('running background.js');
-var is_sending, tab_id, start_on_launch = false;
+var is_sending, tab_id, start_on_launch = true;
 
 //set the initial active tab
 chrome.tabs.query({active: true}, function(response){
@@ -34,6 +34,11 @@ var updateTabs = function(tab){
     tab_id = tab.id;
   }
 };
+
+chrome.storage.sync.get('start_on_launch', function(items) {
+  //check stored settings if we should start on launch
+  start_on_launch = items["start_on_launch"];
+});
 
 if(start_on_launch){
   chrome.windows.getCurrent(function(window) {
