@@ -51,6 +51,7 @@ function startRecognition(){
   recognition.onstart = function(event){
     started = true;
     console.log(event);
+    document.getElementById("dialogue").style.display = "none";
   };
 
   recognition.onresult = function (event) {
