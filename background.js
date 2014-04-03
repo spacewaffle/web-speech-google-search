@@ -2,6 +2,20 @@
 console.log('running background.js');
 var is_sending, tab_id, auto_start = true;
 
+function new_window(){
+  chrome.windows.getCurrent(function(window) {
+    chrome.windows.create({
+        url: chrome.extension.getURL("popup.html"),
+        width: 300,
+        height: 600,
+        left: window.left + window.width - 145,
+        top: window.top,
+        focused: true,
+        type: "popup"
+    });
+  });
+}
+
 //set the initial active tab
 chrome.tabs.query({active: true}, function(response){
   for (var i = response.length - 1; i >= 0; i--) {
@@ -40,17 +54,7 @@ chrome.storage.sync.get('auto_start', function(items) {
 
   console.log("auto start is " + items["auto_start"]);
   if(items["auto_start"] == true){
-    chrome.windows.getCurrent(function(window) {
-      chrome.windows.create({
-          url: chrome.extension.getURL("popup.html"),
-          width: 300,
-          height: 600,
-          left: window.left + window.width - 145,
-          top: window.top,
-          focused: true,
-          type: "popup"
-      });
-    });
+    new_window();
   }
 });
 
@@ -60,17 +64,7 @@ chrome.storage.sync.get('auto_start', function(items) {
 chrome.browserAction.onClicked.addListener(function() {
 
   //open the popup when icon clicked if it isn't open already
-  chrome.windows.getCurrent(function(window) {
-    chrome.windows.create({
-        url: chrome.extension.getURL("popup.html"),
-        width: 300,
-        height: 600,
-        left: window.left + window.width - 145,
-        top: window.top,
-        focused: true,
-        type: "popup"
-    });
-  });
+  new_window();
 
   //otherwise focus the window
   /*
