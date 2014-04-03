@@ -70,6 +70,9 @@ function startRecognition(){
 
     //check for matches
     console.log("checking for matches");
+
+    //this causes the break to break out of both loops instead of just one
+    out:
     for (var key in commands) {
       for (var i = commands[key].length - 1; i >= 0; i--) {
         var index = input.indexOf(commands[key][i]);
@@ -83,6 +86,7 @@ function startRecognition(){
           if(modifier[0] === ' '){
             modifier = modifier.replace(" ", "");
           }
+          break out;
         }
       }
     }
