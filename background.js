@@ -1,6 +1,6 @@
 //setup event listeners for tab switching
 console.log('running background.js');
-var is_sending, tab_id;
+var is_sending, tab_id, start_on_launch = false;
 
 //set the initial active tab
 chrome.tabs.query({active: true}, function(response){
@@ -35,10 +35,7 @@ var updateTabs = function(tab){
   }
 };
 
-
-//event listeners
-
-chrome.browserAction.onClicked.addListener(function() {
+if(start_on_launch){
   chrome.windows.getCurrent(function(window) {
     chrome.windows.create({
         url: chrome.extension.getURL("popup.html"),
@@ -50,6 +47,31 @@ chrome.browserAction.onClicked.addListener(function() {
         type: "popup"
     });
   });
+}
+
+
+//event listeners
+
+chrome.browserAction.onClicked.addListener(function() {
+
+  //open the popup when icon clicked if it isn't open already
+  chrome.windows.getCurrent(function(window) {
+    chrome.windows.create({
+        url: chrome.extension.getURL("popup.html"),
+        width: 300,
+        height: 600,
+        left: window.left + window.width - 145,
+        top: window.top,
+        focused: true,
+        type: "popup"
+    });
+  });
+
+  //otherwise focus the window
+  /*
+   code goes here
+  */
+
 });
 
 //add jquery and receiver to new tabs or refreshed tabs
