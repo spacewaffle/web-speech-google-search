@@ -5,6 +5,10 @@ var last_action = "",
 last_modifier = "";
 var started = false;
 
+
+//style guide
+//Make sure if error commands are multiple words, that the multi-word commands go at the end.
+//This is to prevent extra words from being included in the modifier that should be in the action
 var commands = {
   "open": ["open"],
   "go to": ["goto", "go to"],
@@ -12,22 +16,22 @@ var commands = {
   "forward": ["forward"],
   "wiki": ["wiki"],
   "repeat": ["repeat"],
-  "stop": ["stock", "stop"],
-  "new": ["utah", "newtown", "new tab", "new"],
-  "reload": ["refresh", "rephresh", "reload", "realtor"],
+  "stop": ["stock", "stop", "star"],
+  "new": ["utah", "newtown", "new", "new tab"],
+  "reload": ["refresh", "rephresh", "reload", "realtor", "reloj"],
   "back": ["fack", "facts", "back", "fac", "bass"],
-  "scroll": ["screw", "scrabble", "throwdown", "troll", "scroll"],
   "close": ["post", "lowes", "contact", "clothes", "quotev", "close tab",
                 "close", "first ave"],
   "previous": ["reviews", "sirius", "prius", "paris", "previous"],
   "next": ["sex", "next"],
-  "scroll up": ["scroll up", "skrillex"],
+  "scroll up": ["scroll up", "skrillex", "scrilla"],
   "scroll down": ["scroll down"],
+  "scroll": ["screw", "scrabble", "throwdown", "troll", "scroll"],
   "scroll top": ["scroll top", "scroll to top"],
   "scroll bottom": ["scroll bottom", "scroll to bottom"],
   "pause": ["popeyes", "pies", "pods", "odds", "pause"],
   "play": ["play"],
-  "switch": ["switch to", "switch", "switch 2"],
+  "switch": ["switch", "switch 2", "switch to"],
   "click": ["click", "clique", "quick"]
 };
 
