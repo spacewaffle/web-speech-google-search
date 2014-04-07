@@ -13,7 +13,7 @@
     "scripts": ["background.js"]
   },
   "browser_action": {
-    "default_icon": "siri-icon-xs.png"
+    "default_icon": "siri-icon.png"
   },
   "icons":{
     "16": "siri-icon-xs.png",
