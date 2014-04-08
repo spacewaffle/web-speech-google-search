@@ -3,14 +3,32 @@
   <title>Nat Options</title>
 </head>
 <body>
+  <h1>Options</h1>
   <section>
-    <h3>Options</h3>
-    <div class="checkbox">
+    <div class="checkbox form-group">
       <label>
         <input id="auto_start" type="checkbox"> Enable auto-start on browser load
       </label>
     </div>
   </section>
+  <section>
+    <div class="form-group">
+      <label for="Custom Command">New voice command</label>
+      <input id="custom-command" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="Custom Command">Site to visit</label>
+      <input id="site-to-visit" type="text" class="form-control">
+    </div>
+    <button id="submit_command" type="submit" class="btn btn-default">Create command</button>
+  </section>
+  <section>
+    <h3>Custom commands</h3>
+    <ul class="custom-command-list">
+      <!-- insert commands here -->
+    </ul>
+  </section>
 </body>
+<script type="text/javascript" src="jquery-2.1.0.min.js"></script>
 <script type="text/javascript" src="options.js"></script>
 </html>
