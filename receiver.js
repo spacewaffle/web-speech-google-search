@@ -16,8 +16,9 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
       case "open":
         var links = document.getElementsByTagName("a");
         for (var i = 0; i < links.length; i++) {
-          if(links[i].innerHTML.toLowerCase().indexOf(modifier) >= 0){
-            window.location = links[i].href;
+          var text = links[i].textContent || links[i].innerText || "";
+          if(text.toLowerCase().indexOf(modifier) >= 0){
+            links[i].click();
             break;
           }
         }
