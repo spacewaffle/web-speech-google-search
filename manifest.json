@@ -15,6 +15,7 @@
   // "chrome_url_overrides" : {
   //   "newtab": "home.html"
   // },
+  "options_page": "options.html",
   "browser_action": {
     "default_icon": "N_48px.png"
   },
