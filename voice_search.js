@@ -19,7 +19,7 @@ var commands = {
   "stop": ["stock", "stop", "star"],
   "new": ["utah", "newtown", "new", "new tab"],
   "reload": ["refresh", "rephresh", "reload", "realtor", "reloj"],
-  "back": ["fack", "facts", "back", "fac", "bass"],
+  "back": ["fack", "facts", "back", "fac", "bass", "beck"],
   "close": ["post", "lowes", "contact", "clothes", "quotev", "close tab",
                 "close", "first ave"],
   "previous": ["reviews", "sirius", "prius", "paris", "previous"],
