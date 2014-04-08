@@ -2,6 +2,7 @@
 console.log('running background.js');
 var is_sending, tab_id, auto_start = true, popup_id = -1;
 
+//function for opening a new window
 function new_window(){
   chrome.windows.getCurrent(function(window) {
     chrome.windows.create({
