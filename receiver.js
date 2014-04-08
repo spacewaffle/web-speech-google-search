@@ -63,7 +63,7 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         else{
           $("html, body").animate({
             scrollTop: doc_height
-          }, doc_height*8, "linear");
+          }, doc_height*10, "linear");
         }
         break;
       case "scroll top":
