@@ -23,8 +23,10 @@ storage.get('custom_commands', function(items) {
       console.log(items["custom_commands"][i]);
 
       var command = " \
-        <button class='btn btn-default'>x</button>
-
+        <li>
+          <button class='btn btn-default'>x</button>
+          <strong>" + items['custom_commands'][i]. + "</strong>
+        </li>
       ";
       var div = document.getElementById("custom-command-list");
       div.inner_HTML = div.innerHTML +
