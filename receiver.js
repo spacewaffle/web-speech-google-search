@@ -34,7 +34,18 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         history.forward();
         break;
       case "go to":
-        window.location = search_url+modifier.replace(" ", "+")+"&btnI";
+        
+        //swap modifiers if there is a custom command
+        chrome.storage.sync.get('custom_commands', function(items){
+          for (var i = items["custom_commands"].length - 1; i >= 0; i--) {
+            var key = Object.keys(items["custom_commands"][i])[0];
+            if( modifier == key ){
+              modifier = items["custom_commands"][i][key];
+              break;
+            }
+          }
+          window.location = search_url+modifier.replace(" ", "+")+"&btnI";
+        });
         break;
       case "wiki":
         window.location = wiki_url+modifier.replace(" ", "+");
