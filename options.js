@@ -14,25 +14,47 @@ el_auto_start.addEventListener("change", function(){
 });
 
 //print out the existing custom commands we have
-storage.get('custom_commands', function(items) {
-  console.log(items);
-  console.log('printing out existing commands');
+function update_commands(){
 
-  if(items["custom_commands"]){
-    for (var i = 0; i < items["custom_commands"].length; i++) {
-      console.log(items["custom_commands"][i]);
+  storage.get('custom_commands', function(items) {
+    console.log(items);
+    console.log('printing out existing commands');
 
-      var command = " \
-        <li>
-          <button class='btn btn-default'>x</button>
-          <strong>" + items['custom_commands'][i]. + "</strong>
-        </li>
-      ";
+    if(items["custom_commands"]){
+      $('#custom-command-list').empty();
       var div = document.getElementById("custom-command-list");
-      div.inner_HTML = div.innerHTML +
+      for (var i = 0; i < items["custom_commands"].length; i++) {
+        console.log(items["custom_commands"][i]);
+
+        var command_key = Object.keys(items['custom_commands'][i])[0];
+        var command_val = items['custom_commands'][i][command_key];
+        var command = " \
+          <li> \
+            <button class='btn btn-default remove' data-command='" + command_key + "'>x</button> \
+            <strong>" + command_key + ": </strong> \
+            " + command_val + " \
+          </li> \
+        ";
+        div.innerHTML = div.innerHTML + command;
+      }
+
+      //setup click handlers for removing commands
+      $('.btn.remove').click(function(){
+        for (var i = items["custom_commands"].length - 1; i >= 0; i--) {
+          if(Object.keys(items["custom_commands"][i])[0] == this.dataset["command"]){
+            items["custom_commands"].splice(i, 1);
+            storage.set({ custom_commands: items["custom_commands"]}, function(){
+              update_commands();
+            });
+            break;
+          }
+        };
+      });
     }
-  }
-});
+  });
+}
+
+update_commands();
 
 var submit_command = document.getElementById("submit_command");
 submit_command.addEventListener("click", function(){
@@ -62,14 +84,15 @@ submit_command.addEventListener("click", function(){
     console.log(commands);
 
     //storing the new command
-    storage.set({'custom_commands': commands });
+    storage.set({'custom_commands': commands }, function(){
+      update_commands();
+    });
     console.log('finished setting commands');
 
     //resetting input fields
     document.getElementById("custom-command").value = "";
     document.getElementById("site-to-visit").value = "";
 
-
-
   });
 });
+
