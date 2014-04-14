@@ -134,9 +134,14 @@ startRecognition();
 
 //close Nat popup if all other chrome windows are closed
 chrome.windows.onRemoved.addListener(function(){
-  chrome.windows.getAll(function(some_array){
-    if(some_array.length == 1){
+  console.log("window removed");
+  chrome.windows.getAll({populate: true},function(some_array){
+  console.log("getting all windows");
+    console.log(some_array);
+    if(some_array.length == 1 && some_array[0].tabs.length == 1 && some_array[0].tabs[0].title == "Nat"){
       chrome.windows.remove(some_array[0].id);
     }
   });
 });
+
+

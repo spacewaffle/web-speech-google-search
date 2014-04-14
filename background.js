@@ -95,6 +95,18 @@ chrome.tabs.onUpdated.addListener(function(tab_id, info,tab){
   }
 });
 
+//open Nat popup if first window opened
+chrome.windows.onCreated.addListener(function(){
+  console.log("window added");
+  chrome.windows.getAll({populate: true},function(some_array){
+    console.log("getting all windows");
+    console.log(some_array.length);
+    if(some_array.length == 1){
+      new_window();
+    }
+  });
+});
+
 chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
   if( request.greeting === "action" ){
     chrome.tabs.sendMessage(tab_id, {greeting: "do_action",
