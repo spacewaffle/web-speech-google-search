@@ -22,7 +22,6 @@ function new_window(){
 //set the initial active tab
 chrome.tabs.query({active: true}, function(response){
   for (var i = response.length - 1; i >= 0; i--) {
-    console.log(response[i]);
     updateTabs(response[i]);
     break;
   }
@@ -39,7 +38,6 @@ chrome.tabs.query({}, function(response){
 //when switching tabs, switch which tab is considered the active tab
 chrome.tabs.onActivated.addListener(function(tab) {
   chrome.tabs.get(tab.tabId, function(tab){
-    console.log('tab activated');
     updateTabs(tab);
   });
 });
@@ -89,7 +87,6 @@ chrome.browserAction.onClicked.addListener(function() {
 chrome.tabs.onUpdated.addListener(function(tab_id, info,tab){
    console.log(info);
   if(info.status == "complete"){
-    console.log('tab updated');
 
     updateTabs(tab);
 
