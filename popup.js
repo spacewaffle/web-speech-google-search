@@ -131,3 +131,12 @@ function startRecognition(){
 }
 
 startRecognition();
+
+//close Nat popup if all other chrome windows are closed
+chrome.windows.onRemoved.addListener(function(){
+  chrome.windows.getAll(function(some_array){
+    if(some_array.length == 1){
+      chrome.windows.remove(some_array[0].id);
+    }
+  });
+});
