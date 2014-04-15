@@ -1,9 +1,9 @@
 //setup event listeners for tab switching
 console.log('running background.js');
-var is_sending, tab_id, auto_start = true, popup_id = -1;
+var is_sending, tab_id, popup_id = 0, auto_start, hide_on_start;
 
 //function for opening a new window
-function new_window(){
+function new_window(hide){
   chrome.windows.getCurrent(function(window) {
     chrome.windows.create({
         url: chrome.extension.getURL("popup.html"),
@@ -14,10 +14,31 @@ function new_window(){
         focused: true,
         type: "popup"
     }, function(new_window){
+      console.log("created new popup");
+      console.log(new_window);
       popup_id = new_window.id;
+      console.log("hide is " + hide);
+      if(hide){
+        console.log('attempting to hide popup');
+        chrome.windows.update(popup_id, {focused: false});
+      }
     });
   });
 }
+
+//check stored settings if we should start on launch
+chrome.storage.sync.get('auto_start', function(items) {
+
+  console.log("auto start is " + items["auto_start"]);
+  auto_start = items["auto_start"];
+  chrome.storage.sync.get('hide_on_start', function(items){
+    hide_on_start = items["hide_on_start"];
+  });
+  hide_on_start = hide_on_start || false;
+  if(auto_start === true){
+    new_window(hide_on_start);
+  }
+});
 
 //set the initial active tab
 chrome.tabs.query({active: true}, function(response){
@@ -50,22 +71,14 @@ var updateTabs = function(tab){
   }
 };
 
-//check stored settings if we should start on launch
-chrome.storage.sync.get('auto_start', function(items) {
-
-  console.log("auto start is " + items["auto_start"]);
-  if(items["auto_start"] == true){
-    new_window();
-  }
-});
-
 
 //event listeners
 
 //reset the popup id if it was closed
 chrome.windows.onRemoved.addListener(function(id){
+  console.log("window closed event");
   if(popup_id == id){
-    popup_id = -1;
+    popup_id = 0;
   }
 });
 
@@ -74,8 +87,8 @@ chrome.browserAction.onClicked.addListener(function() {
 
   console.log("popup_id is " + popup_id);
   //open the popup when icon clicked if it isn't open already
-  if(popup_id < 0){
-    new_window();
+  if(popup_id <= 0){
+    new_window(false);
   }
   //otherwise focus the window
   else{
@@ -85,7 +98,6 @@ chrome.browserAction.onClicked.addListener(function() {
 
 //add jquery and receiver to new tabs or refreshed tabs
 chrome.tabs.onUpdated.addListener(function(tab_id, info,tab){
-   console.log(info);
   if(info.status == "complete"){
 
     updateTabs(tab);
@@ -95,20 +107,34 @@ chrome.tabs.onUpdated.addListener(function(tab_id, info,tab){
   }
 });
 
-//open Nat popup if first window opened
+chrome.windows.onFocusChanged.addListener(function(window_id){
+  console.log("focus changed to window with id" + window_id);
+});
+
+//open Nat popup if first window opened and chrome is already running
 chrome.windows.onCreated.addListener(function(){
-  console.log("window added");
-  chrome.windows.getAll({populate: true},function(some_array){
-    console.log("getting all windows");
-    console.log(some_array.length);
+  console.log("window added event");
+  chrome.windows.getAll(function(some_array){
+    console.log("checking if this is the only window open " + some_array.length );
     if(some_array.length == 1){
-      new_window();
+      new_window(hide_on_start);
     }
   });
 });
 
 chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
-  if( request.greeting === "action" ){
+  console.log("REQUEST RECEIVED");
+  console.log(request);
+  if(request.greeting === "option_updated"){
+    window_vars = Object.keys(window);
+    for(var i in window_vars){
+      if(window_vars[i] == request.name){
+        window[request.name] = request.value;
+        break;
+      }
+    }
+  }
+  else if( request.greeting === "action" ){
     chrome.tabs.sendMessage(tab_id, {greeting: "do_action",
                                       action: request.action,
                                       modifier: request.modifier,

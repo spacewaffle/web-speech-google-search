@@ -7,10 +7,35 @@ storage.get('auto_start', function(items) {
   }
 });
 
+storage.get('hide_on_start', function(items) {
+  //check stored settings if we should hide the window on start
+  if(items["hide_on_start"]){
+    document.getElementById('hide_on_start').checked = true;
+  }
+});
+
+function updateOptions(name, value){
+  chrome.extension.sendMessage({
+    greeting: "option_updated",
+    name: name,
+    value: value
+  });
+}
+
+//whenever the user checks or unchecks hide_on_start, update their settings
+var el_hide_on_start= document.getElementById("hide_on_start");
+el_hide_on_start.addEventListener("change", function(){
+  storage.set({'hide_on_start': el_hide_on_start.checked});
+  //send a message to background to update the variable
+  updateOptions("hide_on_start", el_hide_on_start.checked);
+});
+
 //whenever the user checks or unchecks auto_start, update their settings
 var el_auto_start = document.getElementById("auto_start");
 el_auto_start.addEventListener("change", function(){
   storage.set({'auto_start': el_auto_start.checked});
+  //send a message to background to update the variable
+  updateOptions("auto_start", el_auto_start.checked);
 });
 
 //print out the existing custom commands we have
