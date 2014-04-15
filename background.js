@@ -33,11 +33,12 @@ chrome.storage.sync.get('auto_start', function(items) {
   auto_start = items["auto_start"];
   chrome.storage.sync.get('hide_on_start', function(items){
     hide_on_start = items["hide_on_start"];
+    hide_on_start = hide_on_start || false;
+    if(auto_start === true){
+      console.log("relaunching as hidden");
+      new_window(hide_on_start);
+    }
   });
-  hide_on_start = hide_on_start || false;
-  if(auto_start === true){
-    new_window(hide_on_start);
-  }
 });
 
 //set the initial active tab
