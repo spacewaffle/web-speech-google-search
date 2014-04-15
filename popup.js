@@ -29,7 +29,7 @@ var commands = {
                 "close", "first ave"],
   "previous": ["reviews", "sirius", "prius", "paris", "previous"],
   "next": ["sex", "next"],
-  "scroll up": ["scroll up", "skrillex", "scrilla", "screw up"],
+  "scroll up": ["scroll up", "skrillex", "scrilla", "screw up", "throw up"],
   "scroll down": ["scroll down", "screw down"],
   "scroll top": ["scroll top", "scroll to top", "scrub tops", "scrolled hop", "scroll hop"],
   "scroll bottom": ["scroll bottom", "scroll to bottom"],
