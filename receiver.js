@@ -55,35 +55,35 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         break;
       case "scroll up":
         if(modifier.indexOf("fast") >= 0){
-          $("html, body").animate({
+          $("html, body").stop().animate({
             scrollTop: 0
           }, doc_height*3, "linear");
         }
         else{
-          $("html, body").animate({
+          $("html, body").stop().animate({
             scrollTop: 0
           }, doc_height*5, "linear");
         }
         break;
       case "scroll down":
         if(modifier.indexOf("fast") >= 0){
-          $("html, body").animate({
+          $("html, body").stop().animate({
             scrollTop: doc_height
           }, doc_height*3, "linear");
         }
         else{
-          $("html, body").animate({
+          $("html, body").stop().animate({
             scrollTop: doc_height
           }, doc_height*10, "linear");
         }
         break;
       case "scroll top":
-        $("html, body").animate({
+        $("html, body").stop().animate({
           scrollTop: 0
         }, 300, "linear");
         break;
       case "scroll bottom":
-        $("html, body").animate({
+        $("html, body").stop().animate({
           scrollTop: doc_height
         }, 1000, "linear");
         break;
