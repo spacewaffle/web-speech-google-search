@@ -199,6 +199,7 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
             console.log("title is" + response[i].title.toLowerCase());
             if(response[i].title.toLowerCase().indexOf(modifier) >= 0 ){
               chrome.tabs.update(response[i].id, {selected: true});
+              chrome.windows.update(response[i]["windowId"], {focused: true});
               check_url = false;
               break;
             }
@@ -219,6 +220,7 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
               console.log("hostname is " + hostname);
               if(hostname.indexOf(modifier) >= 0 ){
                 chrome.tabs.update(response[i].id, {selected: true});
+                chrome.windows.update(response[i]["windowId"], {focused: true});
                 break;
               }
             }
