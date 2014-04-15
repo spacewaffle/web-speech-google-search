@@ -34,7 +34,7 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         history.forward();
         break;
       case "go to":
-        
+
         //swap modifiers if there is a custom command
         chrome.storage.sync.get('custom_commands', function(items){
           for (var i = items["custom_commands"].length - 1; i >= 0; i--) {
@@ -88,14 +88,14 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         }, 1000, "linear");
         break;
       case "stop":
-        if(last_action == "scroll down"){
-          $("html, body").stop().animate({
-            scrollTop: $("body").scrollTop()-200
-          }, 1000);
-        }
-        else if(last_action == "scroll up"){
+       if(last_action == "scroll up"){
           $("html, body").stop().animate({
             scrollTop: $("body").scrollTop()+200
+          }, 1000);
+        }
+        else{
+          $("html, body").stop().animate({
+            scrollTop: $("body").scrollTop()-200
           }, 1000);
         }
         break;
