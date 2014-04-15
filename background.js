@@ -60,7 +60,10 @@ chrome.tabs.query({}, function(response){
 //when switching tabs, switch which tab is considered the active tab
 chrome.tabs.onActivated.addListener(function(tab) {
   chrome.tabs.get(tab.tabId, function(tab){
-    updateTabs(tab);
+    if(tab){
+      updateTabs(tab);
+      console.log("switching to tab " + tab["id"]);
+    }
   });
 });
 
@@ -69,6 +72,7 @@ var updateTabs = function(tab){
   if(tab.url.substring(0,15) != "chrome-devtools"){
     //set the tab_id of the current tab
     tab_id = tab.id;
+    console.log("tab_id is " + tab_id);
   }
 };
 
@@ -108,8 +112,19 @@ chrome.tabs.onUpdated.addListener(function(tab_id, info,tab){
   }
 });
 
+//check when the window focus changes and update the current tab
 chrome.windows.onFocusChanged.addListener(function(window_id){
-  console.log("focus changed to window with id" + window_id);
+  console.log("focus changed to window with id " + window_id);
+  chrome.windows.get(window_id, {populate: true}, function (window){
+    if(window){
+      for (var i = 0; i < window.tabs.length; i++) {
+        if(window.tabs[i]["active"] === true){
+          updateTabs(window.tabs[i]);
+          console.log("focused tab id is " + window.tabs[i]["id"]);
+        }
+      }
+    }
+  });
 });
 
 //open Nat popup if first window opened and chrome is already running
