@@ -28,9 +28,9 @@ var commands = {
   "next": ["sex", "next"],
   "scroll up": ["scroll up", "skrillex", "scrilla", "screw up"],
   "scroll down": ["scroll down", "screw down"],
-  "scroll": ["screw", "scrabble", "throwdown", "troll", "scroll"],
-  "scroll top": ["scroll top", "scroll to top"],
+  "scroll top": ["scroll top", "scroll to top", "scrub tops", "scrolled hop", "scroll hop"],
   "scroll bottom": ["scroll bottom", "scroll to bottom"],
+  "scroll": ["screw", "scrabble", "throwdown", "troll", "scroll"],
   "pause": ["popeyes", "pies", "pods", "odds", "pause"],
   "play": ["play"]
 };
