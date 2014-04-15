@@ -13,8 +13,10 @@ var commands = {
   "open": ["open"],
   "go to": ["goto", "go to"],
   "search": ["search"],
-  "forward": ["forward"],
+  "switch": ["switch", "switch 2", "switch to"],
   "wiki": ["wiki"],
+  //"click": ["click", "clique", "quick"],
+  "forward": ["forward"],
   "repeat": ["repeat"],
   "stop": ["stock", "stop", "star"],
   "new": ["utah", "newtown", "new", "new tab"],
@@ -30,9 +32,7 @@ var commands = {
   "scroll top": ["scroll top", "scroll to top"],
   "scroll bottom": ["scroll bottom", "scroll to bottom"],
   "pause": ["popeyes", "pies", "pods", "odds", "pause"],
-  "play": ["play"],
-  "switch": ["switch", "switch 2", "switch to"],
-  "click": ["click", "clique", "quick"]
+  "play": ["play"]
 };
 
 console.log('loading voice search js');
