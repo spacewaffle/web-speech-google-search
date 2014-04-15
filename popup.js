@@ -16,6 +16,9 @@ var commands = {
   "switch": ["switch", "switch 2", "switch to"],
   "wiki": ["wiki"],
   //"click": ["click", "clique", "quick"],
+
+  //Commands that take modifiers should ALWAYS COME FIRST
+  //This is to prevent other actions from grabbing the modifiers
   "forward": ["forward"],
   "repeat": ["repeat"],
   "stop": ["stock", "stop", "star"],
