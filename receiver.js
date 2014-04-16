@@ -93,10 +93,13 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
             scrollTop: $("body").scrollTop()+200
           }, 1000);
         }
-        else{
+        else if(last_action == "scroll down"){
           $("html, body").stop().animate({
             scrollTop: $("body").scrollTop()-200
           }, 1000);
+        }
+        else{
+          $("html, body").stop();
         }
         break;
       case "play":
