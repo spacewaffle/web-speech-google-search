@@ -8,9 +8,9 @@ function new_window(hide){
     chrome.windows.create({
         url: chrome.extension.getURL("popup.html"),
         width: 475,
-        height: 675,
+        height: 750,
         left: window.left + window.width - 475,
-        top: window.top,
+        top: window.top + 100,
         focused: true,
         type: "popup"
     }, function(new_window){

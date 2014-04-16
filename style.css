@@ -10,10 +10,12 @@ section{
   text-align: center;
 }
 
+/*bootstrap styles*/
+
 .dl-horizontal{
   font-size: 15px;
 }
-/*styles for horizonal descriptions*/
+
 .dl-horizontal dt {
   float: left;
   width: 160px;
@@ -27,12 +29,21 @@ section{
 
 .dl-horizontal dd {
   margin-left: 180px;
+  min-height: 18px;
 }
 
 dt, dd{
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
-/*styles for horizonal descriptions*/
+
+ul{
+  list-style: none;
+}
+
+li{
+  margin-bottom: 10px;
+}
+/* bootstrap styles */
 
 
 #waiting_dialogue, #accepted_dialogue, #denied_dialogue{
@@ -155,7 +166,7 @@ dt, dd{
   opacity: 0.6;
 }
 
-.prev_commands{
+.header{
   margin-bottom: 5px;
 }
 

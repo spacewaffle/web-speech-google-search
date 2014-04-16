@@ -29,7 +29,7 @@
   </div>
   <section class="commands">
     <div>
-      <h4 class="prev_commands">Previous commands: </h4>
+      <h4 class="header">Previous commands: </h4>
     </div>
     <div>
       <span id="input"></span>
@@ -39,35 +39,37 @@
     </div>
   </section>
   <section>
-    <h3>Commands:</h3>
+    <h3 class="header">Commands:</h3>
     <dl class="dl-horizontal">
       <dt>New tab</dt>
       <dd>Create a new tab</dd>
-      <dt>Go to [site name]</dt>
-      <dd>Browse to [site name]</dd>
+      <dt>Go to [site name]*</dt>
+      <dd>Browse to [site name]<br>"Go to facebook"</dd>
       <dt>Search [phrase]</dt>
       <dd>Google searches [phrase]</dd>
       <dt>Open [link name]</dt>
-      <dd>Open this link on the current page</dd>
+      <dd>Clicks a link. If the name is long, only one or two unique words are necessary
+        <br> For a link named, "Ten movies you must watch!", "Open ten movies" will work
+      </dd>
       <dt>Close</dt>
       <dd>Closes the current tab</dd>
       <dt>Switch to [tab name]</dt>
-      <dd>Switch to this tab</dd>
+      <dd>Switch to this tab. Only one or two unique words are necessary</dd>
       <dt>Reload</dt>
       <dd>Reload the current page</dd>
       <dt>Back</dt>
-      <dd></dd>
+      <dd>Back button</dd>
       <dt>Forward</dt>
-      <dd></dd>
+      <dd>Forward button</dd>
+    </dl>
+
+    <h3 class="header">Advanced Commands:</h3>
+    <dl class="dl-horizontal">
       <dt>Wiki [word or phrase]</dt>
       <dd>Search wikipedia for [phrase]</dd>
-      <dt>Next</dt>
-      <dd>Switch to the tab to the right of the current tab</dd>
-      <dt>Previous</dt>
-      <dd>Switch to the tab to the left of the current tab</dd>
-      <dt>Scroll down (fast)</dt>
+      <dt>Scroll down</dt>
       <dd>Scroll down the page. Use "Scroll down fast" to scroll faster</dd>
-      <dt>Scroll up (fast)</dt>
+      <dt>Scroll up</dt>
       <dd>Scroll up the page. Use "Scroll up fast" to scroll faster</dd>
       <dt>Stop</dt>
       <dd>Stops scrolling</dd>
@@ -77,7 +79,22 @@
       <dd>Scroll quickly to the bottom of the page</dd>
       <dt>Repeat</dt>
       <dd>Repeat the last command</dd>
+      <dt>Next</dt>
+      <dd>Switch to the tab to the right of the current tab</dd>
+      <dt>Previous</dt>
+      <dd>Switch to the tab to the left of the current tab</dd>
     </dl>
+    <h3 class="header">Pro Features:</h3>
+    <sub>Note: These features have not been built yet. If you have a pro account, you'll get these as soon as they're released</sub>
+    <ul>
+      <li>Multi-language support</li>
+      <li>Site specific integration (Reddit commands, Facebook commands, etc. I'm open to suggestions)</li>
+      <li>Window manipulation commands (close window, new window, etc.)</li>
+      <li>Bookmark commands</li>
+      <li>Integrated command indicator</li>
+      <li>Call phones with voice commands</li>
+    </ul>
+
   </section>
 <script type="text/javascript" src="jquery-2.1.0.min.js"></script>
 <script type="text/javascript" src="popup.js"></script>
