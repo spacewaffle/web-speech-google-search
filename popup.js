@@ -53,10 +53,19 @@ function startRecognition(){
   recognition.onstart = function(event){
     started = true;
     console.log(event);
-    document.getElementById("dialogue").style.display = "none";
+    document.getElementById("waiting_dialogue").style.display = "none";
+    document.getElementById("denied_dialogue").style.display = "none";
+    document.getElementById("accepted_dialogue").style.display = "block";
+
   };
 
   recognition.onresult = function (event) {
+
+    //shine the listening dialogue
+    $('.effect').addClass('active');
+    window.setTimeout(function(){
+      $('.effect').removeClass('active');
+    }, 1700);
 
     action = "";
     modifier = "";
@@ -142,7 +151,9 @@ function startRecognition(){
     }
     else{
       //let the user know that the service isn't live because they didn't accept the dialogue.
-      alert("Whoops, it looks like you hit deny instead of allow! You'll need to go to Settings > search media, click content settings, click manage exceptions, find the chrome extension, and click the X next to the blocked entry.");
+      document.getElementById("waiting_dialogue").style.display = "none";
+      document.getElementById("accepted_dialogue").style.display = "none";
+      document.getElementById("denied_dialogue").style.display = "block";
     }
   };
 }
