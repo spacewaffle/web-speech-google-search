@@ -41,6 +41,31 @@ var commands = {
   "play": ["play"]
 };
 
+
+function sendResponse(action, modifier, last_action, last_modifier){
+  console.log('action is ' + action);
+  console.log('modifier is ' + modifier);
+
+  if(action == "repeat"){
+    chrome.extension.sendMessage({greeting: "action",
+                                  action: last_action,
+                                  modifier: last_modifier,
+                                  last_action: last_action,
+                                  last_modifier: last_modifier
+                                });
+  }
+  else{
+    chrome.extension.sendMessage({greeting: "action",
+                                  action: action,
+                                  modifier: modifier,
+                                  last_action: last_action,
+                                  last_modifier: last_modifier
+                                });
+    last_action = action;
+    last_modifier = modifier;
+  }
+}
+
 console.log('loading voice search js');
 function startRecognition(){
   console.log('starting recognition');
@@ -110,28 +135,19 @@ function startRecognition(){
     }
 
     if(listening){
-      console.log('action is ' + action);
-      console.log('modifier is ' + modifier);
-
-      if(action == "repeat"){
-        chrome.extension.sendMessage({greeting: "action",
-                                      action: last_action,
-                                      modifier: last_modifier,
-                                      last_action: last_action,
-                                      last_modifier: last_modifier
-                                    });
-      }
-      else{
-        chrome.extension.sendMessage({greeting: "action",
-                                      action: action,
-                                      modifier: modifier,
-                                      last_action: last_action,
-                                      last_modifier: last_modifier
-                                    });
-        last_action = action;
-        last_modifier = modifier;
-      }
-
+      chrome.windows.getCurrent({populate: false}, function(window){
+        console.log("window is ");
+        console.log(window);
+        if(window.focused === true){
+          //focus a different window if Nat is currently focused
+          chrome.windows.update(window.id, {focused: false}, function(){
+            sendResponse(action, modifier, last_action, last_modifier);
+          });
+        }
+        else{
+          sendResponse(action, modifier, last_action, last_modifier);
+        }
+      });
     }
 
     if(action == "stop listening"){
@@ -170,5 +186,4 @@ chrome.windows.onRemoved.addListener(function(){
     }
   });
 });
-
 
