@@ -1,17 +1,50 @@
 body{
   color: #333;
+  position: relative;
 }
 section{
   margin: 10px;
 }
+
+.center{
+  text-align: center;
+}
+
+.dl-horizontal{
+  font-size: 15px;
+}
+/*styles for horizonal descriptions*/
+.dl-horizontal dt {
+  float: left;
+  width: 160px;
+  clear: left;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+.dl-horizontal dd {
+  margin-left: 180px;
+}
+
+dt, dd{
+  margin-bottom: 5px;
+}
+/*styles for horizonal descriptions*/
+
 
 #waiting_dialogue, #accepted_dialogue, #denied_dialogue{
   text-align: center;
   padding: 10px 0;
 }
 
+
 #waiting_dialogue{
   background-color: #FCF8E3;
+  font-weight: bold;
+  color: #929292;
 }
 
 #accepted_dialogue{
@@ -19,12 +52,28 @@ section{
   color: #fff;
   background-color: #37C5F1;
   display: none;
-  position: relative;
   overflow: hidden;
 }
 #denied_dialogue{
   background-color: #F2DEDE;
+  text-align: left;
   display: none;
+}
+
+
+#waiting_dialogue, #accepted_dialogue{
+  position: fixed;
+  top: 0px;
+  width: 100%;
+}
+
+.denied_header{
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+#denied_dialogue li{
+  margin-bottom: 15px;
 }
 
 .effect {
@@ -94,4 +143,22 @@ section{
   background: -ms-linear-gradient(180deg, rgba(255,255,255,0) 0%,rgba(255,255,255,0.1) 29%,rgba(255,255,255,0.81) 93%,rgba(255,255,255,0.69) 94%,rgba(255,255,255,0) 100%); /* IE10+ */
   background: linear-gradient(180deg, rgba(255,255,255,0) 0%,rgba(255,255,255,0.1) 29%,rgba(255,255,255,0.81) 93%,rgba(255,255,255,0.69) 94%,rgba(255,255,255,0) 100%); /* W3C */
 
+}
+
+#input, #previous{
+  font-weight: bold;
+  font-size: 14px;
+  margin-left: 20px;
+}
+
+#previous{
+  opacity: 0.6;
+}
+
+.prev_commands{
+  margin-bottom: 5px;
+}
+
+.commands{
+  margin-top: 60px;
 }

@@ -53,10 +53,9 @@ function startRecognition(){
   recognition.onstart = function(event){
     started = true;
     console.log(event);
-    document.getElementById("waiting_dialogue").style.display = "none";
-    document.getElementById("denied_dialogue").style.display = "none";
-    document.getElementById("accepted_dialogue").style.display = "block";
-
+    $('#waiting_dialogue').hide();
+    $('#denied_dialogue').hide();
+    $('#accepted_dialogue').slideDown();
   };
 
   recognition.onresult = function (event) {
@@ -151,9 +150,9 @@ function startRecognition(){
     }
     else{
       //let the user know that the service isn't live because they didn't accept the dialogue.
-      document.getElementById("waiting_dialogue").style.display = "none";
-      document.getElementById("accepted_dialogue").style.display = "none";
-      document.getElementById("denied_dialogue").style.display = "block";
+      $('#waiting_dialogue').hide();
+      $('#denied_dialogue').slideDown();
+      $('#accepted_dialogue').hide();
     }
   };
 }

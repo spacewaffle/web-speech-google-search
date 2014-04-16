@@ -13,11 +13,23 @@
     Listening
   </div>
   <div id="denied_dialogue">
-    Whoops, it looks like you hit deny instead of allow! You'll need to go to Settings > search media, click content settings, click manage exceptions, find Nat in the list, and click the X next to the blocked entry.
+    <div class="denied_header">
+      Whoops, you denied Nat permission to listen for commands
+      <p>To fix this:</p>
+    </div>
+    <ul>
+      <li>Open Chrome's Settings </li>
+      <li>In the search bar in the top right corner, search 'microphone'</li>
+      <li>Click 'Content settings'</li>
+      <li>Scroll down to the Microphone section at the bottom and click "Manage Exceptions"</li>
+      <li>Find all lines starting with "chrome-extension://" and click the 'x' to remove them from the block list</li>
+      <li>Close and re-open Nat</li>
+      <li>Click 'Allow' after Nat re-opens</li>
+    </ul>
   </div>
-  <section>
+  <section class="commands">
     <div>
-      <span>Last two commands: </span>
+      <h4 class="prev_commands">Previous commands: </h4>
     </div>
     <div>
       <span id="input"></span>
@@ -28,26 +40,44 @@
   </section>
   <section>
     <h3>Commands:</h3>
-    <ul>
-      <li>Go to [site name]</li>
-      <li>Search [word or phrase]</li>
-      <li>Open [part* of link name]</li>
-      <li>New tab: creates a new tab</li>
-      <li>Close: closes the current tab</li>
-      <li>Switch (to) [part of tab name]</li>
-      <li>Reload</li>
-      <li>Back</li>
-      <li>Forward</li>
-      <li>Wiki [word or phrase]</li>
-      <li>Next (tab)</li>
-      <li>Previous (tab)</li>
-      <li>Scroll down (fast): scroll down a page</li>
-      <li>Scroll up (fast): scroll up a page</li>
-      <li>Stop: stops scrolling</li>
-      <li>Scroll top</li>
-      <li>Scroll bottom</li>
-      <li>Repeat: repeats last command</li>
-    </ul>
+    <dl class="dl-horizontal">
+      <dt>New tab</dt>
+      <dd>Create a new tab</dd>
+      <dt>Go to [site name]</dt>
+      <dd>Browse to [site name]</dd>
+      <dt>Search [phrase]</dt>
+      <dd>Google searches [phrase]</dd>
+      <dt>Open [link name]</dt>
+      <dd>Open this link on the current page</dd>
+      <dt>Close</dt>
+      <dd>Closes the current tab</dd>
+      <dt>Switch to [tab name]</dt>
+      <dd>Switch to this tab</dd>
+      <dt>Reload</dt>
+      <dd>Reload the current page</dd>
+      <dt>Back</dt>
+      <dd></dd>
+      <dt>Forward</dt>
+      <dd></dd>
+      <dt>Wiki [word or phrase]</dt>
+      <dd>Search wikipedia for [phrase]</dd>
+      <dt>Next</dt>
+      <dd>Switch to the tab to the right of the current tab</dd>
+      <dt>Previous</dt>
+      <dd>Switch to the tab to the left of the current tab</dd>
+      <dt>Scroll down (fast)</dt>
+      <dd>Scroll down the page. Use "Scroll down fast" to scroll faster</dd>
+      <dt>Scroll up (fast)</dt>
+      <dd>Scroll up the page. Use "Scroll up fast" to scroll faster</dd>
+      <dt>Stop</dt>
+      <dd>Stops scrolling</dd>
+      <dt>Scroll top</dt>
+      <dd>Scroll quickly to the top of the page</dd>
+      <dt>Scroll bottom</dt>
+      <dd>Scroll quickly to the bottom of the page</dd>
+      <dt>Repeat</dt>
+      <dd>Repeat the last command</dd>
+    </dl>
   </section>
 <script type="text/javascript" src="jquery-2.1.0.min.js"></script>
 <script type="text/javascript" src="popup.js"></script>
