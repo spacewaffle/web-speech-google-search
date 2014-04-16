@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <head>
   <title>Nat</title>
+  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <section id="dialogue">
-  Accept the dialogue above to start listening. Leave this window open and Nat will listen. Close when you're done.
-  </section>
+  <div id="waiting_dialogue">
+    Waiting for permission to listen
+  </div>
+  <div id="accepted_dialogue">
+    <span class="effect"></span>
+    Listening
+  </div>
+  <div id="denied_dialogue">
+    Whoops, it looks like you hit deny instead of allow! You'll need to go to Settings > search media, click content settings, click manage exceptions, find Nat in the list, and click the X next to the blocked entry.
+  </div>
   <section>
     <div>
-      <span>Last heard: </span><span id="input"></span>
+      <span>Last two commands: </span>
     </div>
     <div>
-      <span>Previous command: </span><span id="previous"></span>
+      <span id="input"></span>
+    </div>
+    <div>
+      <span id="previous"></span>
     </div>
   </section>
   <section>
@@ -37,6 +49,7 @@
       <li>Repeat: repeats last command</li>
     </ul>
   </section>
+<script type="text/javascript" src="jquery-2.1.0.min.js"></script>
 <script type="text/javascript" src="popup.js"></script>
 </body>
 </html>
