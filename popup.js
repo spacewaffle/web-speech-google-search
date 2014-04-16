@@ -4,6 +4,7 @@ var recognition;
 var last_action = "",
 last_modifier = "";
 var started = false;
+var listening = true;
 
 
 //style guide
@@ -21,6 +22,8 @@ var commands = {
   //This is to prevent other actions from grabbing the modifiers
   "forward": ["forward"],
   "repeat": ["repeat"],
+  "stop listening": ["stop listening"],
+  "start listening": ["start listening"],
   "stop": ["stock", "stop", "star"],
   "new": ["utah", "newtown", "new", "new tab"],
   "reload": ["refresh", "rephresh", "reload", "realtor", "reloj"],
@@ -33,7 +36,7 @@ var commands = {
   "scroll down": ["scroll down", "screw down"],
   "scroll top": ["scroll top", "scroll to top", "scrub tops", "scrolled hop", "scroll hop"],
   "scroll bottom": ["scroll bottom", "scroll to bottom"],
-  "scroll": ["screw", "scrabble", "throwdown", "troll", "scroll"],
+  //"scroll": ["screw", "scrabble", "throwdown", "troll", "scroll"],
   "pause": ["popeyes", "pies", "pods", "odds", "pause"],
   "play": ["play"]
 };
@@ -98,27 +101,38 @@ function startRecognition(){
       }
     }
 
-    console.log('action is ' + action);
-    console.log('modifier is ' + modifier);
+    if(listening){
+      console.log('action is ' + action);
+      console.log('modifier is ' + modifier);
 
-    if(action == "repeat"){
-      chrome.extension.sendMessage({greeting: "action",
-                                    action: last_action,
-                                    modifier: last_modifier,
-                                    last_action: last_action,
-                                    last_modifier: last_modifier
-                                  });
+      if(action == "repeat"){
+        chrome.extension.sendMessage({greeting: "action",
+                                      action: last_action,
+                                      modifier: last_modifier,
+                                      last_action: last_action,
+                                      last_modifier: last_modifier
+                                    });
+      }
+      else{
+        chrome.extension.sendMessage({greeting: "action",
+                                      action: action,
+                                      modifier: modifier,
+                                      last_action: last_action,
+                                      last_modifier: last_modifier
+                                    });
+        last_action = action;
+        last_modifier = modifier;
+      }
+
     }
-    else{
-      chrome.extension.sendMessage({greeting: "action",
-                                    action: action,
-                                    modifier: modifier,
-                                    last_action: last_action,
-                                    last_modifier: last_modifier
-                                  });
-      last_action = action;
-      last_modifier = modifier;
+
+    if(action == "stop listening"){
+      listening = false;
     }
+    else if(action == "start listening"){
+      listening = true;
+    }
+
   };
 
   recognition.onend = function() {
