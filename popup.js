@@ -66,6 +66,14 @@ function sendResponse(action, modifier, last_action, last_modifier){
   }
 }
 
+    //shine the listening dialogue
+ window.setInterval(function(){
+  $('.effect').addClass('active');
+  window.setTimeout(function(){
+    $('.effect').removeClass('active');
+  }, 1700);
+ }, 7000);
+
 console.log('loading voice search js');
 function startRecognition(){
   console.log('starting recognition');
@@ -84,12 +92,6 @@ function startRecognition(){
   };
 
   recognition.onresult = function (event) {
-
-    //shine the listening dialogue
-    $('.effect').addClass('active');
-    window.setTimeout(function(){
-      $('.effect').removeClass('active');
-    }, 1700);
 
     action = "";
     modifier = "";
@@ -152,9 +154,19 @@ function startRecognition(){
 
     if(action == "stop listening"){
       listening = false;
+      $('#accepted_text').html("Paused");
+      $('#accepted_dialogue').css({
+                                    "background-color": "#FFF1A9",
+                                    "color": "#888",
+                                  });
     }
     else if(action == "start listening"){
       listening = true;
+      $('#accepted_text').html("Listening");
+      $('#accepted_dialogue').css({
+                                    "background-color": "#37C5F1",
+                                    "color": "#fff",
+                                  });
     }
 
   };
