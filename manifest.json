@@ -2,9 +2,9 @@
   "manifest_version": 2,
 
   "name": "Nat Voice Commands",
-  "short_name": "Nat"
+  "short_name": "Nat",
   "description": "Voice commands for Chrome. Browse the web effortlessly using only your voice",
-  "version": "1.0",
+  "version": "1.0.1",
   "permissions": [
     "tabs",
     "storage",
