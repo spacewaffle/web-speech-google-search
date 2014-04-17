@@ -1,8 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "Nat",
-  "description": "Allows Chrome users to google search via voice, and navigate back and forward in browser history",
+  "name": "Nat Voice Commands",
+  ""
+  "description": "Voice commands for Chrome. Browse the web effortlessly using only your voice",
   "version": "1.0",
   "permissions": [
     "tabs",
@@ -12,9 +13,6 @@
   "background": {
     "scripts": ["background.js"]
   },
-  // "chrome_url_overrides" : {
-  //   "newtab": "home.html"
-  // },
   "options_page": "options.html",
   "browser_action": {
     "default_icon": "N_48px.png"
