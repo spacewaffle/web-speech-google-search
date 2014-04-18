@@ -8,7 +8,8 @@
   "permissions": [
     "tabs",
     "storage",
-    "<all_urls>"
+    "<all_urls>",
+    "https://www.googleapis.com/"
   ],
   "background": {
     "scripts": ["background.js"]
@@ -16,6 +17,13 @@
   "options_page": "options.html",
   "browser_action": {
     "default_icon": "N_48px.png"
+  },
+  "oauth2": {
+    "client_id": "558559751604-r6knnadh89pckgqi3d2mip34h25cpnbe.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/plus.login",
+      "https://www.googleapis.com/auth/chromewebstore.readonly"
+    ]
   },
   "icons":{
     "16": "N_48px.png",
