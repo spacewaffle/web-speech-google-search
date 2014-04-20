@@ -42,24 +42,26 @@ var commands = {
 };
 
 
-function sendResponse(action, modifier, last_action, last_modifier){
+function sendResponse(action, modifier, last_act, last_mod){
   console.log('action is ' + action);
   console.log('modifier is ' + modifier);
+  console.log('last action is ' + last_act);
+  console.log('last modifier is ' + last_mod);
 
   if(action == "repeat"){
     chrome.extension.sendMessage({greeting: "action",
-                                  action: last_action,
-                                  modifier: last_modifier,
-                                  last_action: last_action,
-                                  last_modifier: last_modifier
+                                  action: last_act,
+                                  modifier: last_mod,
+                                  last_action: last_act,
+                                  last_modifier: last_mod
                                 });
   }
   else{
     chrome.extension.sendMessage({greeting: "action",
                                   action: action,
                                   modifier: modifier,
-                                  last_action: last_action,
-                                  last_modifier: last_modifier
+                                  last_action: last_act,
+                                  last_modifier: last_mod
                                 });
     last_action = action;
     last_modifier = modifier;
@@ -199,7 +201,7 @@ chrome.windows.onRemoved.addListener(function(){
   });
 });
 
-
+/*
 jso_configure({
   "google": {
     client_id: "558559751604-r6knnadh89pckgqi3d2mip34h25cpnbe.apps.googleusercontent.com",
@@ -210,7 +212,7 @@ jso_configure({
 
 // if (!confirm('Continue')) return;
 
-// Make sure that you have 
+// Make sure that you have
 jso_ensureTokens({
   // "facebook": ["read_stream"],
   "google": ["https://www.googleapis.com/auth/userinfo.profile"],
@@ -247,3 +249,5 @@ $.oajax({
     console.log(data);
   }
 });
+
+*/
