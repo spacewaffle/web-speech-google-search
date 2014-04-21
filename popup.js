@@ -201,26 +201,29 @@ chrome.windows.onRemoved.addListener(function(){
   });
 });
 
-/*
-jso_configure({
-  "google": {
-    client_id: "558559751604-r6knnadh89pckgqi3d2mip34h25cpnbe.apps.googleusercontent.com",
-    authorization: "https://accounts.google.com/o/oauth2/auth",
-    isDefault: true
-  }
-});
+
+// jso_configure({
+//   "google": {
+//     client_id: "558559751604-r6knnadh89pckgqi3d2mip34h25cpnbe.apps.googleusercontent.com",
+//     authorization: "https://accounts.google.com/o/oauth2/auth",
+//     redirect_uri: "chrome-extension://fccpillfgjfodcadfgkljpchmacnponl/popup.html",
+//     isDefault: true
+//   }
+// });
 
 // if (!confirm('Continue')) return;
 
 // Make sure that you have
+/*
 jso_ensureTokens({
   // "facebook": ["read_stream"],
   "google": ["https://www.googleapis.com/auth/userinfo.profile"],
   // "instagram": ["basic", "likes"]
 });
+*/
 
 // This dumps all cached tokens to console, for easyer debugging.
-jso_dump();
+//jso_dump();
 
 // Perform a data request
 // $.oajax({
@@ -238,16 +241,14 @@ jso_dump();
 // });
 
 // Perform a data request
-$.oajax({
-  url: "https://www.googleapis.com/oauth2/v1/userinfo",
-  jso_provider: "google",
-  jso_allowia: true,
-  jso_scopes: ["https://www.googleapis.com/auth/userinfo.profile"],
-  dataType: 'json',
-  success: function(data) {
-    console.log("Response (google):");
-    console.log(data);
-  }
-});
-
-*/
+// $.oajax({
+//   url: "https://www.googleapis.com/oauth2/v2/userinfo",
+//   jso_provider: "google",
+//   jso_allowia: true,
+//   jso_scopes: ["https://www.googleapis.com/auth/userinfo.profile"],
+//   dataType: 'json',
+//   success: function(data) {
+//     console.log("Response (google):");
+//     console.log(data);
+//   }
+// });
