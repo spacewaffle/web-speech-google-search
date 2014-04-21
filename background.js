@@ -151,12 +151,7 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
     }
   }
   else if( request.greeting === "action" ){
-    chrome.tabs.sendMessage(tab_id, {greeting: "do_action",
-                                      action: request.action,
-                                      modifier: request.modifier,
-                                      last_action: request.last_action,
-                                      last_modifier: request.last_modifier
-                                    });
+
     console.log('action is ' + request.action);
     console.log('modifier is ' + request.modifier);
     console.log('last_action is ' + request.last_action);
@@ -164,6 +159,14 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
     var action = request.action;
     var modifier = request.modifier;
     switch(action){
+      default:
+        chrome.tabs.sendMessage(tab_id, {greeting: "do_action",
+                                    action: request.action,
+                                    modifier: request.modifier,
+                                    last_action: request.last_action,
+                                    last_modifier: request.last_modifier
+                                  });
+        break;
       case "new":
         chrome.tabs.create({url: "https://google.com"});
         break;
@@ -227,6 +230,19 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
           }
         });
         break;
+      // Only execute pro features if the user has a pro license
+      case "wiki":
+      case "stop listening":
+      case "start listening":
+        if(pro_license){
+          chrome.tabs.sendMessage(tab_id, {greeting: "do_action",
+                            action: request.action,
+                            modifier: request.modifier,
+                            last_action: request.last_action,
+                            last_modifier: request.last_modifier
+                          });
+        }
+        break;
     }
   }
 });
@@ -245,7 +261,7 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
 var CWS_LICENSE_API_URL = 'https://www.googleapis.com/chromewebstore/v1.1/userlicenses/';
 
 function init() {
-  chrome.storage.get("license_last_checked", function(items){
+  chrome.storage.sync.get("license_last_checked", function(items){
 
     //if the license check is more than two days old, check it again
     var d = new Date();
@@ -254,7 +270,7 @@ function init() {
       getLicense();
     }
     else{
-      chrome.storage.get("pro_license", function(items){
+      chrome.storage.sync.get("pro_license", function(items){
         if(items["pro_license"]){
           pro_license = true;
         }
