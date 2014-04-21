@@ -1,3 +1,6 @@
+(function(){
+
+
 //setup event listeners for tab switching
 console.log('running background.js');
 var is_sending, tab_id, popup_id = 0, auto_start, hide_on_start, pro_license = false;
@@ -364,3 +367,4 @@ function xhrWithAuth(method, url, interactive, callback) {
 
 init();
 
+})();

@@ -1,3 +1,4 @@
+(function(){
 var storage = chrome.storage.sync;
 
 var pro_license = false;
@@ -160,3 +161,4 @@ submit_command.addEventListener("click", function(){
   }
 });
 
+})();

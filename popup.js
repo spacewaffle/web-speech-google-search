@@ -1,3 +1,5 @@
+(function(){
+
 var action;
 var modifier;
 var recognition;
@@ -211,3 +213,5 @@ option.addEventListener("click", function(){
   //open the options page in a new tab in a different window
   chrome.tabs.create({url: "chrome-extension://mnkjdemkpmiamhjdbbiihomainhabeob/options.html"});
 });
+
+})();
