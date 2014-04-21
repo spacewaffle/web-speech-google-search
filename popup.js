@@ -1,12 +1,17 @@
 var action;
 var modifier;
 var recognition;
-var last_action = "",
-last_modifier = "";
+var last_action = "";
+var last_modifier = "";
 var started = false;
 var listening = true;
+var pro_license = false;
 
-
+chrome.storage.sync.get("pro_license", function(items){
+  if(items["pro_license"] == true){
+    pro_license = true;
+  }
+});
 //style guide
 //Make sure if error commands are multiple words, that the multi-word commands go at the end.
 //This is to prevent extra words from being included in the modifier that should be in the action
