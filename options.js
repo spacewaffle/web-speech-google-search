@@ -2,15 +2,33 @@ var storage = chrome.storage.sync;
 
 storage.get('auto_start', function(items) {
   //check stored settings if we should start on launch
-  if(items["auto_start"]){
+  if(items["auto_start"] !== undefined){
+    if(items["auto_start"]){
+      document.getElementById('auto_start').checked = true;
+    }
+  }
+  else{
+    //auto_start hasn't been defined
     document.getElementById('auto_start').checked = true;
+    storage.set({'auto_start': el_auto_start.checked});
+    //send a message to background to update the variable
+    updateOptions("auto_start", el_auto_start.checked);
   }
 });
 
 storage.get('hide_on_start', function(items) {
   //check stored settings if we should hide the window on start
-  if(items["hide_on_start"]){
-    document.getElementById('hide_on_start').checked = true;
+  if(items["auto_start"] !== undefined){
+    if(items["hide_on_start"]){
+      document.getElementById('hide_on_start').checked = true;
+    }
+  }
+  else{
+    //hide_on_start hasn't been defined
+    storage.set({'hide_on_start': false});
+    //send a message to background to update the variable
+    updateOptions("hide_on_start", false);
+
   }
 });
 
@@ -75,6 +93,10 @@ function update_commands(){
           }
         };
       });
+    }
+    else{
+      //commands haven't been set yet
+      storage.set({ custom_commands: []});
     }
   });
 }
