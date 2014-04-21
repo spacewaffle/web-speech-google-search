@@ -243,10 +243,17 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
 *****************************************************************************************/
 
 var CWS_LICENSE_API_URL = 'https://www.googleapis.com/chromewebstore/v1.1/userlicenses/';
-var TRIAL_PERIOD_DAYS = 2;
 
 function init() {
-  getLicense();
+  chrome.storage.get("license_last_checked", function(items){
+
+    //if the license check is more than two days old, check it again
+    var d = new Date();
+    d.setDate(d.getDate()-2);
+    if(items["license_last_checked"] === undefined || items["license_last_checked"] < d){
+      getLicense();
+    }
+  });
 }
 
 /*****************************************************************************
@@ -276,28 +283,15 @@ function onLicenseFetched(error, status, response) {
 *****************************************************************************/
 
 function parseLicense(license) {
-  var licenseStatus;
-  var licenseStatusText;
+  var d = new Date();
+  chrome.storage.sync.set({"license_last_checked": d});
   if (license.result && license.accessLevel == "FULL") {
     console.log("Fully paid & properly licensed.");
-    licenseStatusText = "FULL";
-    licenseStatus = "alert-success";
-  } else if (license.result && license.accessLevel == "FREE_TRIAL") {
-    var daysAgoLicenseIssued = Date.now() - parseInt(license.createdTime, 10);
-    daysAgoLicenseIssued = daysAgoLicenseIssued / 1000 / 60 / 60 / 24;
-    if (daysAgoLicenseIssued <= TRIAL_PERIOD_DAYS) {
-      console.log("Free trial, still within trial period");
-      licenseStatusText = "FREE_TRIAL";
-      licenseStatus = "alert-info";
-    } else {
-      console.log("Free trial, trial period expired.");
-      licenseStatusText = "FREE_TRIAL_EXPIRED";
-      licenseStatus = "alert-warning";
-    }
-  } else {
-    console.log("No license ever issued.");
-    licenseStatusText = "NONE";
-    licenseStatus = "alert-danger";
+    chrome.storage.sync.set({"pro_license": true});
+  }
+  else {
+    console.log("Free trial, still within trial period");
+    chrome.storage.sync.set({"pro_license": false});
   }
 }
 
@@ -310,7 +304,7 @@ function xhrWithAuth(method, url, interactive, callback) {
   var retry = true;
   getToken();
 
-  function getToken() {
+  function getToken(){
     console.log("Calling chrome.identity.getAuthToken", interactive);
     chrome.identity.getAuthToken({ interactive: interactive }, function(token) {
       if (chrome.runtime.lastError) {
