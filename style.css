@@ -43,6 +43,60 @@ ul{
 li{
   margin-bottom: 10px;
 }
+
+.btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid rgba(0, 0, 0, 0);
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.btn-default {
+  color: #333;
+  background-color: #FFF;
+  border-color: #CCC;
+}
+
+.btn-info {
+  color: #FFF;
+  background-color: #37C5F1;
+  border-color: #46B8DA;
+}
+
+.btn-primary {
+  color: #FFF;
+  background-color: #428BCA;
+  border-color: #357EBD;
+}
+
+.btn-warning {
+  color: #FFF;
+  background-color: #F0AD4E;
+  border-color: #EEA236;
+}
+
+.fr{
+  float: right;
+}
+
+.btn-lh{
+  line-height: 35px;
+}
+
+
 /* bootstrap styles */
 
 
@@ -173,3 +227,15 @@ li{
 .commands{
   margin-top: 60px;
 }
+
+
+/************* OPTIONS PAGE *****************/
+.pro_locked{
+  display: none;
+}
+
+.pro_msg{
+  height: 25px;
+}
+
+/************* OPTIONS PAGE *****************/
