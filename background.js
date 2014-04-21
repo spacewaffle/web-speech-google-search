@@ -1,6 +1,6 @@
 //setup event listeners for tab switching
 console.log('running background.js');
-var is_sending, tab_id, popup_id = 0, auto_start, hide_on_start;
+var is_sending, tab_id, popup_id = 0, auto_start, hide_on_start, pro_license = false;
 
 //function for opening a new window
 function new_window(hide){
@@ -253,6 +253,13 @@ function init() {
     if(items["license_last_checked"] === undefined || items["license_last_checked"] < d){
       getLicense();
     }
+    else{
+      chrome.storage.get("pro_license", function(items){
+        if(items["pro_license"]){
+          pro_license = true;
+        }
+      });
+    }
   });
 }
 
@@ -288,10 +295,12 @@ function parseLicense(license) {
   if (license.result && license.accessLevel == "FULL") {
     console.log("Fully paid & properly licensed.");
     chrome.storage.sync.set({"pro_license": true});
+    pro_license = true;
   }
   else {
     console.log("Free trial, still within trial period");
     chrome.storage.sync.set({"pro_license": false});
+    pro_license = false;
   }
 }
 
