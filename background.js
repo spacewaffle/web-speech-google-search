@@ -72,7 +72,7 @@ var updateTabs = function(tab){
   if(tab.url.substring(0,15) != "chrome-devtools"){
     //set the tab_id of the current tab
     tab_id = tab.id;
-    console.log("tab_id is " + tab_id);
+    //console.log("tab_id is " + tab_id);
   }
 };
 
@@ -114,13 +114,13 @@ chrome.tabs.onUpdated.addListener(function(tab_id, info,tab){
 
 //check when the window focus changes and update the current tab
 chrome.windows.onFocusChanged.addListener(function(window_id){
-  console.log("focus changed to window with id " + window_id);
+  //console.log("focus changed to window with id " + window_id);
   chrome.windows.get(window_id, {populate: true}, function (window){
     if(window){
       for (var i = 0; i < window.tabs.length; i++) {
         if(window.tabs[i]["active"] === true){
           updateTabs(window.tabs[i]);
-          console.log("focused tab id is " + window.tabs[i]["id"]);
+          //console.log("focused tab id is " + window.tabs[i]["id"]);
         }
       }
     }
@@ -129,9 +129,9 @@ chrome.windows.onFocusChanged.addListener(function(window_id){
 
 //open Nat popup if first window opened and chrome is already running
 chrome.windows.onCreated.addListener(function(){
-  console.log("window added event");
+  //console.log("window added event");
   chrome.windows.getAll(function(some_array){
-    console.log("checking if this is the only window open " + some_array.length );
+    //console.log("checking if this is the only window open " + some_array.length );
     if(some_array.length == 1){
       new_window(hide_on_start);
     }
@@ -231,3 +231,72 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
   }
 });
 
+
+// var oauth = ChromeExOAuth.initBackgroundPage({
+//   'request_url': 'https://www.google.com/accounts/OAuthGetRequestToken',
+//   'authorize_url': 'https://www.google.com/accounts/OAuthAuthorizeToken',
+//   'access_url': 'https://www.google.com/accounts/OAuthGetAccessToken',
+//   'consumer_key': 'anonymous',
+//   'consumer_secret': 'anonymous',
+//   'scope': 'https://www.googleapis.com/auth/plus.me',
+//   'app_name': 'Nat Voice Commands'
+// });
+
+// function callback(resp, xhr) {
+//   // ... Process text response ...
+//   console.log("signed request response: ");
+//   console.log(resp);
+//   console.log('xhr used to make request: ');
+//   console.log(xhr);
+// }
+
+// function onAuthorized(response) {
+//   var url = 'https://accounts.google.com/o/oauth2/auth';
+
+//   var request = {
+//     'method': 'GET',
+//     'parameters': {
+//       'response_type': "token",
+//       "scope": "https://www.googleapis.com/auth/plus.me",
+//       "client_id": "558559751604-ci8he1nsgo81bgf6q3qda8o6513cbt5q.apps.googleusercontent.com",
+//       "redirect_uri": "chrome-extension://mnkjdemkpmiamhjdbbiihomainhabeob/background.html"
+//     }
+//   };
+//   console.log('authorize response');
+//   console.log(response);
+//   oauth.sendSignedRequest(url, callback, request);
+// }
+
+// oauth.authorize(onAuthorized);
+
+chrome.identity.getAuthToken({ interactive: true }, function(authToken){
+  if (chrome.runtime.lastError) {
+    console.log(chrome.runtime.lastError);
+    return;
+  }
+
+  token = authToken;
+  console.log("token is");
+  console.log(token);
+  start();
+});
+
+function start() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", 'https://www.googleapis.com');
+  xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+  xhr.responseType = 'json';
+  xhr.onload = onLoad;
+  xhr.send(null);
+}
+
+function onLoad() {
+  if (this.status == 401 && retry) {
+    retry = false;
+    chrome.identity.removeCachedAuthToken({ token: token }, getToken);
+  }
+  else {
+    console.log(this.status);
+    console.log(this.response);
+  }
+}
