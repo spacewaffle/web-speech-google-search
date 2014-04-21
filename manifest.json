@@ -4,7 +4,7 @@
   "name": "Nat Voice Commands",
   "short_name": "Nat",
   "description": "Voice commands for Chrome. Browse the web effortlessly using only your voice",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "permissions": [
     "tabs",
     "storage",
