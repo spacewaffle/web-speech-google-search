@@ -12,7 +12,7 @@
     "<all_urls>"
   ],
   "background": {
-    "page": "background.html"
+    "scripts": ["background.js"]
   },
   "options_page": "options.html",
   "browser_action": {
@@ -21,7 +21,7 @@
   "oauth2": {
     "client_id": "558559751604-ci8he1nsgo81bgf6q3qda8o6513cbt5q.apps.googleusercontent.com",
     "scopes": [
-      "https://www.googleapis.com/auth/chromewebstore"
+      "https://www.googleapis.com/auth/chromewebstore.readonly"
     ]
   },
   "icons":{

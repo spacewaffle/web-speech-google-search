@@ -232,71 +232,116 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
 });
 
 
-// var oauth = ChromeExOAuth.initBackgroundPage({
-//   'request_url': 'https://www.google.com/accounts/OAuthGetRequestToken',
-//   'authorize_url': 'https://www.google.com/accounts/OAuthAuthorizeToken',
-//   'access_url': 'https://www.google.com/accounts/OAuthGetAccessToken',
-//   'consumer_key': 'anonymous',
-//   'consumer_secret': 'anonymous',
-//   'scope': 'https://www.googleapis.com/auth/plus.me',
-//   'app_name': 'Nat Voice Commands'
-// });
+/****************************************************************************************
+*                                                                                       *
+*  This is Google's implementation of one-time-payments in apps and extensions          *
+*                                                                                       *
+*  Kudos to the great example here:                                                     *
+*  https://github.com/GoogleChrome/chrome-app-samples/tree/master/one-time-payment      *
+*                                                                                       *
+*                                                                                       *
+*****************************************************************************************/
 
-// function callback(resp, xhr) {
-//   // ... Process text response ...
-//   console.log("signed request response: ");
-//   console.log(resp);
-//   console.log('xhr used to make request: ');
-//   console.log(xhr);
-// }
+var CWS_LICENSE_API_URL = 'https://www.googleapis.com/chromewebstore/v1.1/userlicenses/';
+var TRIAL_PERIOD_DAYS = 2;
 
-// function onAuthorized(response) {
-//   var url = 'https://accounts.google.com/o/oauth2/auth';
-
-//   var request = {
-//     'method': 'GET',
-//     'parameters': {
-//       'response_type': "token",
-//       "scope": "https://www.googleapis.com/auth/plus.me",
-//       "client_id": "558559751604-ci8he1nsgo81bgf6q3qda8o6513cbt5q.apps.googleusercontent.com",
-//       "redirect_uri": "chrome-extension://mnkjdemkpmiamhjdbbiihomainhabeob/background.html"
-//     }
-//   };
-//   console.log('authorize response');
-//   console.log(response);
-//   oauth.sendSignedRequest(url, callback, request);
-// }
-
-// oauth.authorize(onAuthorized);
-
-chrome.identity.getAuthToken({ interactive: true }, function(authToken){
-  if (chrome.runtime.lastError) {
-    console.log(chrome.runtime.lastError);
-    return;
-  }
-
-  token = authToken;
-  console.log("token is");
-  console.log(token);
-  start();
-});
-
-function start() {
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", 'https://www.googleapis.com');
-  xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-  xhr.responseType = 'json';
-  xhr.onload = onLoad;
-  xhr.send(null);
+function init() {
+  getLicense();
 }
 
-function onLoad() {
-  if (this.status == 401 && retry) {
-    retry = false;
-    chrome.identity.removeCachedAuthToken({ token: token }, getToken);
-  }
-  else {
-    console.log(this.status);
-    console.log(this.response);
+/*****************************************************************************
+* Call to license server to request the license
+*****************************************************************************/
+
+function getLicense() {
+  xhrWithAuth('GET', CWS_LICENSE_API_URL + chrome.runtime.id, true, onLicenseFetched);
+}
+
+function onLicenseFetched(error, status, response) {
+  console.log(error, status, response);
+  response = JSON.parse(response);
+  if (status === 200) {
+    parseLicense(response);
+  } else {
+    console.log("error reading server");
   }
 }
+
+/*****************************************************************************
+* Parse the license and determine if the user should get a free trial
+*  - if license.accessLevel == "FULL", they've paid for the app
+*  - if license.accessLevel == "FREE_TRIAL" they haven't paid
+*    - If they've used the app for less than TRIAL_PERIOD_DAYS days, free trial
+*    - Otherwise, the free trial has expired
+*****************************************************************************/
+
+function parseLicense(license) {
+  var licenseStatus;
+  var licenseStatusText;
+  if (license.result && license.accessLevel == "FULL") {
+    console.log("Fully paid & properly licensed.");
+    licenseStatusText = "FULL";
+    licenseStatus = "alert-success";
+  } else if (license.result && license.accessLevel == "FREE_TRIAL") {
+    var daysAgoLicenseIssued = Date.now() - parseInt(license.createdTime, 10);
+    daysAgoLicenseIssued = daysAgoLicenseIssued / 1000 / 60 / 60 / 24;
+    if (daysAgoLicenseIssued <= TRIAL_PERIOD_DAYS) {
+      console.log("Free trial, still within trial period");
+      licenseStatusText = "FREE_TRIAL";
+      licenseStatus = "alert-info";
+    } else {
+      console.log("Free trial, trial period expired.");
+      licenseStatusText = "FREE_TRIAL_EXPIRED";
+      licenseStatus = "alert-warning";
+    }
+  } else {
+    console.log("No license ever issued.");
+    licenseStatusText = "NONE";
+    licenseStatus = "alert-danger";
+  }
+}
+
+/*****************************************************************************
+* Helper method for making authenticated requests
+*****************************************************************************/
+
+// Helper Util for making authenticated XHRs
+function xhrWithAuth(method, url, interactive, callback) {
+  var retry = true;
+  getToken();
+
+  function getToken() {
+    console.log("Calling chrome.identity.getAuthToken", interactive);
+    chrome.identity.getAuthToken({ interactive: interactive }, function(token) {
+      if (chrome.runtime.lastError) {
+        callback(chrome.runtime.lastError);
+        return;
+      }
+      console.log("chrome.identity.getAuthToken returned a token", token);
+      access_token = token;
+      requestStart();
+    });
+  }
+
+  function requestStart() {
+    var xhr = new XMLHttpRequest();
+    xhr.open(method, url);
+    xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+    xhr.onload = requestComplete;
+    xhr.send();
+  }
+
+  function requestComplete() {
+    if (this.status == 401 && retry) {
+      retry = false;
+      chrome.identity.removeCachedAuthToken({ token: access_token },
+                                            getToken);
+    } else {
+      callback(null, this.status, this.response);
+    }
+  }
+}
+
+
+init();
+
