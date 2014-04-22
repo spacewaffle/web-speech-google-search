@@ -46,8 +46,8 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
                 break;
               }
             }
-            window.location = search_url+modifier.replace(" ", "+")+"&btnI";
           }
+          window.location = search_url+modifier.replace(" ", "+")+"&btnI";
         });
         break;
       case "wiki":
