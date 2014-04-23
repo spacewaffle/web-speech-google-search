@@ -5,47 +5,53 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Options</h1>
-  <section>
-    <div class="checkbox form-group">
-      <label>
-        <input id="auto_start" type="checkbox"> Enable auto-start on browser start
-      </label>
-    </div>
-  </section>
-    <section>
-    <div class="checkbox form-group">
-      <label>
-        <input id="hide_on_start" type="checkbox"> Hide Nat on browser start
-      </label>
-    </div>
-  </section>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-6 col-xs-offset-3 module">
+        <div class="options-header"><img src="icon_48x48.png" alt="nat_icon" class="option-logo"><h1 class="ib options-header-text">Options</h1></div>
+        <section>
+          <div class="checkbox form-group">
+            <label>
+              <input id="auto_start" type="checkbox"> Enable auto-start on browser start
+            </label>
+          </div>
+        </section>
+          <section>
+          <div class="checkbox form-group">
+            <label>
+              <input id="hide_on_start" type="checkbox"> Hide Nat on browser start
+            </label>
+          </div>
+        </section>
 
-  <section>
-    <button id="go_pro" class="btn btn-warning"><strong>Upgrade to Pro for $5 / year</strong></button>
-  </section>
-  <section class="form-inline">
-    <h3>Custom commands</h3>
-    <div class="form-group">
-      <strong>
-        <label for="Custom Command">"Go to </label>
-      </strong>
-      <input id="custom-command" type="text" class="form-control" placeholder="face">
-      <strong>
-        " <label for="Custom Command" class="cust_cmd_2">will visit</label>
-      </strong>
-      <input id="site-to-visit" type="text" class="form-control" placeholder="facebook">
+        <section>
+          <button id="go_pro" class="btn btn-warning"><strong>Upgrade to Pro for $5 / year</strong></button>
+        </section>
+        <section class="form-inline">
+          <h3>Custom commands</h3>
+          <div class="form-group">
+            <strong>
+              <label for="Custom Command">"Go to </label>
+            </strong>
+            <input id="custom-command" type="text" class="form-control" placeholder="face">
+            <strong>
+              " <label for="Custom Command" class="cust_cmd_2">will visit</label>
+            </strong>
+            <input id="site-to-visit" type="text" class="form-control" placeholder="facebook">
+          </div>
+        </section>
+        <section>
+          <button id="submit_command" type="submit" class="btn btn-default">Create command</button>
+          <span class="pro_msg"><strong class="pro_locked">Please upgrade to pro to use this feature</strong></span>
+        </section>
+        <section>
+          <ul id="custom-command-list">
+            <!-- insert commands here -->
+          </ul>
+        </section>
+      </div>
     </div>
-  </section>
-  <section>
-    <button id="submit_command" type="submit" class="btn btn-default">Create command</button>
-    <span class="pro_msg"><strong class="pro_locked">Please upgrade to pro to use this feature</strong></span>
-  </section>
-  <section>
-    <ul id="custom-command-list">
-      <!-- insert commands here -->
-    </ul>
-  </section>
+  </div>
 
 </body>
 <script type="text/javascript" src="jquery-2.1.0.min.js"></script>
