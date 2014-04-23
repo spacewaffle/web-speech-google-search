@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
   <title>Nat Options</title>
-  <link rel="stylesheet" href="options.css">
+  <link rel="stylesheet" href="normalize.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,27 +20,33 @@
       </label>
     </div>
   </section>
-  <section>
-    <div class="form-group">
-      <label for="Custom Command">New voice command</label>
-      <input id="custom-command" type="text" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="Custom Command">Site to visit</label>
-      <input id="site-to-visit" type="text" class="form-control">
-    </div>
-    <button id="submit_command" type="submit" class="btn btn-default">Create command</button>
-    <div class="pro_msg"><div class="pro_locked">Please upgrade to pro to use this feature</div></div>
-  </section>
+
   <section>
     <button id="go_pro" class="btn btn-warning"><strong>Upgrade to Pro for $5 / year</strong></button>
   </section>
-  <section>
+  <section class="form-inline">
     <h3>Custom commands</h3>
+    <div class="form-group">
+      <strong>
+        <label for="Custom Command">"Go to </label>
+      </strong>
+      <input id="custom-command" type="text" class="form-control" placeholder="face">
+      <strong>
+        " <label for="Custom Command" class="cust_cmd_2">will visit</label>
+      </strong>
+      <input id="site-to-visit" type="text" class="form-control" placeholder="facebook">
+    </div>
+  </section>
+  <section>
+    <button id="submit_command" type="submit" class="btn btn-default">Create command</button>
+    <span class="pro_msg"><strong class="pro_locked">Please upgrade to pro to use this feature</strong></span>
+  </section>
+  <section>
     <ul id="custom-command-list">
       <!-- insert commands here -->
     </ul>
   </section>
+
 </body>
 <script type="text/javascript" src="jquery-2.1.0.min.js"></script>
 <script type="text/javascript" src="options.js"></script>
