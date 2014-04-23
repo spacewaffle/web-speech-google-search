@@ -161,7 +161,7 @@ function startRecognition(){
       });
     }
 
-    if(action == "stop listening"){
+    if(action == "stop listening" && pro_license){
       listening = false;
       $('#accepted_text').html("Paused");
       $('#accepted_dialogue').css({
@@ -169,7 +169,7 @@ function startRecognition(){
                                     "color": "#888",
                                   });
     }
-    else if(action == "start listening"){
+    else if(action == "start listening" && pro_license){
       listening = true;
       $('#accepted_text').html("Listening");
       $('#accepted_dialogue').css({
