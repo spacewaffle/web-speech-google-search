@@ -192,10 +192,10 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         }
         break;
       case "play":
-        $('video').play();
+        movie_player.playVideo();
         break;
       case "pause":
-        $('video').pause();
+        movie_player.pauseVideo();
         break;
     }
   }
