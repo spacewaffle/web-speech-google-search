@@ -44,7 +44,7 @@ var commands = {
   "scroll top": ["scroll top", "scroll to top", "scrub tops", "scrolled hop", "scroll hop"],
   "scroll bottom": ["scroll bottom", "scroll to bottom"],
   //"scroll": ["screw", "scrabble", "throwdown", "troll", "scroll"],
-  "pause": ["popeyes", "pies", "pods", "odds", "pause"],
+  "pause": ["popeyes", "pies", "pods", "odds", "pause", "pos"],
   "play": ["play"]
 };
 

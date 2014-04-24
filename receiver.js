@@ -176,26 +176,31 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
           scrollTop: doc_height
         }, 1000, "linear");
         break;
-      case "stop":
-       if(last_action == "scroll up"){
-          $("html, body").stop().animate({
-            scrollTop: $("body").scrollTop()+200
-          }, 1000);
-        }
-        else if(last_action == "scroll down"){
-          $("html, body").stop().animate({
-            scrollTop: $("body").scrollTop()-200
-          }, 1000);
-        }
-        else{
-          $("html, body").stop();
-        }
-        break;
+      // case "stop":
+      //  if(last_action == "scroll up"){
+      //     $("html, body").stop().animate({
+      //       scrollTop: $("body").scrollTop()+200
+      //     }, 1000);
+      //   }
+      //   else if(last_action == "scroll down"){
+      //     $("html, body").stop().animate({
+      //       scrollTop: $("body").scrollTop()-200
+      //     }, 1000);
+      //   }
+      //   else{
+      //     $("html, body").stop();
+      //   }
+      //   break;
       case "play":
-        movie_player.playVideo();
+        var evt=document.createEvent("CustomEvent");
+        evt.initCustomEvent("playEvent", true, true, {});
+        document.dispatchEvent(evt);
         break;
       case "pause":
-        movie_player.pauseVideo();
+      case "stop":
+        var evt2=document.createEvent("CustomEvent");
+        evt2.initCustomEvent("pauseEvent", true, true, {});
+        document.dispatchEvent(evt2);
         break;
     }
   }
