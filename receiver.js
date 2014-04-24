@@ -1,6 +1,7 @@
 (function(){
 var search_url = "https://www.google.com/search?q=";
 var wiki_url = "https://wikipedia.org/w/index.php?search=";
+var show_indicator = true;
 
 console.log('added receiver');
 
@@ -39,10 +40,16 @@ function showIndicator(input, callback){
   });
 }
 
-chrome.storage.sync.get("indicator", function(items){
-  if(items["indicator"] !== undefined && items["indicator"] !== null){
-    showIndicator(items["indicator"], function(){
-      chrome.storage.sync.set({"indicator": null});
+chrome.storage.sync.get("show_indicator", function(items){
+  show_indicator = items["show_indicator"] || false;
+  console.log("show indicator is " + show_indicator);
+  if(show_indicator === true){
+    chrome.storage.sync.get("indicator", function(items){
+      if(items["indicator"] !== undefined && items["indicator"] !== null){
+        showIndicator(items["indicator"], function(){
+          chrome.storage.sync.set({"indicator": null});
+        });
+      }
     });
   }
 });
@@ -54,11 +61,14 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
     var last_action = request.last_action;
     var last_modifier = request.last_modifier;
     var input = request.input;
+    show_indicator = request.show_indicator;
+    console.log("show indicator is " + show_indicator);
 
     console.log(action + " " + modifier);
 
-    showIndicator(input, function(){
-    });
+    if(show_indicator){
+      showIndicator(input);
+    }
 
     console.log(input);
 

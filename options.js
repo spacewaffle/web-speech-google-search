@@ -24,6 +24,22 @@ storage.get('auto_start', function(items) {
   }
 });
 
+storage.get('show_indicator', function(items) {
+  //check stored settings if we should start on launch
+  if(items["show_indicator"] !== undefined){
+    if(items["show_indicator"]){
+      document.getElementById('show_indicator').checked = true;
+    }
+  }
+  else{
+    //show_indicator hasn't been defined
+    document.getElementById('show_indicator').checked = true;
+    storage.set({'show_indicator': el_show_indicator.checked});
+    //send a message to background to update the variable
+    updateOptions("show_indicator", el_show_indicator.checked);
+  }
+});
+
 storage.get('hide_on_start', function(items) {
   //check stored settings if we should hide the window on start
   if(items["auto_start"] !== undefined){
@@ -63,6 +79,15 @@ el_auto_start.addEventListener("change", function(){
   //send a message to background to update the variable
   updateOptions("auto_start", el_auto_start.checked);
 });
+
+//whenever the user checks or unchecks show_indicator, update their settings
+var el_show_indicator = document.getElementById("show_indicator");
+el_show_indicator.addEventListener("change", function(){
+  storage.set({'show_indicator': el_show_indicator.checked});
+  //send a message to background to update the variable
+  updateOptions("show_indicator", el_show_indicator.checked);
+});
+
 
 //print out the existing custom commands we have
 function update_commands(){

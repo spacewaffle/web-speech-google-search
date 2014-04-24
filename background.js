@@ -3,7 +3,7 @@
 
 //setup event listeners for tab switching
 console.log('running background.js');
-var is_sending, tab_id, popup_id = 0, auto_start, hide_on_start, pro_license = false;
+var is_sending, tab_id, popup_id = 0, pro_license = false;
 
 //function for opening a new window
 function new_window(hide){
@@ -42,6 +42,12 @@ chrome.storage.sync.get('auto_start', function(items) {
       new_window(hide_on_start);
     }
   });
+});
+
+//check stored settings if we should show indicator
+chrome.storage.sync.get('show_indicator', function(items) {
+  console.log("show_indicator is " + items["show_indicator"]);
+  show_indicator = items["show_indicator"] || false;
 });
 
 //set the initial active tab
@@ -146,6 +152,8 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
   console.log(request);
   if(request.greeting === "option_updated"){
     window_vars = Object.keys(window);
+    console.log("window vars are ");
+    console.log(window_vars);
     for(var i in window_vars){
       if(window_vars[i] == request.name){
         window[request.name] = request.value;
@@ -169,6 +177,7 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
                                     action: request.action,
                                     modifier: request.modifier,
                                     input: request.input,
+                                    show_indicator: show_indicator,
                                     last_action: request.last_action,
                                     last_modifier: request.last_modifier
                                   });
@@ -245,6 +254,7 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
                             action: request.action,
                             modifier: request.modifier,
                             input: request.input,
+                            show_indicator: show_indicator,
                             last_action: request.last_action,
                             last_modifier: request.last_modifier
                           });
