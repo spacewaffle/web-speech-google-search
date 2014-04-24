@@ -1,7 +1,7 @@
 (function(){
 var storage = chrome.storage.sync;
 
-var pro_license = false;
+var pro_license = true;
 storage.get("pro_license", function(items){
   if(items["pro_license"]){
     pro_license = true;
