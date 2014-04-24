@@ -71,7 +71,6 @@ chrome.tabs.onActivated.addListener(function(tab) {
   chrome.tabs.get(tab.tabId, function(tab){
     if(tab){
       updateTabs(tab);
-      console.log("switching to tab " + tab["id"]);
     }
   });
 });
