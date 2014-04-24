@@ -1,7 +1,7 @@
 (function(){
 var search_url = "https://www.google.com/search?q=";
 var wiki_url = "https://wikipedia.org/w/index.php?search=";
-var show_indicator = true;
+var show_indicator = true, scroll_height = 600;
 
 console.log('added receiver');
 
@@ -145,24 +145,24 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
       case "scroll up":
         if(modifier.indexOf("fast") >= 0){
           $("html, body").stop().animate({
-            scrollTop: $(window).scrollTop() - 600
+            scrollTop: $(window).scrollTop() - scroll_height
           }, 500, "linear");
         }
         else{
           $("html, body").stop().animate({
-            scrollTop: $(window).scrollTop() - 600
+            scrollTop: $(window).scrollTop() - scroll_height
           }, 1000, "linear");
         }
         break;
       case "scroll down":
         if(modifier.indexOf("fast") >= 0){
           $("html, body").stop().animate({
-            scrollTop: $(window).scrollTop() + 600
+            scrollTop: $(window).scrollTop() + scroll_height
           }, 500, "linear");
         }
         else{
           $("html, body").stop().animate({
-            scrollTop: $(window).scrollTop() + 600
+            scrollTop: $(window).scrollTop() + scroll_height
           }, 1000, "linear");
         }
         break;
