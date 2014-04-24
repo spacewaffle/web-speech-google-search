@@ -4,13 +4,64 @@ var wiki_url = "https://wikipedia.org/w/index.php?search=";
 
 console.log('added receiver');
 
+//store an indicator to be displayed after the page loads
+function setIndicator(input, callback){
+  chrome.storage.sync.set({"indicator": input}, function(){
+    if(callback){
+      callback.call();
+    }
+  });
+}
+
+function showIndicator(input, callback){
+  var div = " \
+    <div style='position: fixed; \
+      display: none; \
+      bottom: 0px; \
+      right: 0px; \
+      max-width: 300px; \
+      max-height: 85px; \
+      background: rgba(55, 197, 241, 1); \
+      border-top-left-radius: 15px; \
+      z-index: 10000; \
+      padding: 15px; \
+      color: #333; \
+      font-size: 14px; \
+      overflow: hidden; \
+      font-weight: bold;'>" + input + "</div> \
+  ";
+
+  $(div).appendTo("body").fadeIn().delay(2000).fadeOut(500, function(){
+    //this.remove();
+    if(callback){
+      callback.call();
+    }
+  });
+}
+
+chrome.storage.sync.get("indicator", function(items){
+  if(items["indicator"] !== undefined && items["indicator"] !== null){
+    showIndicator(items["indicator"], function(){
+      chrome.storage.sync.set({"indicator": null});
+    });
+  }
+});
+
 chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
   if( request.greeting === "do_action" ){
     var action = request.action;
     var modifier = request.modifier;
     var last_action = request.last_action;
     var last_modifier = request.last_modifier;
+    var input = request.input;
+
     console.log(action + " " + modifier);
+
+    showIndicator(input, function(){
+    });
+
+    console.log(input);
+
     var doc_height = $(document).height();
     switch (action){
       case "click":
@@ -19,20 +70,28 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         for (var i = 0; i < links.length; i++) {
           var text = links[i].textContent || links[i].innerText || "";
           if(text.toLowerCase().indexOf(modifier) >= 0){
-            links[i].click();
+            setIndicator(input, function(){
+              links[i].click();
+            });
             break;
           }
         }
         break;
       case "search":
-        window.location = search_url+modifier.replace(" ", "+");
+        setIndicator(input, function(){
+          window.location = search_url+modifier.replace(" ", "+");
+        });
         break;
       case "back":
         //history.back doesn't do a full reload so no js :/
-        history.go(-1);
+        setIndicator(input, function(){
+          history.go(-1);
+        });
         break;
       case "forward":
-        history.forward();
+        setIndicator(input, function(){
+          history.forward();
+        });
         break;
       case "go to":
 
@@ -47,14 +106,20 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
               }
             }
           }
-          window.location = search_url+modifier.replace(" ", "+")+"&btnI";
+          setIndicator(input, function(){
+            window.location = search_url+modifier.replace(" ", "+")+"&btnI";
+          });
         });
         break;
       case "wiki":
-        window.location = wiki_url+modifier.replace(" ", "+");
+        setIndicator(input, function(){
+          window.location = wiki_url+modifier.replace(" ", "+");
+        });
         break;
       case "reload":
-        window.location = window.location;
+        setIndicator(input, function(){
+          window.location = window.location;
+        });
         break;
       case "scroll up":
         if(modifier.indexOf("fast") >= 0){

@@ -49,7 +49,7 @@ var commands = {
 };
 
 
-function sendResponse(action, modifier, last_act, last_mod){
+function sendResponse(action, modifier, input, last_act, last_mod){
   console.log('action is ' + action);
   console.log('modifier is ' + modifier);
   console.log('last action is ' + last_act);
@@ -59,6 +59,7 @@ function sendResponse(action, modifier, last_act, last_mod){
     chrome.extension.sendMessage({greeting: "action",
                                   action: last_act,
                                   modifier: last_mod,
+                                  input: input,
                                   last_action: last_act,
                                   last_modifier: last_mod
                                 });
@@ -67,6 +68,7 @@ function sendResponse(action, modifier, last_act, last_mod){
     chrome.extension.sendMessage({greeting: "action",
                                   action: action,
                                   modifier: modifier,
+                                  input: input,
                                   last_action: last_act,
                                   last_modifier: last_mod
                                 });
@@ -152,11 +154,11 @@ function startRecognition(){
         if(window.focused === true){
           //focus a different window if Nat is currently focused
           chrome.windows.update(window.id, {focused: false}, function(){
-            sendResponse(action, modifier, last_action, last_modifier);
+            sendResponse(action, modifier, input, last_action, last_modifier);
           });
         }
         else{
-          sendResponse(action, modifier, last_action, last_modifier);
+          sendResponse(action, modifier, input, last_action, last_modifier);
         }
       });
     }

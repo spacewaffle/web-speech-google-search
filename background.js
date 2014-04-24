@@ -155,10 +155,12 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
   }
   else if( request.greeting === "action" ){
 
+    console.log('input is ' + request.input);
     console.log('action is ' + request.action);
     console.log('modifier is ' + request.modifier);
     console.log('last_action is ' + request.last_action);
     console.log('last_modifier is ' + request.last_modifier);
+
     var action = request.action;
     var modifier = request.modifier;
     switch(action){
@@ -166,12 +168,15 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         chrome.tabs.sendMessage(tab_id, {greeting: "do_action",
                                     action: request.action,
                                     modifier: request.modifier,
+                                    input: request.input,
                                     last_action: request.last_action,
                                     last_modifier: request.last_modifier
                                   });
         break;
       case "new":
-        chrome.tabs.create({url: "https://google.com"});
+        chrome.storage.sync.set({"indicator": request.input}, function(){
+          chrome.tabs.create({url: "https://google.com"});
+        });
         break;
       case "close":
         chrome.tabs.remove(tab_id);
@@ -239,6 +244,7 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
           chrome.tabs.sendMessage(tab_id, {greeting: "do_action",
                             action: request.action,
                             modifier: request.modifier,
+                            input: request.input,
                             last_action: request.last_action,
                             last_modifier: request.last_modifier
                           });
