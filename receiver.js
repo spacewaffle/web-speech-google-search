@@ -202,6 +202,22 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         evt2.initCustomEvent("pauseEvent", true, true, {});
         document.dispatchEvent(evt2);
         break;
+      case "fast forward":
+        var evt=document.createEvent("CustomEvent");
+        evt.initCustomEvent("scrollEvent", true, true, {
+          seconds: modifier,
+          forward: true
+        });
+        document.dispatchEvent(evt);
+        break;
+      case "rewind":
+        var evt=document.createEvent("CustomEvent");
+        evt.initCustomEvent("scrollEvent", true, true, {
+          seconds: modifier,
+          forward: false
+        });
+        document.dispatchEvent(evt);
+        break;
     }
   }
 });

@@ -27,6 +27,8 @@ var commands = {
 
   //Commands that take modifiers should ALWAYS COME FIRST
   //This is to prevent other actions from grabbing the modifiers
+  "rewind": ["rewind"],
+  "fast forward": ["fast for", "fast forward", "fast forwards"],
   "forward": ["forward"],
   "repeat": ["repeat"],
   "stop listening": ["stop listening"],
@@ -45,7 +47,8 @@ var commands = {
   "scroll bottom": ["scroll bottom", "scroll to bottom"],
   //"scroll": ["screw", "scrabble", "throwdown", "troll", "scroll"],
   "pause": ["popeyes", "pies", "pods", "odds", "pause", "pos"],
-  "play": ["play"]
+  "play": ["play"],
+
 };
 
 
