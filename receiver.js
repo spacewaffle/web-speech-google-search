@@ -145,25 +145,25 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
       case "scroll up":
         if(modifier.indexOf("fast") >= 0){
           $("html, body").stop().animate({
-            scrollTop: 0
-          }, doc_height*3, "linear");
+            scrollTop: $(window).scrollTop() - 600
+          }, 500, "linear");
         }
         else{
           $("html, body").stop().animate({
-            scrollTop: 0
-          }, doc_height*5, "linear");
+            scrollTop: $(window).scrollTop() - 600
+          }, 1000, "linear");
         }
         break;
       case "scroll down":
         if(modifier.indexOf("fast") >= 0){
           $("html, body").stop().animate({
-            scrollTop: doc_height
-          }, doc_height*3, "linear");
+            scrollTop: $(window).scrollTop() + 600
+          }, 500, "linear");
         }
         else{
           $("html, body").stop().animate({
-            scrollTop: doc_height
-          }, doc_height*10, "linear");
+            scrollTop: $(window).scrollTop() + 600
+          }, 1000, "linear");
         }
         break;
       case "scroll top":
