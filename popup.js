@@ -35,6 +35,7 @@ var commands = {
   "stop listening": ["stop listening"],
   "start listening": ["start listening"],
   "stop": ["stock", "stop", "star"],
+  "new email": ["new email"],
   "new": ["utah", "newtown", "new", "new tab"],
   "reload": ["refresh", "rephresh", "reload", "realtor", "reloj"],
   "back": ["fack", "facts", "back", "fac", "bass", "beck"],
