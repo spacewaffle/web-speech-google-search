@@ -1,6 +1,7 @@
 (function(){
 var search_url = "https://www.google.com/search?q=";
 var wiki_url = "https://wikipedia.org/w/index.php?search=";
+var youtube_url = "https://www.youtube.com/results?search_query=";
 var show_indicator = true, scroll_height = 600;
 
 console.log('added receiver');
@@ -90,6 +91,11 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
       case "search":
         setIndicator(input, function(){
           window.location = search_url+modifier.replace(" ", "+");
+        });
+        break;
+      case "search":
+        setIndicator(input, function(){
+          window.location = youtube_url+modifier.replace(" ", "+");
         });
         break;
       case "back":

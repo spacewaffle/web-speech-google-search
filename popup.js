@@ -23,6 +23,7 @@ var commands = {
   "search": ["search"],
   "switch": ["switch", "switch 2", "switch to"],
   "wiki": ["wiki"],
+  "youtube": ["youtube"],
   //"click": ["click", "clique", "quick"],
 
   //Commands that take modifiers should ALWAYS COME FIRST
