@@ -3,7 +3,7 @@
 
 //setup event listeners for tab switching
 console.log('running background.js');
-var is_sending, tab_id, popup_id = 0, pro_license = false;
+var is_sending, tab_id, popup_id = 0, popup_tab_id = 0, pro_license = false;
 
 //function for opening a new window
 function new_window(hide){
@@ -20,6 +20,7 @@ function new_window(hide){
       console.log("created new popup");
       console.log(new_window);
       popup_id = new_window.id;
+      popup_tab_id = new_window.tabs[0].id;
       console.log("hide is " + hide);
       if(hide){
         console.log('attempting to hide popup');
@@ -77,10 +78,35 @@ chrome.tabs.onActivated.addListener(function(tab) {
 
 //update which tab is the active tab
 var updateTabs = function(tab){
-  if(tab.url.substring(0,15) != "chrome-devtools"){
+  var tab_url = tab.url.substring(0,15);
+  if( tab_url != "chrome-devtools" && tab.id != popup_tab_id){
     //set the tab_id of the current tab
     tab_id = tab.id;
-    //console.log("tab_id is " + tab_id);
+    console.log("tab_id is " + tab_id);
+  }
+  // if a dev tools window or Nat popup is selected
+  // switch the tab id to a different window
+  else{
+    console.log('finding an alternate tab');
+    chrome.windows.getAll({populate: true}, function(window_array){
+      out:
+      for (var i = 0; i < window_array.length; i++) {
+        for (var j = 0; j < window_array[i].tabs.length; j++) {
+          console.log("tab is " + window_array[i].tabs[j].id + " " + window_array[i].tabs[j].title);
+
+          if(window_array[i].tabs[j].active == true &&
+             //check if this is the active tab in the window
+             window_array[i].tabs[j].id != popup_tab_id &&
+             //check if this tab is the Nat popup
+             window_array[i].tabs[j].url.substring(0,15) != "chrome-devtools" ){
+             //check if this tab is a developer tools window
+            tab_id = window_array[i].tabs[j].id;
+            console.log('switched tab id is ' + tab_id);
+            break out;
+          }
+        }
+      }
+    });
   }
 };
 
@@ -92,6 +118,7 @@ chrome.windows.onRemoved.addListener(function(id){
   console.log("window closed event");
   if(popup_id == id){
     popup_id = 0;
+    popup_tab_id = 0;
   }
 });
 
