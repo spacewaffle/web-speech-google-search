@@ -93,7 +93,7 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
           window.location = search_url+modifier.replace(" ", "+");
         });
         break;
-      case "search":
+      case "youtube":
         setIndicator(input, function(){
           window.location = youtube_url+modifier.replace(" ", "+");
         });
