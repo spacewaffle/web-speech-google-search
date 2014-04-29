@@ -215,7 +215,7 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         break;
       case "new email":
         chrome.storage.sync.set({"indicator": request.input}, function(){
-          chrome.tabs.create({url: "mailto:?body=%0A%0ASent%20via%20Nat%20Voice%20Commands%20%0Ahttps://chrome.google.com/webstore/detail/nat-voice-commands/mnkjdemkpmiamhjdbbiihomainhabeob"});
+          chrome.tabs.create({url: "mailto:?body=%0A%0ASent%20from%20Nat%20Voice%20Commands%20%0Ahttps://chrome.google.com/webstore/detail/nat-voice-commands/mnkjdemkpmiamhjdbbiihomainhabeob"});
         });
         break;
       case "close":
