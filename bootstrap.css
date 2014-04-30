@@ -976,3 +976,9 @@ hr {
 .panel-default {
   border-color: #DDD;
 }
+.panel-heading{
+  background-color: #F5F5F5;
+}
+.panel-body{
+  border-top: 1px solid #DDD;
+}
