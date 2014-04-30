@@ -12,30 +12,12 @@ section{
 
 /*bootstrap styles*/
 
-.dl-horizontal{
-  font-size: 15px;
+strong[data-toggle="collapse"]{
+  cursor: pointer;
 }
-
-.dl-horizontal dt {
-  float: left;
-  width: 160px;
-  clear: left;
-  text-align: right;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-weight: bold;
+strong[data-toggle="collapse"]:hover{
+  text-decoration: underline;
 }
-
-.dl-horizontal dd {
-  margin-left: 180px;
-  min-height: 18px;
-}
-
-dt, dd{
-  margin-bottom: 10px;
-}
-
 ul{
   list-style: none;
 }
@@ -152,6 +134,7 @@ li{
 #waiting_dialogue, #accepted_dialogue, #denied_dialogue{
   text-align: center;
   padding: 10px 0;
+  z-index: 1;
 }
 
 
