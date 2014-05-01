@@ -293,6 +293,14 @@ dt, dd{
   text-decoration: underline;
 }
 
+.panel-no-margin{
+  margin: 0;
+}
+
+.leave_open_msg{
+  display: none;
+}
+
 
 /************* OPTIONS PAGE *****************/
 .pro_locked{

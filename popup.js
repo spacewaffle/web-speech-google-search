@@ -227,4 +227,21 @@ $('body').on('click.collapse-next.data-api', '[data-toggle=collapse-next]', func
     $target.collapse('toggle');
 });
 
+
+//Notify the user to keep the window open only when the extension is installed or updated
+function getVersion() {
+  var details = chrome.app.getDetails();
+  return details.version;
+}
+var currVersion = getVersion();
+var prevVersion = localStorage['version'];
+if (currVersion != prevVersion) {
+  // Check if we just installed or updated this extension.
+  $('.leave_open_msg').show();
+  window.setTimeout(function(){
+    $('.leave_open_msg').slideUp();
+  }, 3000);
+  localStorage['version'] = currVersion;
+}
+
 })();
