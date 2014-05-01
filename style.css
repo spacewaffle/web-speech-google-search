@@ -10,12 +10,16 @@ section{
   text-align: center;
 }
 
-/*bootstrap styles*/
-
-strong[data-toggle="collapse"]{
+a{
   cursor: pointer;
 }
-strong[data-toggle="collapse"]:hover{
+
+/*bootstrap styles*/
+
+strong[data-toggle="collapse-next"]{
+  cursor: pointer;
+}
+strong[data-toggle="collapse-next"]:hover{
   text-decoration: underline;
 }
 ul{
@@ -259,6 +263,30 @@ li{
 .commands{
   margin-top: 60px;
 }
+
+.dl-horizontal{
+  font-size: 15px;
+}
+
+.dl-horizontal dt {
+  float: left;
+  clear: left;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+.dl-horizontal dd {
+  min-height: 18px;
+}
+
+dt, dd{
+  margin-bottom: 10px;
+}
+
+
 
 
 /************* OPTIONS PAGE *****************/

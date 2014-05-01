@@ -215,10 +215,14 @@ chrome.windows.onRemoved.addListener(function(){
   });
 });
 
-var option = document.getElementById("options_link");
-option.addEventListener("click", function(){
+$(".options_link").on("click", function(){
   //open the options page in a new tab in a different window
   chrome.tabs.create({url: chrome.extension.getURL("options.html"),});
+});
+
+$('body').on('click.collapse-next.data-api', '[data-toggle=collapse-next]', function(e) {
+    var $target = $(this).parent().next();
+    $target.collapse('toggle');
 });
 
 })();
