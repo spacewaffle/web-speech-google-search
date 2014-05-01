@@ -69,6 +69,15 @@ function sendResponse(action, modifier, input, last_act, last_mod){
                                   last_modifier: last_mod
                                 });
   }
+  else if(action == ""){
+    chrome.extension.sendMessage({greeting: "action",
+                              action: action,
+                              modifier: modifier,
+                              input: input,
+                              last_action: last_action,
+                              last_modifier: last_modifier
+                            });
+  }
   else{
     chrome.extension.sendMessage({greeting: "action",
                                   action: action,
