@@ -286,7 +286,12 @@ dt, dd{
   margin-bottom: 10px;
 }
 
-
+.panel-heading{
+  cursor: pointer;
+}
+.panel-heading:hover{
+  text-decoration: underline;
+}
 
 
 /************* OPTIONS PAGE *****************/

@@ -220,8 +220,10 @@ $(".options_link").on("click", function(){
   chrome.tabs.create({url: chrome.extension.getURL("options.html"),});
 });
 
+
+//javascript for accordion functionality
 $('body').on('click.collapse-next.data-api', '[data-toggle=collapse-next]', function(e) {
-    var $target = $(this).parent().next();
+    var $target = $(this).next();
     $target.collapse('toggle');
 });
 
