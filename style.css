@@ -298,19 +298,18 @@ dt, dd{
 }
 
 .overlay{
+  display: none;
   position: fixed;
   width: 100%;
   height: 100%;
   top: 0px;
+  text-align: center;
   padding-top: 50px;
+  font-weight: bold;
   background-color: #F7F7F7;
   font-size: 20px;
   z-index: 1;
 }
-.leave_open_msg{
-  display: none;
-}
-
 
 /************* OPTIONS PAGE *****************/
 .pro_locked{

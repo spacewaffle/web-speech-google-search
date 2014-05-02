@@ -107,11 +107,17 @@ function startRecognition(){
   recognition.start();
   console.log("recognition is...");
   console.log(recognition);
+  window.setTimeout(function(){
+    if(!started){
+      $('#waiting_message').fadeIn();
+    }
+  }, 1000);
 
   recognition.onstart = function(event){
     started = true;
     console.log(event);
     $('#waiting_dialogue').hide();
+    $('#waiting_message').hide();
     $('#denied_dialogue').hide();
     $('#accepted_dialogue').slideDown();
   };
@@ -204,6 +210,7 @@ function startRecognition(){
     else{
       //let the user know that the service isn't live because they didn't accept the dialogue.
       $('#waiting_dialogue').hide();
+      $('#waiting_message').hide();
       $('#denied_dialogue').slideDown();
       $('#accepted_dialogue').hide();
     }
