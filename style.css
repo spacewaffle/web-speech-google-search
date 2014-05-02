@@ -153,6 +153,7 @@ li{
   font-weight: bold;
   color: #fff;
   background-color: #37C5F1;
+  height: 40px;
   display: none;
 }
 #denied_dialogue{
@@ -309,6 +310,39 @@ dt, dd{
   background-color: #F7F7F7;
   font-size: 20px;
   z-index: 1;
+}
+
+#chevron {
+  display: none;
+  position: absolute;
+  text-align: center;
+  height: 70px;
+  width: 160px;
+  top: -30px;
+  left: -3px;
+}
+
+#chevron span{
+  position: relative;
+  top: 36px;
+  left: -44px;
+  font-size: 21px;
+  z-index: 1;
+}
+
+#chevron:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 51%;
+  background: #37F1D3;
+  -webkit-transform: skew(-30deg, 0deg);
+  -moz-transform: skew(-30deg, 0deg);
+  -ms-transform: skew(-30deg, 0deg);
+  -o-transform: skew(-30deg, 0deg);
+  transform: skew(-30deg, 0deg);
 }
 
 /************* OPTIONS PAGE *****************/
