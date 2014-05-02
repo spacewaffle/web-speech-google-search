@@ -240,15 +240,20 @@ $('body').on('click.collapse-next.data-api', '[data-toggle=collapse-next]', func
 //Notify the user to keep the window open only when the extension is installed or updated
 function getVersion() {
   var details = chrome.app.getDetails();
+  console.log("getting version");
   return details.version;
 }
 var currVersion = getVersion();
 var prevVersion = localStorage['version'];
+console.log('current version is' + currVersion);
+console.log('previous version is' + prevVersion);
+
 if (currVersion != prevVersion) {
   // Check if we just installed or updated this extension.
+  console.log('showing the leave open message');
   $('.leave_open_msg').show();
   window.setTimeout(function(){
-    $('.leave_open_msg').slideUp();
+    $('.leave_open_msg').fadeOut();
   }, 3000);
   localStorage['version'] = currVersion;
 }
