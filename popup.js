@@ -9,9 +9,12 @@ var started = false;
 var listening = true;
 var pro_license = false;
 
+//send a message to background to check for pro license
 chrome.storage.sync.get("pro_license", function(items){
   if(items["pro_license"] == true){
     pro_license = true;
+    $('#chevron').fadeIn();
+    $('#activate_pro').fadeOut();
   }
 });
 //style guide
@@ -264,5 +267,18 @@ if (currVersion != prevVersion) {
   }, 3000);
   localStorage['version'] = currVersion;
 }
+
+//send a message to activate pro account
+//send a message to background to check for pro license
+chrome.extension.sendMessage({greeting: "check_license"});
+
+chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
+  if(request.greeting === "upgrade"){
+    if(request.pro){
+      pro_license = request.pro;
+      $('#activate_pro').fadeOut();
+    }
+  }
+});
 
 })();

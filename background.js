@@ -187,6 +187,9 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
       }
     }
   }
+  else if(request.greeting === "check_license"){
+    init();
+  }
   else if( request.greeting === "action" ){
 
     console.log('input is ' + request.input);
@@ -318,9 +321,11 @@ function init() {
     d.setDate(d.getDate()-2);
     console.log('checking for license');
     if(items["license_last_checked"] === undefined || new Date(items["license_last_checked"]) < d){
+      console.log('asking google for the license');
       getLicense();
     }
     else{
+      console.log('just use the local license we got');
       chrome.storage.sync.get("pro_license", function(items){
         if(items["pro_license"]){
           pro_license = true;
@@ -362,10 +367,16 @@ function parseLicense(license) {
   if (license.result && license.accessLevel == "FULL") {
     console.log("Fully paid & properly licensed.");
     chrome.storage.sync.set({"pro_license": true});
+
+    //send the pro message to the popup
+    chrome.tabs.sendMessage(popup_tab_id, {greeting: "upgrade",
+                                           pro: true});
     pro_license = true;
   }
   else {
     console.log("Free trial, still within trial period");
+    chrome.tabs.sendMessage(popup_tab_id, {greeting: "upgrade",
+                                           pro: false});
     chrome.storage.sync.set({"pro_license": false});
     pro_license = false;
   }
