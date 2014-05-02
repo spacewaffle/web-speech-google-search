@@ -310,12 +310,14 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
 var CWS_LICENSE_API_URL = 'https://www.googleapis.com/chromewebstore/v1.1/userlicenses/';
 
 function init() {
+  console.log('running init');
   chrome.storage.sync.get("license_last_checked", function(items){
 
     //if the license check is more than two days old, check it again
     var d = new Date();
     d.setDate(d.getDate()-2);
-    if(items["license_last_checked"] === undefined || items["license_last_checked"] < d){
+    console.log('checking for license');
+    if(items["license_last_checked"] === undefined || new Date(items["license_last_checked"]) < d){
       getLicense();
     }
     else{
@@ -356,7 +358,7 @@ function onLicenseFetched(error, status, response) {
 
 function parseLicense(license) {
   var d = new Date();
-  chrome.storage.sync.set({"license_last_checked": d});
+  chrome.storage.sync.set({"license_last_checked": d.toJSON()});
   if (license.result && license.accessLevel == "FULL") {
     console.log("Fully paid & properly licensed.");
     chrome.storage.sync.set({"pro_license": true});
