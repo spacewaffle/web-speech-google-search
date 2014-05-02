@@ -2,7 +2,7 @@
 var search_url = "https://www.google.com/search?q=";
 var wiki_url = "https://wikipedia.org/w/index.php?search=";
 var youtube_url = "https://www.youtube.com/results?search_query=";
-var show_indicator = true, scroll_height = 600;
+var show_indicator = true, scroll_height = 500;
 
 console.log('added receiver');
 
