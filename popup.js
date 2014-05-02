@@ -14,7 +14,7 @@ chrome.storage.sync.get("pro_license", function(items){
   if(items["pro_license"] == true){
     pro_license = true;
     $('#chevron').fadeIn();
-    $('#activate_pro').fadeOut();
+    $('#pro_controls').fadeOut();
   }
 });
 //style guide
@@ -268,15 +268,21 @@ if (currVersion != prevVersion) {
   localStorage['version'] = currVersion;
 }
 
-//send a message to activate pro account
-//send a message to background to check for pro license
-chrome.extension.sendMessage({greeting: "check_license"});
+//whenever the user checks or unchecks show_indicator, update their settings
+$('#activate_pro').on('click', function(){
+  //send a message to background to check for pro license
+  chrome.extension.sendMessage({greeting: "check_license"});
+  $("html, body").animate({
+    scrollTop: 0
+  }, 100, "linear");
+});
 
 chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
   if(request.greeting === "upgrade"){
     if(request.pro){
       pro_license = request.pro;
-      $('#activate_pro').fadeOut();
+      $('#chevron').fadeIn();
+      $('#pro_controls').fadeOut();
     }
   }
 });

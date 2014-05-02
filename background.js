@@ -22,6 +22,8 @@ function new_window(hide){
       popup_id = new_window.id;
       popup_tab_id = new_window.tabs[0].id;
       console.log("hide is " + hide);
+      chrome.tabs.sendMessage(popup_tab_id, {greeting: "upgrade",
+                                             pro: pro_license});
       if(hide){
         console.log('attempting to hide popup');
         chrome.windows.update(popup_id, {focused: false});
@@ -188,7 +190,7 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
     }
   }
   else if(request.greeting === "check_license"){
-    init();
+    getLicense();
   }
   else if( request.greeting === "action" ){
 
