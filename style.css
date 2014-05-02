@@ -139,6 +139,7 @@ li{
   text-align: center;
   padding: 10px 0;
   z-index: 2;
+  overflow: hidden;
 }
 
 
@@ -153,7 +154,6 @@ li{
   color: #fff;
   background-color: #37C5F1;
   display: none;
-  overflow: hidden;
 }
 #denied_dialogue{
   background-color: #F2DEDE;
