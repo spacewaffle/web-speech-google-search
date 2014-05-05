@@ -42,7 +42,12 @@ function showIndicator(input, callback){
 }
 
 chrome.storage.sync.get("show_indicator", function(items){
-  show_indicator = items["show_indicator"] || false;
+  if(items["show_indicator"] !== undefined){
+    show_indicator = items["show_indicator"];
+  }
+  else{
+    show_indicator = true;
+  }
   console.log("show indicator is " + show_indicator);
   if(show_indicator === true){
     //the indicator is the actual stored value of the last action and modifier

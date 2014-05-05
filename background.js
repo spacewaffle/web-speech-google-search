@@ -50,7 +50,12 @@ chrome.storage.sync.get('auto_start', function(items) {
 //check stored settings if we should show indicator
 chrome.storage.sync.get('show_indicator', function(items) {
   console.log("show_indicator is " + items["show_indicator"]);
-  show_indicator = items["show_indicator"] || false;
+  if(items["show_indicator"] !== undefined){
+    show_indicator = items["show_indicator"];
+  }
+  else{
+    show_indicator = true;
+  }
 });
 
 //set the initial active tab
