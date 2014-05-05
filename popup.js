@@ -8,6 +8,7 @@ var last_modifier = "";
 var started = false;
 var listening = true;
 var pro_license = false;
+var notify_leave_open = false;
 
 //send a message to background to check for pro license
 chrome.storage.sync.get("pro_license", function(items){
@@ -56,6 +57,11 @@ var commands = {
 
 };
 
+function getVersion() {
+  var details = chrome.app.getDetails();
+  console.log("getting version");
+  return details.version;
+}
 
 function sendResponse(action, modifier, input, last_act, last_mod){
   console.log('action is ' + action);
@@ -110,14 +116,34 @@ function startRecognition(){
   recognition.start();
   console.log("recognition is...");
   console.log(recognition);
-  window.setTimeout(function(){
+  
     if(!started){
       $('#waiting_message').fadeIn();
+      notify_leave_open = true;
     }
-  }, 1000);
+  
 
   recognition.onstart = function(event){
     started = true;
+    if(notify_leave_open){
+      //Notify the user to keep the window open only when the extension is installed or updated
+
+      var currVersion = getVersion();
+      var prevVersion = localStorage['version'];
+      console.log('current version is' + currVersion);
+      console.log('previous version is' + prevVersion);
+
+      if (currVersion != prevVersion) {
+        // Check if we just installed or updated this extension.
+        console.log('showing the leave open message');
+        $('.leave_open_msg').show();
+        window.setTimeout(function(){
+          $('.leave_open_msg').fadeOut();
+        }, 3000);
+        localStorage['version'] = currVersion;
+      }
+      
+    }
     console.log(event);
     $('#waiting_dialogue').hide();
     $('#waiting_message').hide();
@@ -135,7 +161,7 @@ function startRecognition(){
 
     //get rid of leading space that appears sometimes
     if(input[0] === ' '){
-        input = input.replace(" ", "");
+      input = input.replace(" ", "");
     }
 
     //turn all words to lowercase
@@ -245,28 +271,6 @@ $('body').on('click.collapse-next.data-api', '[data-toggle=collapse-next]', func
     var $target = $(this).next();
     $target.collapse('toggle');
 });
-
-
-//Notify the user to keep the window open only when the extension is installed or updated
-function getVersion() {
-  var details = chrome.app.getDetails();
-  console.log("getting version");
-  return details.version;
-}
-var currVersion = getVersion();
-var prevVersion = localStorage['version'];
-console.log('current version is' + currVersion);
-console.log('previous version is' + prevVersion);
-
-if (currVersion != prevVersion) {
-  // Check if we just installed or updated this extension.
-  console.log('showing the leave open message');
-  $('.leave_open_msg').show();
-  window.setTimeout(function(){
-    $('.leave_open_msg').fadeOut();
-  }, 3000);
-  localStorage['version'] = currVersion;
-}
 
 //whenever the user checks or unchecks show_indicator, update their settings
 $('#activate_pro').on('click', function(){
