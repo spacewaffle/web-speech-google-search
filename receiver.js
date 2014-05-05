@@ -45,6 +45,7 @@ chrome.storage.sync.get("show_indicator", function(items){
   show_indicator = items["show_indicator"] || false;
   console.log("show indicator is " + show_indicator);
   if(show_indicator === true){
+    //the indicator is the actual stored value of the last action and modifier
     chrome.storage.sync.get("indicator", function(items){
       if(items["indicator"] !== undefined && items["indicator"] !== null){
         showIndicator(items["indicator"], function(){
