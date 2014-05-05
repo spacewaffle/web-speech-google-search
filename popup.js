@@ -8,7 +8,6 @@ var last_modifier = "";
 var started = false;
 var listening = true;
 var pro_license = false;
-var notify_leave_open = false;
 
 //send a message to background to check for pro license
 chrome.storage.sync.get("pro_license", function(items){
@@ -116,18 +115,16 @@ function startRecognition(){
   recognition.start();
   console.log("recognition is...");
   console.log(recognition);
-  
-    if(!started){
-      $('#waiting_message').fadeIn();
-      notify_leave_open = true;
-    }
-  
+  if(started){
+    $('#content').show();
+  }
 
   recognition.onstart = function(event){
-    started = true;
-    if(notify_leave_open){
-      //Notify the user to keep the window open only when the extension is installed or updated
+    console.log('recognition started');
+    if(!started){
+      $('#content').fadeIn();
 
+      //Notify the user to keep the window open only when the extension is installed or updated
       var currVersion = getVersion();
       var prevVersion = localStorage['version'];
       console.log('current version is' + currVersion);
@@ -142,8 +139,9 @@ function startRecognition(){
         }, 3000);
         localStorage['version'] = currVersion;
       }
-      
     }
+    started = true;
+
     console.log(event);
     $('#waiting_dialogue').hide();
     $('#waiting_message').hide();
