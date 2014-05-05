@@ -36,6 +36,5 @@
       "run_at": "document_start"
     }
   ],
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgU+Tr99cVMi6oykLym1nmVuHBblbCR8jx64oZaXpctMmyltEPIIgqJhgEL95PrGm/oEmQ1qIv6Koy2NWnAcAoYMFlM5AWVxOJhQIF4dq9qXkw1D0GdyHaxqJxa0cpAftAe+QlEjkZYYAgRrU3O0cruxRs34Cqnh0GLWv5iP5g8oYJEq3snfFuWlsjDdQNgHkdCSEKWCEULpAWAoRCYSXvCyKhMZVWXwbEr68JHrpubXJBlWgMhkrTm+oJDjYIKFu5v6Iw4WAZjgbCOgX7NQuU4v+MF6pcDa86UBcJZL4ZFHivm8jA3N3uDGfiR4FhI8XH9Iw/v2ICC2U1jQb4ZRTWwIDAQAB",
   "web_accessible_resources": ["yt_setup.js"]
 }
