@@ -136,7 +136,7 @@ function startRecognition(){
         $('.leave_open_msg').show();
         window.setTimeout(function(){
           $('.leave_open_msg').fadeOut();
-        }, 3000);
+        }, 7000);
         localStorage['version'] = currVersion;
       }
     }
