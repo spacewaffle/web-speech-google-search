@@ -290,7 +290,6 @@ chrome.extension.onMessage.addListener( function(request,sender,sendResponse){
         break;
       // Only execute pro features if the user has a pro license
       case "wiki":
-      case "youtube":
         if(pro_license){
           chrome.tabs.sendMessage(tab_id, {greeting: "do_action",
                             action: request.action,
